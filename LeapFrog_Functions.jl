@@ -1,6 +1,6 @@
 #=---------------------------------------------------------------
 7/25/2022
-LeapFrogging v10 Functions_LeapFrog.jl
+LeapFrogging v10 LeapFrog_Functions.jl
 
 This file contains all of the functions I used for my leapfrog
 code. The first function is the one called in LeapFrog.jl.
