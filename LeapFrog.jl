@@ -11,7 +11,7 @@ conditions.
 using DelimitedFiles, Printf, Plots
 
 # I included all of the functions in another file.
-include("Functions_LeapFrog.jl")
+include("LeapFrog_Functions.jl")
 
 #=---------------------------------------------------------------
 Arguments for this function are: 
