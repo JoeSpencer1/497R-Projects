@@ -10,21 +10,22 @@
 \usepackage{esvect}
 
 \usepackage[utf8]{inputenc}
-\usepackage{glossaries}
+\usepackage[acronym, section=section]{glossaries}
 
 \makeglossaries
 
-\newglossaryentry{glsy}
+\newglossaryentry{Cd}
 {
     	name = Airfoil Thickness,
     	description = {The thingy}
 }
 
-\newglossaryentry{latex}
+\newglossaryentry{Cl}
 {
     	name = Airfoil Thickness,
     	description = {The thingy}
 }
+
 
 \begin{document}
 
@@ -36,7 +37,7 @@
 \subsubsection*{Methods}
 Pairs of vortex rings can move together along a line, appearing to play leapfrog with each other. This phenomenon can occur when the circulation of one vortex ring pulls a second vortex ring forward, and once the second vortex ring has its own inertia moving it forward it begins to pull the first vortex ring. For this assignment, a set of 4 points marking the top and bottom of 2 vortex rings was modeled to leapfrog off of each other, and different graphs and GIFs were created of this behavior. The code used to solve this problem, as well as output data and graphs from the nine drafts of this project, can be found in the LeapFrog branch (\emph{JoeSpencer1-LeapFrog}) of this \href{https://github.com/JoeSpencer1/497R-Projects.git}{GitHub Repository}. \newline
 
-\gls{glsy} and \gls{latex}.
+\gls{Cd} and \gls{Cl} and .
 
 I used the Julia programming language to model these leapfrogging vortices. Julia was especially handy for this project because it could perform calculations on large matrices quickly. Another feature of Julia that became especially handy for this project is its ability to publish figures easily for help visualizing data. Initially, data was written to a file, but recording data to a file was later skipped in the final version to instead dedicate runtime to examining different initial conditions.\newline
 
