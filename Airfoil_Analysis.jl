@@ -75,3 +75,25 @@ findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure13.png", "NACA
 findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure14.png", "NACA 4418, Re=5×10⁴")
 
 findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure15.png", "NACA 4418, Re=2×10⁵")
+
+#=---------------------------------------------------------------
+The NACA 4418 airfoil has a thicker camber.
+---------------------------------------------------------------=#
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca4412.txt")
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure16.png", "NACA 4412, Re=1×10⁵")
+
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure17.png", "NACA 4412, Re=5×10⁴")
+
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure18.png", "NACA 4412, Re=2×10⁵")
+
+#=---------------------------------------------------------------
+The NACA 4418 airfoil has a thicker camber.
+---------------------------------------------------------------=#
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca4421.txt")
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure19.png", "NACA 4421, Re=1×10⁵")
+
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure20.png", "NACA 4421, Re=5×10⁴")
+
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure21.png", "NACA 4421, Re=2×10⁵")
