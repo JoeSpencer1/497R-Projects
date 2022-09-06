@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
-9/1/2022
-Airfoil_Analysis v1 Airfoil_Analysis.jl
-My first iteration of the airfoil analysis uses a header file to
-gain basic understanding of the code to describe airfoils.
+9/5/2022
+Airfoil_Analysis v2 Airfoil_Analysis.jl
+My second version of the airfoil analysis julia code uses files
+for airfoil data instead of multiplying by factors. I also made
+the Reynolds numbers closer together.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -12,39 +13,65 @@ include("Airfoil_Functions.jl")
 
 #=---------------------------------------------------------------
 Get provoded geometry for an airfoil. These geometries are from 
-https://m-selig.ae.illinois.edu/ads/coord_database.html.
+https://m-selig.ae.illinois.edu/ads/coord_database.html. In the
+second version of this code, I have used different airfoils from
+this website instead of simply multiplying y by scale factors as
+in version 1.
 ---------------------------------------------------------------=#
-loadairfoil("Documents/GitHub/497R-Projects/naca633618.txt")
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca2410.txt")
 
 #=---------------------------------------------------------------
 This findcoefficients function can be used to experiment with 
 different Reynolds numbers. It tests different angles of attack
 and then outputs a plot.
 ---------------------------------------------------------------=#
-findcoefficients(x, y, 1e5, "Desktop/Figure1.png")
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure1.png", "NACA 2410")
 
-findcoefficients(x, y, 5e5, "Desktop/Figure2.png")
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure2.png", "NACA 2410")
 
-findcoefficients(x, y, 5e4, "Desktop/Figure3.png")
-
-#=---------------------------------------------------------------
-The thickness is doubled in thie repeat of the previous 3 lines.
----------------------------------------------------------------=#
-y *= 2
-
-findcoefficients(x, y, 1e5, "Desktop/Figure4.png")
-
-findcoefficients(x, y, 5e5, "Desktop/Figure5.png")
-
-findcoefficients(x, y, 5e4, "Desktop/Figure6.png")
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure3.png", "NACA 2410")
 
 #=---------------------------------------------------------------
-This time, it is halved instead.
+These next plots try a NACA 2411 (maximum wing thickness slightly
+less)
 ---------------------------------------------------------------=#
-y /= 4
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca2411.txt")
 
-findcoefficients(x, y, 1e5, "Desktop/Figure7.png")
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure4.png", "NACA 2411")
 
-findcoefficients(x, y, 5e5, "Desktop/Figure8.png")
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure5.png", "NACA 2411")
 
-findcoefficients(x, y, 5e4, "Desktop/Figure9.png")
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure6.png", "NACA 2411")
+
+#=---------------------------------------------------------------
+This an even thicker NACA 2418 airfoil.
+---------------------------------------------------------------=#
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca2418.txt")
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure7.png", "NACA 2418")
+
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure8.png", "NACA 2418")
+
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure9.png", "NACA 2418")
+
+#=---------------------------------------------------------------
+The NACA 1408 airfoil has a thinner camber.
+---------------------------------------------------------------=#
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca1408.txt")
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure10.png", "NACA 1408")
+
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure11.png", "NACA 1408")
+
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure12.png", "NACA 1408")
+
+#=---------------------------------------------------------------
+The NACA 4418 airfoil has a thicker camber.
+---------------------------------------------------------------=#
+const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca4418.txt")
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure13.png", "NACA 4418")
+
+findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure14.png", "NACA 4418")
+
+findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure15.png", "NACA 4418")

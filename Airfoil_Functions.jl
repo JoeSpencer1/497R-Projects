@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
-9/1/2022
+9/5/2022
 Airfoil_Analysis v1 Airfoil_Functions.jl
 This file contains the supporting functions for the code 
-contained in Airfoil_Analysis.jl
+contained in Airfoil_Analysis.jl. In the second version I have
+edited the graphing function to show more data in the graph. 
 ---------------------------------------------------------------=#
 function loadairfoil(filename)
     for i in 1:1
@@ -15,10 +16,11 @@ function loadairfoil(filename)
             push!(y, parse(Float64, entries[2]))
         end
         close(f)
+        return([x, y])
     end
 end
 
-function findcoefficients(x, y, re, figuretitle)
+function findcoefficients(x, y, re, figuretitle, type)
     lowest = 0
     highest = 1
     lowerlim = false
@@ -48,12 +50,12 @@ function findcoefficients(x, y, re, figuretitle)
     end
     alpha = lowest:highest
     c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle)
+    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
 end
 
-function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle)
+function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
     angle = lowest:1:highest
-    plot(angle[:], c_l[:], label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
+    plot(angle[:], c_l[:], title = type, label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
     plot!(angle[:], c_d[:], label = "Cd")
     plot!(angle[:], c_dp[:], label = "Cdp")
     plot!(angle[:], c_m[:], label = "Cm")

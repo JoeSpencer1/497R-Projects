@@ -9,35 +9,19 @@
 \usepackage{amsmath} 
 \usepackage{esvect}
 
-\usepackage[utf8]{inputenc}
-\usepackage[acronym, section=section]{glossaries}
-
-\makeglossaries
-
-\newglossaryentry{Cd}
-{
-    	name = Airfoil Thickness,
-    	description = {The thingy}
-}
-
-\newglossaryentry{Cl}
-{
-    	name = Airfoil Thickness,
-    	description = {The thingy}
-}
 
 
 \begin{document}
 
 \author{Joe Spencer}
 \title{Airfoil Analysis}
-\date{August 27, 2022}
+\date{September 5, 2022}
 \maketitle
 
 \subsubsection*{Methods}
 Pairs of vortex rings can move together along a line, appearing to play leapfrog with each other. This phenomenon can occur when the circulation of one vortex ring pulls a second vortex ring forward, and once the second vortex ring has its own inertia moving it forward it begins to pull the first vortex ring. For this assignment, a set of 4 points marking the top and bottom of 2 vortex rings was modeled to leapfrog off of each other, and different graphs and GIFs were created of this behavior. The code used to solve this problem, as well as output data and graphs from the nine drafts of this project, can be found in the LeapFrog branch (\emph{JoeSpencer1-LeapFrog}) of this \href{https://github.com/JoeSpencer1/497R-Projects.git}{GitHub Repository}. \newline
 
-\gls{Cd} and \gls{Cl} and .
+\hyperlink{CD}{Coefficient of Drag} \hyperlink{CL}{Coefficient of Lift} \hyperlink{CM}{Coefficient of Moment} \hyperlink{alpha}{$\alpha$} \hyperlink{AP}{Airfoil Polar} \hyperlink{LC}{Lift Coefficient} \hyperlink{ST}{Stall} \hyperlink{c}{Chord} \hyperlink{Camber}{Camber} \hyperlink{Th}{thickness} \hyperlink{Vinf}{Freestream Velocity} \hyperlink{Re}{Reynolds Number} \hyperlink{M}{Mach Number} \hyperlink{NACA}{NACA Airfoil}
 
 I used the Julia programming language to model these leapfrogging vortices. Julia was especially handy for this project because it could perform calculations on large matrices quickly. Another feature of Julia that became especially handy for this project is its ability to publish figures easily for help visualizing data. Initially, data was written to a file, but recording data to a file was later skipped in the final version to instead dedicate runtime to examining different initial conditions.\newline
 
@@ -85,6 +69,63 @@ One interesting relationship to note in the vortex rings that this experiment fo
 
 \clearpage
 
-\printglossaries
+\section{Glossary}
+\begin{itemize}
+	
+	\item \hypertarget{Camber}{Airfoil Camber} - The Camber of an airfoil is represented by the Camber Line, which runs halfway between its top and bottom surfaces. This line represents the curvature of an airfoil. An airfoil with positive camber is slightly convex on top and slightly concave on its bottom.
+	
+	\item \hypertarget{c}{Airfoil Chord, $c$} - An airfoil's Chord is the imaginary line running straight from the tip of an airfoil to its tail. The chord line is used to find an airfoil's \hyperlink{alpha}{Angle of Attack}.
+
+	\item \hypertarget{AP}{Airfoil Polar} - The Airfoil Polar is a plot showing the  \hyperlink{CL}{Lift} and  \hyperlink{CD}{Drag} coefficients corresponding with each \hyperlink{alpha}{Angle of Attack} for an airfoil. Examining the ratios of lift to drag is instrumental in choosing the optimal Angle of Attack.
+	
+	\item \hypertarget{Th}{Airfoil Thickness} - An airfoil's thickness can be measured in two different ways, either along its \hyperlink{c}{Chord Line} or along its \hyperlink{Camber}{Camber Line}. Thickness measured perpendicular to the Camber Line is also called the American Convention, and thickness measured perpendicular to the Chord Line is also called the British Convention.
+		
+	\item \hypertarget{alpha}{Angle of Attack, $\alpha$} - The angle of attack, $\alpha$ is the angle between the motion of oncoming fluid and the chord line of the wing. a positive $\alpha$ corresponds to a wing tilted upwards.
+
+	\item \hypertarget{CD}{Drag Coefficient (2D), $c_{D}$} - The drag coefficient determines how much drag force opposing motion will be experienced. It is used in this way: 
+		\begin{equation} \label{eq:2}
+		\begin{aligned}
+        			D = \frac{1}{2} \rho u^{2} c_{D}
+	    	\end{aligned}
+		\end{equation}
+	
+	\item \hypertarget{Vinf}{Freestream Velocity, $V_{\infty}$} - The velocity of an oncoming air flow directly upstream from an airfoil, before it interacts with it.
+		
+	\item \hypertarget{CL}{Lift Coefficient (2D), $c_{L}$} - The lift coefficient is used in the equation below to define how much lift force acts perpendicular to the direction of the oncoming fluid flow.
+		\begin{equation} \label{eq:3}
+		\begin{aligned}
+        			L = \frac{1}{2} \rho u^{2} c_{L}
+	    	\end{aligned}
+		\end{equation}
+	
+	\item \hypertarget{LC}{Lift Curve Slope} - The lift curve plots the \hyperlink{CL}{Lift Coefficient} against the \hyperlink{alpha}{Angle of Attack}. This shows the effect that changing the angle of attack will have on the plane's total lift force.
+		
+	\item \hypertarget{M}{Mach Number, $M$} - The Mach number is the velocity of an object in proportion to the speed of sound in its medium. When an airfoil is traveling near the speed of sound, its top portions can have fluid velocity above Mach 1. When an airfoil is traveling above Mach 1, the fluid on both sides of it also have velocities above mach 1 while there are points directly before and after it that are below Mach 1.
+		\begin{equation} \label{eq:4}
+		\begin{aligned}
+        			M = \frac{u}{c}
+	    	\end{aligned}
+		\end{equation}
+		
+	\item \hypertarget{CM}{Pitching Moment Coefficient (2D), $c_{M}$} - The moment coefficient is used to calculate the pitching moment a wing will experience from its dynamic pressure $q$, area $S$, and chord length $c$.
+		\begin{equation} \label{eq:5}
+		\begin{aligned}
+        			M = q S e c_{M}
+	    	\end{aligned}
+		\end{equation}
+	
+	\item \hypertarget{Re}{Reynolds Number, $Re$} - The Reynolds Number is a unit-less number for fluid flow described by the equation below. It can be used to predict patterns in the fluid's flow, using its flow speed $u$, characteristic length $L$, and kinetic viscosity $\nu$, or else by its density $\rho$, flow speed $u$, characteristic length $L$, and fluid density $\mu$.
+		\begin{equation} \label{eq:6}
+		\begin{aligned}
+        			Re = \frac{uL}{\nu} \\
+			= \frac{\rho uL}{\mu} 
+	    	\end{aligned}
+		\end{equation}
+	
+	\item \hypertarget{ST}{Stall} - Stall occurs when an airfoil's \hyperlink{alpha}{Angle of Attack} is too great in magnitude. When the angle of attack is too great, flow separation occurs, reducing rather than augmenting the airfoil's \hyperlink{CL}{Lift Coefficient} as the Angle of Attack increases.
+		
+	\item \hypertarget{NACA}{4-Digit NACA Airfoil} - A wing shape developed by the National Advisory Committee for Aeronautics (NACA). The first digit is the maximum \hyperlink{Camber}{Camber} as a percentage of the \hyperlink{c}{Chord}. The second digit is the distance in tenths of the maximum Camber from the leading edge. the final two digits are the maximum wing thickness as a percentage of the Chord. Descriptions of other NACA numbers can also be found on this \href{https://en.wikipedia.org/wiki/NACA_airfoil}{Wikipedia Article}. 
+	
+\end{itemize}
 
 \end{document}
