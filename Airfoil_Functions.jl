@@ -1,9 +1,8 @@
 #=---------------------------------------------------------------
-9/5/2022
-Airfoil_Analysis v1 Airfoil_Functions.jl
-This file contains the supporting functions for the code 
-contained in Airfoil_Analysis.jl. In the second version I have
-edited the graphing function to show more data in the graph. 
+9/6/2022
+Airfoil_Analysis v3 Airfoil_Functions.jl
+This version attempts to create a function that allows the user
+to input an airfoil type.
 ---------------------------------------------------------------=#
 function loadairfoil(filename)
     for i in 1:1
@@ -60,4 +59,35 @@ function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, typ
     plot!(angle[:], c_dp[:], label = "Cdp")
     plot!(angle[:], c_m[:], label = "Cm")
     savefig(figuretitle)
+end
+
+function createairfoil(mpth)
+    x = Array{Float64}(undef, 41, 1)
+    y = Array{Float64}(undef, 41, 1)
+    for i in 1:41
+        if i < 22
+            x[i] = 1 - (i - 1) / 20.0
+        end
+        if i > 21
+            x[i] = (i - 21) / 20.0
+        end
+    end
+    th = mod(mpth, 100) / 100
+    p = (mod(mpth, 1000) - th) / 1000
+    m = (mpth - 100 * p - th) / 100000
+    for i in 1:41
+        if i < 21
+            y[i] = -5 * 0.5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 - 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
+        end
+        if i > 20
+            y[i] = 5 * 0.5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 - 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
+        end
+        if x[i] <= p
+            y[i] += (2 * p * x[i] - x[i] ^ 2) * m / p ^ 2
+        end
+        if x[i] > p
+            y[i] += ((1 - 2 * p) + 2 * p * x[i] - x[i] ^ 2) * m / (1 - p) ^ 2
+        end
+    end
+    return([x, y])
 end

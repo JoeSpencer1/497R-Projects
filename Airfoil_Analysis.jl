@@ -1,9 +1,8 @@
 #=---------------------------------------------------------------
-9/5/2022
-Airfoil_Analysis v2 Airfoil_Analysis.jl
-My second version of the airfoil analysis julia code uses files
-for airfoil data instead of multiplying by factors. I also made
-the Reynolds numbers closer together.
+9/6/2022
+Airfoil_Analysis v3 Airfoil_Analysis.jl
+This version attempts to create a function that allows the user
+to input an airfoil type.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -77,7 +76,7 @@ findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure14.png", "NACA
 findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure15.png", "NACA 4418, Re=2×10⁵")
 
 #=---------------------------------------------------------------
-The NACA 4418 airfoil has a thicker camber.
+The NACA 4412 airfoil has a thicker camber.
 ---------------------------------------------------------------=#
 const x, y = loadairfoil("Documents/GitHub/497R-Projects/naca4412.txt")
 
@@ -97,3 +96,11 @@ findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure19.png", "NACA
 findcoefficients(x, y, 5e4, "Documents/GitHub/497R-Projects/Figure20.png", "NACA 4421, Re=5×10⁴")
 
 findcoefficients(x, y, 2e5, "Documents/GitHub/497R-Projects/Figure21.png", "NACA 4421, Re=2×10⁵")
+
+#=---------------------------------------------------------------
+This function tries creating an airfoil from scratch.
+---------------------------------------------------------------=#
+
+const x, y = createairfoil(2410)
+
+findcoefficients(x, y, 1e5, "Documents/GitHub/497R-Projects/Figure22.png", "NACA 2410, Re=1×10⁵")
