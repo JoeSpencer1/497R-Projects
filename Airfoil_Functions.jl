@@ -73,8 +73,8 @@ function createairfoil(mpth)
         end
     end
     th = mod(mpth, 100) / 100
-    p = (mod(mpth, 1000) - th) / 1000
-    m = (mpth - 100 * p - th) / 100000
+    p = (mod(mpth, 1000) - th * 100) / 1000
+    m = (mpth - p * 1000 - th* 100) / 100000
     for i in 1:41
         if i < 21
             y[i] = -5 * 0.5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 - 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
@@ -89,5 +89,20 @@ function createairfoil(mpth)
             y[i] += ((1 - 2 * p) + 2 * p * x[i] - x[i] ^ 2) * m / (1 - p) ^ 2
         end
     end
+    writetofile(x, y, m, p, th)
     return([x, y])
+end
+
+function writetofile(x, y, m, p, th)
+    num0 = m * 100000 + p * 1000 + th * 100
+    num = trunc(Int64, num0)
+    filename = string("Documents/GitHub/497R-Projects/naca" , string(num) , "new.txt")
+    printfile = open(filename, "w")
+    for i in 1:41
+        write(printfile, string(x[i]))
+        write(printfile, "\t")
+        write(printfile, string(y[i]))
+        write(printfile, "\n")
+    end
+    close(printfile)
 end
