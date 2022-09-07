@@ -1,8 +1,7 @@
 #=---------------------------------------------------------------
-9/6/2022
-Airfoil_Analysis v3 Airfoil_Functions.jl
-This version attempts to create a function that allows the user
-to input an airfoil type.
+9/7/2022
+Airfoil_Analysis v4 Airfoil_Functions.jl
+I managed to genearate an airfoil from the number.
 ---------------------------------------------------------------=#
 function loadairfoil(filename)
     for i in 1:1
@@ -77,17 +76,18 @@ function createairfoil(mpth)
     m = (mpth - p * 1000 - th* 100) / 100000
     for i in 1:41
         if i < 21
-            y[i] = -5 * 0.5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 - 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
+            y[i] = 5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
         end
         if i > 20
-            y[i] = 5 * 0.5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 - 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
+            y[i] = -5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
         end
         if x[i] <= p
             y[i] += (2 * p * x[i] - x[i] ^ 2) * m / p ^ 2
         end
-        if x[i] > p
+        if x[i] > p 
             y[i] += ((1 - 2 * p) + 2 * p * x[i] - x[i] ^ 2) * m / (1 - p) ^ 2
         end
+        
     end
     writetofile(x, y, m, p, th)
     return([x, y])
