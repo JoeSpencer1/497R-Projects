@@ -108,3 +108,27 @@ findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure22.png", "Ho
 const x8, y8 = createairfoil(2410, 21)
 
 findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure23.png", "Homemade NACA 2410, Re=1×10⁵")
+
+const x8, y8 = createairfoil(1410, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure24.png", "Homemade NACA 1410, Re=1×10⁵")
+
+const x8, y8 = createairfoil(3410, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure25.png", "Homemade NACA 3410, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2510, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure26.png", "Homemade NACA 2510, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2610, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure27.png", "Homemade NACA 2610, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2420, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure28.png", "Homemade NACA 2420, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2430, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure29.png", "Homemade NACA 2430, Re=1×10⁵")
