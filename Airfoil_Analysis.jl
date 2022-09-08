@@ -1,7 +1,8 @@
 #=---------------------------------------------------------------
-9/6/2022
-Airfoil_Analysis v4 Airfoil_Analysis.jl
-This version is able to generate an airfoil.
+9/7/2022
+Airfoil_Analysis v5 Airfoil_Analysis.jl
+This version is capable of finding different resolutions of
+describing airfoils.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -100,6 +101,10 @@ findcoefficients(x7, y7, 2e5, "Documents/GitHub/497R-Projects/Figure21.png", "NA
 This function tries creating an airfoil from scratch.
 ---------------------------------------------------------------=#
 
-const x8, y8 = createairfoil(2410)
+const x8, y8 = createairfoil(2410, 20)
 
 findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure22.png", "Homemade NACA 2410, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2410, 21)
+
+findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure23.png", "Homemade NACA 2410, Re=1×10⁵")

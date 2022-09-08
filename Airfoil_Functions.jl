@@ -1,7 +1,8 @@
 #=---------------------------------------------------------------
-9/7/2022
-Airfoil_Analysis v4 Airfoil_Functions.jl
-I managed to genearate an airfoil from the number.
+9/8/2022
+Airfoil_Analysis v5 Airfoil_Functions.jl
+This version is capable of finding different resolutions of
+describing airfoils.
 ---------------------------------------------------------------=#
 function loadairfoil(filename)
     for i in 1:1
@@ -60,15 +61,17 @@ function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, typ
     savefig(figuretitle)
 end
 
-function createairfoil(mpth)
-    x = Array{Float64}(undef, 41, 1)
-    y = Array{Float64}(undef, 41, 1)
-    for i in 1:41
-        if i < 22
-            x[i] = 1 - (i - 1) / 20.0
+function createairfoil(mpth, n)
+    nd = n * 1.0
+    n2 = n * 2 + 1
+    x = Array{Float64}(undef, n2, 1)
+    y = Array{Float64}(undef, n2, 1)
+    for i in 1:n2
+        if i < (n + 2)
+            x[i] = 1 - (i - 1) / nd
         end
-        if i > 21
-            x[i] = (i - 21) / 20.0
+        if i > (n + 1)
+            x[i] = (i - 21) / nd
         end
     end
     th = mod(mpth, 100) / 100
