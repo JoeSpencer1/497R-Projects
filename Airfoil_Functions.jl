@@ -71,17 +71,17 @@ function createairfoil(mpth, n)
             x[i] = 1 - (i - 1) / nd
         end
         if i > (n + 1)
-            x[i] = (i - 21) / nd
+            x[i] = (i - n - 1) / nd
         end
     end
     th = mod(mpth, 100) / 100
     p = (mod(mpth, 1000) - th * 100) / 1000
     m = (mpth - p * 1000 - th* 100) / 100000
-    for i in 1:41
-        if i < 21
+    for i in 1:n2
+        if i < n + 1
             y[i] = 5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
         end
-        if i > 20
+        if i > n
             y[i] = -5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
         end
         if x[i] <= p
