@@ -33,7 +33,7 @@ It can be seen that lift and drag force are both proportional to the square of v
 
 This project sought to identify how adjusting an airfoil's \hyperlink{c}{Chord}, or $c$, and \hyperlink{Camber}{Camber} can affect its performance, making it better suited for different environments. For this project, I downloaded the coordinates of a variety of different airfoils from the \href{https://m-selig.ae.illinois.edu/ads.html}{UIUC Applied Aeronautics Group} and then imported them to a julia program to calculate their \hyperlink{CL}{Lift Coefficient}, \hyperlink{CD}{Drag Coefficient}, \hyperlink{DP}{Pressure Drag Coefficient}, and \hyperlink{CM}{Moment Coefficient}. As can be seen from the included figures, these coefficients each changed with different angles of attack.\newline
 
-
+To solve this problem, I used the \href{https://docs.juliahub.com/Xfoil/Mlbda/0.4.0/}{Xfoil.jl} Julia wrapper. Xfoil can calculate an airfoil's lift, drag, moment, 
 
 Pairs of vortex rings can move together along a line, appearing to play leapfrog with each other. This phenomenon can occur when the circulation of one vortex ring pulls a second vortex ring forward, and once the second vortex ring has its own inertia moving it forward it begins to pull the first vortex ring. For this assignment, a set of 4 points marking the top and bottom of 2 vortex rings was modeled to leapfrog off of each other, and different graphs and GIFs were created of this behavior. The code used to solve this problem, as well as output data and graphs from the nine drafts of this project, can be found in the LeapFrog branch (\emph{JoeSpencer1-LeapFrog}) of this \href{https://github.com/JoeSpencer1/497R-Projects.git}{GitHub Repository}. \newline
 
