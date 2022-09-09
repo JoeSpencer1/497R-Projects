@@ -140,3 +140,7 @@ findcoefficientsnum(300, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure30.p
 const x8, y8 = createairfoil(2430, 21)
 
 findcoefficientslim(-2, 1, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure31.png", "Homemade NACA 2430, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2430, 21)
+
+findcoefficientsres(0.25, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure32.png", "Homemade NACA 2430, Re=1×10⁵")

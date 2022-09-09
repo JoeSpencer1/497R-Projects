@@ -92,6 +92,46 @@ function findcoefficientslim(lowest, highest, x, y, re, figuretitle, type)
     plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
 end
 
+function findcoefficientsres(res, x, y, re, figuretitle, type)
+    lowest = 0
+    highest = 1
+    lowerlim = false
+    upperlim = false
+    alpha = lowest:res:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)    
+    while lowerlim == false
+        lowest = lowest - 1
+        alpha = lowest:res:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
+        if converged[1] == 0
+            lowerlim = true
+            lowest = lowest + 1
+        end
+    end   
+    if lowest > 0
+        highest = lowest + 1
+    end 
+    while upperlim == false
+        highest = highest + 1
+        alpha = lowest:res:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
+        if converged[1 + highest - lowest] == 0
+            upperlim = true
+            highest = highest - 1
+        end
+    end
+    alpha = lowest:res:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
+    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
+end
+
+function findcoefficientsnomlimres(num, lowest, highest, res, x, y, re, figuretitle, type)
+    alpha = lowest:res:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=num, zeroinit=false, printdata=false)  
+    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
+    return converged
+end
+
 function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
     angle = lowest:1:highest
     plot(angle[:], c_l[:], title = type, label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
