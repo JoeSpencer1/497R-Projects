@@ -1,8 +1,8 @@
 #=---------------------------------------------------------------
-9/7/2022
-Airfoil_Analysis v5 Airfoil_Analysis.jl
-This version is capable of finding different resolutions of
-describing airfoils.
+9/9/2022
+Airfoil_Analysis v6 Airfoil_Analysis.jl
+This version was updated to allow the user to update the number
+of iterations if needed.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -132,3 +132,11 @@ findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure28.png", "Ho
 const x8, y8 = createairfoil(2430, 21)
 
 findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure29.png", "Homemade NACA 2430, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2430, 21)
+
+findcoefficientsnum(300, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure30.png", "Homemade NACA 2430, Re=1×10⁵")
+
+const x8, y8 = createairfoil(2430, 21)
+
+findcoefficientslim(-2, 1, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure31.png", "Homemade NACA 2430, Re=1×10⁵")

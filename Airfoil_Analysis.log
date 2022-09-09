@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  6 SEP 2022 13:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  8 SEP 2022 14:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -433,12 +433,17 @@ LaTeX Font Info:    Trying to load font information for U+esvect on input line
 (/usr/local/texlive/2022/texmf-dist/tex/latex/esvect/uesvect.fd
 File: uesvect.fd 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--41
+Underfull \hbox (badness 10000) in paragraph at lines 34--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
@@ -447,20 +452,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
-[1
 
-{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 50--51
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 
  []
 
+[1
 
+{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Underfull \hbox (badness 10000) in paragraph at lines 52--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
+Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
@@ -470,16 +475,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--76
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--83
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
-[2] [3] [4
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 83--85
+
+ []
+
+[3] [4
 
 ] [5] (./Airfoil_Analysis.aux)
 Package rerunfilecheck Info: File `Airfoil_Analysis.out' has not changed.
@@ -506,10 +516,10 @@ exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texl
 ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
 ve/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Airfoil_Analysis.pdf (5 pages, 151878 bytes).
+Output written on Airfoil_Analysis.pdf (5 pages, 152378 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 151 compressed objects within 2 object streams
+ 185 PDF objects out of 1000 (max. 8388607)
+ 152 compressed objects within 2 object streams
  31 named destinations out of 1000 (max. 500000)
  9 words of extra memory for PDF output out of 10000 (max. 10000000)
 

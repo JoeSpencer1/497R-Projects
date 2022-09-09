@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
-9/8/2022
+9/9/2022
 Airfoil_Analysis v5 Airfoil_Functions.jl
 This version is capable of finding different resolutions of
-describing airfoils.
+describing airfoils. I have also added a duplicate function for
+more or fewer iterations.
 ---------------------------------------------------------------=#
 function loadairfoil(filename)
     for i in 1:1
@@ -47,6 +48,45 @@ function findcoefficients(x, y, re, figuretitle, type)
             highest = highest - 1
         end
     end
+    alpha = lowest:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
+    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
+end
+
+function findcoefficientsnum(itr, x, y, re, figuretitle, type)
+    lowest = 0
+    highest = 1
+    lowerlim = false
+    upperlim = false
+    alpha = lowest:1:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=itr, zeroinit=false, printdata=false)    
+    while lowerlim == false
+        lowest = lowest - 1
+        alpha = lowest:1:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
+        if converged[1] == 0
+            lowerlim = true
+            lowest = lowest + 1
+        end
+    end   
+    if lowest > 0
+        highest = lowest + 1
+    end 
+    while upperlim == false
+        highest = highest + 1
+        alpha = lowest:1:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
+        if converged[1 + highest - lowest] == 0
+            upperlim = true
+            highest = highest - 1
+        end
+    end
+    alpha = lowest:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
+    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
+end
+
+function findcoefficientslim(lowest, highest, x, y, re, figuretitle, type)
     alpha = lowest:highest
     c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
     plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
