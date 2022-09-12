@@ -1,8 +1,10 @@
 #=---------------------------------------------------------------
-9/9/2022
+9/12/2022
 Airfoil_Analysis v6 Airfoil_Analysis.jl
-This version was updated to allow the user to update the number
-of iterations if needed.
+This updated version creates different types of graphs. I will
+probably delete previously created graphs and airfoil files, 
+since I have learned how to make them easily amd they mostly just
+clog up my airfoil analysis folder now.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -11,136 +13,126 @@ using Xfoil, Printf, Plots
 include("Airfoil_Functions.jl")
 
 #=---------------------------------------------------------------
-Get provoded geometry for an airfoil. These geometries are from 
-https://m-selig.ae.illinois.edu/ads/coord_database.html. In the
-second version of this code, I have used different airfoils from
-this website instead of simply multiplying y by scale factors as
-in version 1.
+For this version of the code, I will only create homemade 
+airfoils since that program seems to work very well. I tested
+this in previous versions by comparing with airfoils found at
+https://m-selig.ae.illinois.edu/ads/coord_database.html.
 ---------------------------------------------------------------=#
-const x1, y1 = loadairfoil("Documents/GitHub/497R-Projects/naca2410.txt")
 
 #=---------------------------------------------------------------
-This findcoefficients function can be used to experiment with 
-different Reynolds numbers. It tests different angles of attack
-and then outputs a plot.
+This first section compares airfoils with different first digits.
 ---------------------------------------------------------------=#
-findcoefficients(x1, y1, 1e5, "Documents/GitHub/497R-Projects/Figure1.png", "NACA 2410, Re=1×10⁵")
+const x1, y1 = createairfoil(1430, 21)
 
-findcoefficients(x1, y1, 5e4, "Documents/GitHub/497R-Projects/Figure2.png", "NACA 2410, Re=5×10⁴")
+const l1, d1, dp1, m1, c1 = limscoef(x1, y1, 1, numitr, 1e5, -10, 10)
 
-findcoefficients(x1, y1, 2e5, "Documents/GitHub/497R-Projects/Figure3.png", "NACA 2410, Re=2×10⁵")
+const x2, y2 = createairfoil(2430, 21)
+
+const l2, d2, dp2, m2, c2 = limscoef(x2, y2, 1, numitr, 1e5, -10, 10)
+
+const x3, y3 = createairfoil(3430, 21)
+
+const l3, d3, dp3, m3, c3 = limscoef(x3, y3, 1, numitr, 1e5, -10, 10)
+
+plot3coefficients(-10, 1, 10, l1, "NACA 1430", l2, "NACA 2430", l3, "NACA 3430", "Documents/GitHub/497R-Projects/Figure1.png", "Lift Coefficient with Varying Camber")
+
+plot3coefficients(-10, 1, 10, d1, "NACA 1430", d2, "NACA 2430", d3, "NACA 3430", "Documents/GitHub/497R-Projects/Figure2.png", "Drag Coefficient with Varying Camber")
+
+plot3coefficients(-10, 1, 10, m1, "NACA 1430", m2, "NACA 2430", m3, "NACA 3430", "Documents/GitHub/497R-Projects/Figure3.png", "Moment Coefficient with Varying Camber")
+
+const x4, y4 = createairfoil(1210, 21)
+
+const l4, d4, dp4, m4, c4 = limscoef(x4, y4, 1, numitr, 1e5, -10, 10)
+
+const x5, y5 = createairfoil(2210, 21)
+
+const l5, d5, dp5, m5, c5 = limscoef(x5, y5, 1, numitr, 1e5, -10, 10)
+
+const x6, y6 = createairfoil(3210, 21)
+
+const l6, d6, dp6, m6, c6 = limscoef(x6, y6, 1, numitr, 1e5, -10, 10)
+
+plot3coefficients(-10, 1, 10, l4, "NACA 1210", l5, "NACA 2210", l6, "NACA 3210", "Documents/GitHub/497R-Projects/Figure4.png", "Lift Coefficient with Varying Camber")
+
+plot3coefficients(-10, 1, 10, d4, "NACA 1210", d5, "NACA 2210", d6, "NACA 3210", "Documents/GitHub/497R-Projects/Figure5.png", "Drag Coefficient with Varying Camber")
+
+plot3coefficients(-10, 1, 10, m4, "NACA 1210", m5, "NACA 2210", m6, "NACA 3210", "Documents/GitHub/497R-Projects/Figure6.png", "Moment Coefficient with Varying Camber")
 
 #=---------------------------------------------------------------
-These next plots try a NACA 2411 (maximum wing thickness slightly
-less)
+This section explores the effects of different Reynolds numbers
+on airfoil performance.
 ---------------------------------------------------------------=#
-const x2, y2 = loadairfoil("Documents/GitHub/497R-Projects/naca2411.txt")
 
-findcoefficients(x2, y2, 1e5, "Documents/GitHub/497R-Projects/Figure4.png", "NACA 2411, Re=1×10⁵")
+const x7, y7 = createairfoil(2230, 21)
 
-findcoefficients(x2, y2, 5e4, "Documents/GitHub/497R-Projects/Figure5.png", "NACA 2411, Re=5×10⁴")
+const l7a, d7a, dp7a, m7a, c7a = limscoef(x7, y7, 1, numitr, 1e5, -15, 15)
 
-findcoefficients(x2, y2, 2e5, "Documents/GitHub/497R-Projects/Figure6.png", "NACA 2411, Re=2×10⁵")
+const l7b, d7b, dp7b, m7b, c7b = limscoef(x7, y7, 1, numitr, 2e5, -15, 15)
+
+const l7c, d7c, dp7c, m7c, c7c = limscoef(x7, y7, 1, numitr, 3e5, -15, 15)
+
+plot3coefficients(-15, 1, 15, l7a, "Re = 10,000", l7b, "Re = 20,000", l7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure7.png", "NACA 2230 Lift Coefficient")
+
+plot3coefficients(-15, 1, 15, d7a, "Re = 10,000", d7b, "Re = 20,000", d7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure8.png", "NACA 2230 Drag Coefficient")
+
+plot3coefficients(-15, 1, 15, m7a, "Re = 10,000", m7b, "Re = 20,000", m7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure9.png", "NACA 2230 Moment Coefficient")
+
+const x8, y8 = createairfoil(1120, 21)
+
+const l8a, d8a, dp8a, m8a, c7a = limscoef(x8, y8, 1, numitr, 1e5, -15, 15)
+
+const l8b, d8b, dp8b, m8b, c7b = limscoef(x8, y8, 1, numitr, 2e5, -15, 15)
+
+const l8c, d8c, dp8c, m8c, c7c = limscoef(x8, y8, 1, numitr, 3e5, -15, 15)
+
+plot3coefficients(-15, 1, 15, l8a, "Re = 10,000", l8b, "Re = 20,000", l8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure10.png", "NACA 1120 Lift Coefficient")
+
+plot3coefficients(-15, 1, 15, d8a, "Re = 10,000", d8b, "Re = 20,000", d8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure11.png", "NACA 1120 Drag Coefficient")
+
+plot3coefficients(-15, 1, 15, m8a, "Re = 10,000", m8b, "Re = 20,000", m8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure12.png", "NACA 1120 Moment Coefficient")
 
 #=---------------------------------------------------------------
-This an even thicker NACA 2418 airfoil.
+This section examines different airfoil thicknesses and cambers.
 ---------------------------------------------------------------=#
-const x3, y3 = loadairfoil("Documents/GitHub/497R-Projects/naca2418.txt")
 
-findcoefficients(x3, y3, 1e5, "Documents/GitHub/497R-Projects/Figure7.png", "NACA 2418, Re=1×10⁵")
+const x9, y9 = createairfoil(2230, 21)
 
-findcoefficients(x3, y3, 5e4, "Documents/GitHub/497R-Projects/Figure8.png", "NACA 2418, Re=5×10⁴")
+const l9, d9, dp9, m9, c9 = limscoef(x9, y9, 1, numitr, 1e5, -15, 15)
 
-findcoefficients(x3, y3, 2e5, "Documents/GitHub/497R-Projects/Figure9.png", "NACA 2418, Re=2×10⁵")
+const x10, y10 = createairfoil(2235, 21)
+
+const l10, d10, dp10, m10, c10 = limscoef(x10, y10, 1, numitr, 1e5, -15, 15)
+
+const x11, y11 = createairfoil(2240, 21)
+
+const l11, d11, dp11, m11, c11 = limscoef(x11, y11, 1, numitr, 1e5, -15, 15)
+
+plot3coefficients(-15, 1, 15, l9, "NACA 2230", l10, "NACA 2235", l11, "NACA 2240", "Documents/GitHub/497R-Projects/Figure13.png", "Lift Coefficients With Varying Thickness")
+
+plot3coefficients(-15, 1, 15, d9, "NACA 2230", d10, "NACA 2235", d11, "NACA 2240", "Documents/GitHub/497R-Projects/Figure14.png", "Drag Coefficients with Varying Thickness")
+
+plot3coefficients(-15, 1, 15, m9, "NACA 2230", m10, "NACA 2235", m11, "NACA 2240", "Documents/GitHub/497R-Projects/Figure15.png", "Moment Coefficients with Varying Thickness")
+
+const x12, y12 = createairfoil(2120, 21)
+
+const l12, d12, dp12, m12, c12 = limscoef(x12, y12, 1, numitr, 1e5, -15, 15)
+
+const x13, y13 = createairfoil(2220, 21)
+
+const l13, d13, dp13, m13, c13 = limscoef(x13, y13, 1, numitr, 1e5, -15, 15)
+
+const x14, y14 = createairfoil(2320, 21)
+
+const l14, d14, dp14, m14, c14 = limscoef(x14, y14, 1, numitr, 1e5, -15, 15)
+
+plot3coefficients(-15, 1, 15, l9, "NACA 2120", l10, "NACA 2220", l11, "NACA 2320", "Documents/GitHub/497R-Projects/Figure16.png", "Lift Coefficients With Varying Camber Distance")
+
+plot3coefficients(-15, 1, 15, d9, "NACA 2120", d10, "NACA 2220", d11, "NACA 2320", "Documents/GitHub/497R-Projects/Figure17.png", "Drag Coefficients with Varying Camber Distance")
+
+plot3coefficients(-15, 1, 15, m9, "NACA 2120", m10, "NACA 2220", m11, "NACA 2320", "Documents/GitHub/497R-Projects/Figure18.png", "Moment Coefficients with Varying Camber Distance")
 
 #=---------------------------------------------------------------
-The NACA 1408 airfoil has a thinner camber.
+I also want to examine different angle resolutions, number of
+points found in the aifroil, and numbers of iterations before
+stopping the xfoil program.
 ---------------------------------------------------------------=#
-const x4, y4 = loadairfoil("Documents/GitHub/497R-Projects/naca1408.txt")
-
-findcoefficients(x4, y4, 1e5, "Documents/GitHub/497R-Projects/Figure10.png", "NACA 1408, Re=1×10⁵")
-
-findcoefficients(x4, y4, 5e4, "Documents/GitHub/497R-Projects/Figure11.png", "NACA 1408, Re=5×10⁴")
-
-findcoefficients(x4, y4, 2e5, "Documents/GitHub/497R-Projects/Figure12.png", "NACA 1408, Re=2×10⁵")
-
-#=---------------------------------------------------------------
-The NACA 4418 airfoil has a thicker camber.
----------------------------------------------------------------=#
-const x5, y5 = loadairfoil("Documents/GitHub/497R-Projects/naca4418.txt")
-
-findcoefficients(x5, y5, 1e5, "Documents/GitHub/497R-Projects/Figure13.png", "NACA 4418, Re=1×10⁵")
-
-findcoefficients(x5, y5, 5e4, "Documents/GitHub/497R-Projects/Figure14.png", "NACA 4418, Re=5×10⁴")
-
-findcoefficients(x5, y5, 2e5, "Documents/GitHub/497R-Projects/Figure15.png", "NACA 4418, Re=2×10⁵")
-
-#=---------------------------------------------------------------
-The NACA 4412 airfoil has a thicker camber.
----------------------------------------------------------------=#
-const x6, y6 = loadairfoil("Documents/GitHub/497R-Projects/naca4412.txt")
-
-findcoefficients(x6, y6, 1e5, "Documents/GitHub/497R-Projects/Figure16.png", "NACA 4412, Re=1×10⁵")
-
-findcoefficients(x6, y6, 5e4, "Documents/GitHub/497R-Projects/Figure17.png", "NACA 4412, Re=5×10⁴")
-
-findcoefficients(x6, y6, 2e5, "Documents/GitHub/497R-Projects/Figure18.png", "NACA 4412, Re=2×10⁵")
-
-#=---------------------------------------------------------------
-The NACA 4418 airfoil has a thicker camber.
----------------------------------------------------------------=#
-const x7, y7 = loadairfoil("Documents/GitHub/497R-Projects/naca4421.txt")
-
-findcoefficients(x7, y7, 1e5, "Documents/GitHub/497R-Projects/Figure19.png", "NACA 4421, Re=1×10⁵")
-
-findcoefficients(x7, y7, 5e4, "Documents/GitHub/497R-Projects/Figure20.png", "NACA 4421, Re=5×10⁴")
-
-findcoefficients(x7, y7, 2e5, "Documents/GitHub/497R-Projects/Figure21.png", "NACA 4421, Re=2×10⁵")
-
-#=---------------------------------------------------------------
-This function tries creating an airfoil from scratch.
----------------------------------------------------------------=#
-
-const x8, y8 = createairfoil(2410, 20)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure22.png", "Homemade NACA 2410, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2410, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure23.png", "Homemade NACA 2410, Re=1×10⁵")
-
-const x8, y8 = createairfoil(1410, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure24.png", "Homemade NACA 1410, Re=1×10⁵")
-
-const x8, y8 = createairfoil(3410, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure25.png", "Homemade NACA 3410, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2510, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure26.png", "Homemade NACA 2510, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2610, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure27.png", "Homemade NACA 2610, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2420, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure28.png", "Homemade NACA 2420, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2430, 21)
-
-findcoefficients(x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure29.png", "Homemade NACA 2430, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2430, 21)
-
-findcoefficientsnum(300, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure30.png", "Homemade NACA 2430, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2430, 21)
-
-findcoefficientslim(-2, 1, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure31.png", "Homemade NACA 2430, Re=1×10⁵")
-
-const x8, y8 = createairfoil(2430, 21)
-
-findcoefficientsres(0.25, x8, y8, 1e5, "Documents/GitHub/497R-Projects/Figure32.png", "Homemade NACA 2430, Re=1×10⁵")

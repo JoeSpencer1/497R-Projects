@@ -1,11 +1,13 @@
 #=---------------------------------------------------------------
-9/9/2022
-Airfoil_Analysis v5 Airfoil_Functions.jl
-This version is capable of finding different resolutions of
-describing airfoils. I have also added a duplicate function for
-more or fewer iterations.
+9/12/2022
+Airfoil_Analysis v6 Airfoil_Functions.jl
+I have consolidated the functions in this version of airfoil
+functions. I still have a function to load an airfoil, but I
+will only use homemade airfoils for Airfoil version 6.
 ---------------------------------------------------------------=#
-function loadairfoil(filename)
+numitr = 100
+
+function load(filename)
     for i in 1:1
         x = Float64[]
         y = Float64[]
@@ -20,128 +22,7 @@ function loadairfoil(filename)
     end
 end
 
-function findcoefficients(x, y, re, figuretitle, type)
-    lowest = 0
-    highest = 1
-    lowerlim = false
-    upperlim = false
-    alpha = lowest:1:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)    
-    while lowerlim == false
-        lowest = lowest - 1
-        alpha = lowest:1:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1] == 0
-            lowerlim = true
-            lowest = lowest + 1
-        end
-    end   
-    if lowest > 0
-        highest = lowest + 1
-    end 
-    while upperlim == false
-        highest = highest + 1
-        alpha = lowest:1:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1 + highest - lowest] == 0
-            upperlim = true
-            highest = highest - 1
-        end
-    end
-    alpha = lowest:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-end
-
-function findcoefficientsnum(itr, x, y, re, figuretitle, type)
-    lowest = 0
-    highest = 1
-    lowerlim = false
-    upperlim = false
-    alpha = lowest:1:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=itr, zeroinit=false, printdata=false)    
-    while lowerlim == false
-        lowest = lowest - 1
-        alpha = lowest:1:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1] == 0
-            lowerlim = true
-            lowest = lowest + 1
-        end
-    end   
-    if lowest > 0
-        highest = lowest + 1
-    end 
-    while upperlim == false
-        highest = highest + 1
-        alpha = lowest:1:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1 + highest - lowest] == 0
-            upperlim = true
-            highest = highest - 1
-        end
-    end
-    alpha = lowest:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-end
-
-function findcoefficientslim(lowest, highest, x, y, re, figuretitle, type)
-    alpha = lowest:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-end
-
-function findcoefficientsres(res, x, y, re, figuretitle, type)
-    lowest = 0
-    highest = 1
-    lowerlim = false
-    upperlim = false
-    alpha = lowest:res:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)    
-    while lowerlim == false
-        lowest = lowest - 1
-        alpha = lowest:res:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1] == 0
-            lowerlim = true
-            lowest = lowest + 1
-        end
-    end   
-    if lowest > 0
-        highest = lowest + 1
-    end 
-    while upperlim == false
-        highest = highest + 1
-        alpha = lowest:res:highest
-        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)  
-        if converged[1 + highest - lowest] == 0
-            upperlim = true
-            highest = highest - 1
-        end
-    end
-    alpha = lowest:res:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=100, zeroinit=false, printdata=false)
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-end
-
-function findcoefficientsnomlimres(num, lowest, highest, res, x, y, re, figuretitle, type)
-    alpha = lowest:res:highest
-    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=num, zeroinit=false, printdata=false)  
-    plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-    return converged
-end
-
-function plotcoefficients(lowest, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-    angle = lowest:1:highest
-    plot(angle[:], c_l[:], title = type, label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
-    plot!(angle[:], c_d[:], label = "Cd")
-    plot!(angle[:], c_dp[:], label = "Cdp")
-    plot!(angle[:], c_m[:], label = "Cm")
-    savefig(figuretitle)
-end
-
-function createairfoil(mpth, n)
+function create(mpth, n)
     nd = n * 1.0
     n2 = n * 2 + 1
     x = Array{Float64}(undef, n2, 1)
@@ -172,11 +53,11 @@ function createairfoil(mpth, n)
         end
         
     end
-    writetofile(x, y, m, p, th)
+    writefile(x, y, m, p, th)
     return([x, y])
 end
 
-function writetofile(x, y, m, p, th)
+function writefile(x, y, m, p, th)
     num0 = m * 100000 + p * 1000 + th * 100
     num = trunc(Int64, num0)
     filename = string("Documents/GitHub/497R-Projects/naca" , string(num) , "new.txt")
@@ -188,4 +69,73 @@ function writetofile(x, y, m, p, th)
         write(printfile, "\n")
     end
     close(printfile)
+end
+
+function range(x, y, re, increment, iterations)
+    lowest = 0
+    highest = lowest + increment
+    lowerlim = false
+    upperlim = false
+    alpha = lowest:increment:highest
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false) 
+    while lowerlim == false
+        lowest = lowest - increment
+        alpha = lowest:increment:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)  
+        if converged[1] == 0
+            lowerlim = true
+            lowest = lowest + increment
+        end
+    end   
+    if lowest > 0
+        highest = lowest + increment
+    end 
+    while upperlim == false
+        highest = highest + increment
+        alpha = lowest:increment:highest
+        c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)  
+        if converged[1 + highest - lowest] == 0
+            upperlim = true
+            highest = highest - increment
+        end
+    end
+    alpha = lowert:increment:highest
+    return alpha
+end
+
+function convergecoef(x, y, increment, iterations, re)
+    alpha = range(x, y, re, increment, numitr)
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)
+    return lowest, highest, c_l, c_d, c_dp, c_m, converged
+end
+
+function limscoef(x, y, increment, iterations, re, min, max)
+    alpha = min:increment:max
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)
+    return c_l, c_d, c_dp, c_m, converged
+end
+
+function plotcoefficients(lowest, res, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
+    angle = lowest:res:highest
+    plot(angle[:], c_l[:], title = type, label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
+    plot!(angle[:], c_d[:], label = "Cd")
+    plot!(angle[:], c_dp[:], label = "Cdp")
+    plot!(angle[:], c_m[:], label = "Cm")
+    savefig(figuretitle)
+end
+
+function plot2coefficients(lowest, highest, a, la, resa, b, lb, resb , figuretitle, type)
+    anglea = lowest:resa:highest
+    angleb = lowest:resb:highest
+    plot(anglea[:], a[:], title = type, label = la, xlabel = "Angle of Attack, degrees", ylabel = "Coefficient")
+    plot!(angleb[:], b[:], label = lb)
+    savefig(figuretitle)
+end
+
+function plot3coefficients(lowest, res, highest, a, la, b, lb, c, lc, figuretitle, type)
+    angle = lowest:res:highest
+    plot(angle[:], a[:], title = type, label = la, xlabel = "Angle of Attack, degrees", ylabel = "Coefficient")
+    plot!(angle[:], b[:], label = lb)
+    plot!(angle[:], c[:], label = lc)
+    savefig(figuretitle)
 end
