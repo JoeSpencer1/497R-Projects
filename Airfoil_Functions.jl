@@ -5,7 +5,7 @@ I have consolidated the functions in this version of airfoil
 functions. I still have a function to load an airfoil, but I
 will only use homemade airfoils for Airfoil version 6.
 ---------------------------------------------------------------=#
-numitr = 100
+numitr = 1000
 
 function load(filename)
     for i in 1:1

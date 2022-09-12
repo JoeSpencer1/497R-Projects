@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  12 SEP 2022 10:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  12 SEP 2022 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -500,26 +500,35 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--95
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--99
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 100--102
+Underfull \hbox (badness 10000) in paragraph at lines 102--104
 
  []
 
-[3] [4
+[3] [4] [5
 
-] [5] (./Airfoil_Analysis.aux)
-Package rerunfilecheck Info: File `Airfoil_Analysis.out' has not changed.
-(rerunfilecheck)             Checksum: EC9B13D1173F847BC67BAB2E25FEDC33;96.
+] [6] (./Airfoil_Analysis.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `Airfoil_Analysis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Airfoil_Analysis.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  EC9B13D1173F847BC67BAB2E25FEDC33;96.
  ) 
 Here is how much of TeX's memory you used:
- 12053 strings out of 478268
- 197289 string characters out of 5846347
- 510147 words of memory out of 5000000
- 30086 multiletter control sequences out of 15000+600000
+ 12052 strings out of 478268
+ 197282 string characters out of 5846347
+ 509699 words of memory out of 5000000
+ 30084 multiletter control sequences out of 15000+600000
  478006 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,11n,63p,1030b,412s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -544,10 +553,10 @@ live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
 e/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
 /2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Airfoil_Analysis.pdf (5 pages, 158768 bytes).
+Output written on Airfoil_Analysis.pdf (6 pages, 159371 bytes).
 PDF statistics:
- 214 PDF objects out of 1000 (max. 8388607)
- 181 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 9 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 216 PDF objects out of 1000 (max. 8388607)
+ 182 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
