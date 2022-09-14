@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  12 SEP 2022 16:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  13 SEP 2022 23:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Airfoil_Analysis.tex
+**Aifroil_Analysis.tex
 (./Airfoil_Analysis.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24>
@@ -311,45 +311,76 @@ File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 Package: esvect 
 \symesvector=\mathgroup6
 )
+(/usr/local/texlive/2022/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2022/01/07 v1.5 Sub-captions (AR)
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2022/03/01 v3.6b Customizing captions (AR)
+
+(/usr/local/texlive/2022/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2022/03/17 v2.3b caption3 kernel (AR)
+\caption@tempdima=\dimen162
+\captionmargin=\dimen163
+\caption@leftmargin=\dimen164
+\caption@rightmargin=\dimen165
+\caption@width=\dimen166
+\caption@indent=\dimen167
+\caption@parindent=\dimen168
+\caption@hangindent=\dimen169
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count284
+\c@continuedfloat=\count285
+Package caption Info: hyperref package is loaded.
+)
+\c@subfigure=\count286
+\c@subtable=\count287
+)
+(/usr/local/texlive/2022/texmf-dist/tex/latex/sttools/stfloats.sty
+Package: stfloats 2017/03/27 v3.3 Improve float mechanism and baselineskip sett
+ings
+\@dblbotnum=\count288
+\c@dblbotnumber=\count289
+)
 (/usr/local/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count284
+\l__color_backend_stack_int=\count290
 \l__pdf_internal_box=\box52
 )
 (./Airfoil_Analysis.aux)
 \openout1 = `Airfoil_Analysis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
-LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
 
 (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count285
-\scratchdimen=\dimen162
+\scratchcounter=\count291
+\scratchdimen=\dimen170
 \scratchbox=\box53
-\nofMPsegments=\count286
-\nofMParguments=\count287
+\nofMPsegments=\count292
+\nofMParguments=\count293
 \everyMPshowfont=\toks23
-\MPscratchCnt=\count288
-\MPscratchDim=\dimen163
-\MPnumerator=\count289
-\makeMPintoPDFobject=\count290
+\MPscratchCnt=\count294
+\MPscratchDim=\dimen171
+\MPnumerator=\count295
+\makeMPintoPDFobject=\count296
 \everyMPtoPDFconversion=\toks24
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -360,7 +391,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 14.
+Package hyperref Info: Link coloring ON on input line 16.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -372,11 +403,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count291
+\c@section@level=\count297
 )
-LaTeX Info: Redefining \ref on input line 14.
-LaTeX Info: Redefining \pageref on input line 14.
-LaTeX Info: Redefining \nameref on input line 14.
+LaTeX Info: Redefining \ref on input line 16.
+LaTeX Info: Redefining \pageref on input line 16.
+LaTeX Info: Redefining \nameref on input line 16.
  (./Airfoil_Analysis.out) (./Airfoil_Analysis.out)
 \@outlinefile=\write3
 \openout3 = `Airfoil_Analysis.out'.
@@ -416,28 +447,25 @@ LaTeX Info: Redefining \nameref on input line 14.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 20.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 22.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 20.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 22.
 
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for U+esvect on input line 
-20.
+22.
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/esvect/uesvect.fd
 File: uesvect.fd 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 32--33
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 34--35
 
  []
@@ -465,53 +493,159 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--43
 [1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 80--81
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+<Figure1.png, id=85, 602.25pt x 401.5pt>
+File: Figure1.png Graphic file (type png)
+<use Figure1.png>
+Package pdftex.def Info: Figure1.png  used on input line 87.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 7722) in paragraph at lines 88--88
+[]\OT1/cmr/m/n/10 Figure 1: |Lift Co-ef-fi-cient
+ []
+
+<Figure2.png, id=86, 602.25pt x 401.5pt>
+File: Figure2.png Graphic file (type png)
+<use Figure2.png>
+Package pdftex.def Info: Figure2.png  used on input line 91.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 4001) in paragraph at lines 92--92
+[]\OT1/cmr/m/n/10 Figure 2: |Drag Co-ef-fi-cient
+ []
+
+<Figure3.png, id=87, 602.25pt x 401.5pt>
+File: Figure3.png Graphic file (type png)
+<use Figure3.png>
+Package pdftex.def Info: Figure3.png  used on input line 95.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+<Figure4.png, id=113, 602.25pt x 401.5pt>
+File: Figure4.png Graphic file (type png)
+<use Figure4.png>
+Package pdftex.def Info: Figure4.png  used on input line 104.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 7722) in paragraph at lines 105--105
+[]\OT1/cmr/m/n/10 Figure 4: |Lift Co-ef-fi-cient
+ []
+
+<Figure5.png, id=114, 602.25pt x 401.5pt>
+File: Figure5.png Graphic file (type png)
+<use Figure5.png>
+Package pdftex.def Info: Figure5.png  used on input line 108.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 4001) in paragraph at lines 109--109
+[]\OT1/cmr/m/n/10 Figure 5: |Drag Co-ef-fi-cient
+ []
+
+<Figure6.png, id=115, 602.25pt x 401.5pt>
+File: Figure6.png Graphic file (type png)
+<use Figure6.png>
+Package pdftex.def Info: Figure6.png  used on input line 112.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
 
  []
 
+<Figure7.png, id=116, 602.25pt x 401.5pt>
+File: Figure7.png Graphic file (type png)
+<use Figure7.png>
+Package pdftex.def Info: Figure7.png  used on input line 129.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--89
+Underfull \hbox (badness 1127) in paragraph at lines 130--130
+\OT1/cmr/m/n/10 ef-fi-cients Var-ied by Reynolds
+ []
+
+<Figure8.png, id=117, 602.25pt x 401.5pt>
+File: Figure8.png Graphic file (type png)
+<use Figure8.png>
+Package pdftex.def Info: Figure8.png  used on input line 133.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure9.png, id=118, 602.25pt x 401.5pt>
+File: Figure9.png Graphic file (type png)
+<use Figure9.png>
+Package pdftex.def Info: Figure9.png  used on input line 137.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+LaTeX Warning: Reference `Re' on page 3 undefined on input line 142.
+
+[3 <./Figure1.png> <./Figure2.png> <./Figure3.png> <./Figure4.png> <./Figure5.p
+ng> <./Figure6.png> <./Figure7.png> <./Figure8.png> <./Figure9.png>]
+<Figure10.png, id=131, 602.25pt x 401.5pt>
+File: Figure10.png Graphic file (type png)
+<use Figure10.png>
+Package pdftex.def Info: Figure10.png  used on input line 146.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure11.png, id=132, 602.25pt x 401.5pt>
+File: Figure11.png Graphic file (type png)
+<use Figure11.png>
+Package pdftex.def Info: Figure11.png  used on input line 150.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure12.png, id=133, 602.25pt x 401.5pt>
+File: Figure12.png Graphic file (type png)
+<use Figure12.png>
+Package pdftex.def Info: Figure12.png  used on input line 154.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure13.png, id=136, 602.25pt x 401.5pt>
+File: Figure13.png Graphic file (type png)
+<use Figure13.png>
+Package pdftex.def Info: Figure13.png  used on input line 163.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure14.png, id=137, 602.25pt x 401.5pt>
+File: Figure14.png Graphic file (type png)
+<use Figure14.png>
+Package pdftex.def Info: Figure14.png  used on input line 167.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure15.png, id=138, 602.25pt x 401.5pt>
+File: Figure15.png Graphic file (type png)
+<use Figure15.png>
+Package pdftex.def Info: Figure15.png  used on input line 171.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure16.png, id=145, 602.25pt x 401.5pt>
+File: Figure16.png Graphic file (type png)
+<use Figure16.png>
+Package pdftex.def Info: Figure16.png  used on input line 180.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure17.png, id=146, 602.25pt x 401.5pt>
+File: Figure17.png Graphic file (type png)
+<use Figure17.png>
+Package pdftex.def Info: Figure17.png  used on input line 184.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+<Figure18.png, id=147, 602.25pt x 401.5pt>
+File: Figure18.png Graphic file (type png)
+<use Figure18.png>
+Package pdftex.def Info: Figure18.png  used on input line 188.
+(pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
+[4 <./Figure10.png> <./Figure11.png> <./Figure12.png> <./Figure13.png> <./Figur
+e14.png> <./Figure15.png> <./Figure16.png> <./Figure17.png> <./Figure18.png>]
+[5] [6
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
+] [7] (./Airfoil_Analysis.aux)
 
- []
+LaTeX Warning: There were undefined references.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 94--95
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--104
-
- []
-
-[3] [4] [5
-
-] [6] (./Airfoil_Analysis.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -525,38 +659,35 @@ Package rerunfilecheck Info: Checksums for `Airfoil_Analysis.out':
 (rerunfilecheck)             After:  EC9B13D1173F847BC67BAB2E25FEDC33;96.
  ) 
 Here is how much of TeX's memory you used:
- 12052 strings out of 478268
- 197282 string characters out of 5846347
- 509699 words of memory out of 5000000
- 30084 multiletter control sequences out of 15000+600000
- 478006 words of font info for 66 fonts, out of 8000000 for 9000
+ 13651 strings out of 478268
+ 227939 string characters out of 5846347
+ 535862 words of memory out of 5000000
+ 31642 multiletter control sequences out of 15000+600000
+ 478365 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,11n,63p,1030b,412s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67i,8n,77p,1021b,412s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{PD} has been referenced but does not exist, replace
 d by a fixed one
 
-
-pdfTeX warning (dest): name{PFC} has been referenced but does not exist, replac
-ed by a fixed one
-
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<
 /usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
 usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></u
-sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
-local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
-cal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
-l/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/
-texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/tex
-live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
-ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
-e/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
-/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Airfoil_Analysis.pdf (6 pages, 159371 bytes).
+sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></
+usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
+al/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local
+/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
+xlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
+ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
+e/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on Airfoil_Analysis.pdf (7 pages, 684376 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 182 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 280 PDF objects out of 1000 (max. 8388607)
+ 224 compressed objects within 3 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

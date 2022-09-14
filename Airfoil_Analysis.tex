@@ -9,13 +9,15 @@
 \usepackage{amsmath} 
 \usepackage{esvect}
 \usepackage{hyperref}
-
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{stfloats}
 
 \begin{document}
 
 \author{Joe Spencer}
 \title{Airfoil Analysis}
-\date{September 6, 2022}
+\date{September 13, 2022}
 \maketitle
 
 \subsubsection*{Methods}
@@ -35,11 +37,11 @@ This project sought to identify how adjusting an airfoil's \hyperlink{c}{Chord},
 
 I used the \href{https://docs.juliahub.com/Xfoil/Mlbda/0.4.0/}{Xfoil.jl} Julia wrapper to calculate the coefficients of lift, drag, and . of the Xfoil potential flow software. Xfoil is a potential-flow code that can calculate an airfoil's lift, drag, pressure drag, moment coefficients. A \hyperlink{PFC}{Potential-flow Code} divides the wing into many small plates and calculates the lift, drag, pressure drag, and moment coefficients for each of a finite number of points along the length of the wing. This program is repeated with different starting estimates for each coefficient until it either converges or is run a set number of times. The user can adjust the limit of how many times the code can run before it gives up.\newline
 
-The \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Analysis.jl}{julia file} files created for this project and its accompanying \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file} could control separately for different input options. I included one function that used a default angle step size of 1 degree, with 100 iterations. It found the lowest and highest angles for which a solution converged, then plotted all four solutions overlaid on each other between these angles. A second function allowed the user to adjust the number of iterations, and a third function allowed the user to manually set the maximum and minimum angles of attack.\newline
+The \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Analysis.jl}{julia file} created for this project and its accompanying \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file} could control separately for different input options. I included one function that used a default angle step size of 1 degree, with 100 iterations. It found the lowest and highest angles for which a solution converged, then plotted all four solutions overlaid on each other between these angles. A second function allowed the user to adjust the number of iterations, and a third function allowed the user to manually set the maximum and minimum angles of attack.\newline
 
 For this code, it also became necessary to create similar airfoils, only adjusted slightly for the size and position of their \hyperlink{Camber}{Camber}, and the maximum thickness as a percentage of the \hyperlink{c}{Chord}. To do this, I created a function in the previously mentioned \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file} to calculate the shape of an airfoil based on its \hyperlink{NACA}{NACA Airfoil} (National Advisory Committee for Aeronautics) number. Although there are also other ways to describe an airfoil's profile, this seemed like a clear and efficient method.\newline
 
-Each of the digits in a \hyperlink{NACA}{NACA Airfoil} has its own purpose in defining an airfoil. The first digit is the ratio of the maximum \hyperlink{Camber}{Camber} to the \hyperlink{c}{Chord}, multiplied by ten. The second digit is the distance of the location of maximum camber from the leading edge of the wing, in tenths of the entire length of the wing. The third and fourth digit define the maxim wing thickness as a percentage of the Chord. The profiles of both the top and bottom of the wing can be described by Equations 2 and 3. In these Equations, $x$ represents the distance from the front of the wing, $y_{t}$ represents the wing thickness at $x$, $y_{c}$ represents the location of the wing's center at $x$, $t$ represents the maximum thickness as a decimal percentage of the \hyperlink{c}{chord}, $m$ denotes the wing's maximum camber as a percent of the wing's cord length, and $p$ is the distance of the maximum camber from the front of the wing, in tenths. \newline
+Each of the digits in a \hyperlink{NACA}{NACA Airfoil} has its own purpose in defining an airfoil. The first digit is the ratio of the maximum \hyperlink{Camber}{Camber} to the \hyperlink{c}{Chord}, multiplied by ten. The second digit is the distance of the location of maximum camber from the leading edge of the wing, in tenths of the entire length of the wing. The third and fourth digit define the maxim wing thickness as a percentage of the Chord. The profiles of both the top and bottom of the wing can be described by Equations 2 and 3. In these Equations, $x$ represents the distance from the front of the wing, $y_{t}$ represents the wing thickness at $x$, $y_{c}$ represents the location of the wing's center at $x$, $t$ represents the maximum thickness as a decimal percentage of the \hyperlink{c}{chord}, $m$ denotes the wing's maximum camber as a percent of the wing's cord length, and $p$ is the distance of the maximum camber from the front of the wing, in tenths.
 
 \begin{equation} \label{eq:2}
 \begin{aligned}
@@ -58,49 +60,141 @@ The code to create an airfoil from its \hyperlink{NACA}{4-digit NACA Number} was
 
 \subsubsection*{Results and Discussion}
 
-\begin{table}
+This research found that adjusting the Reynolds number, angle of attack, thickness, and camber amount and position all affect the forces experienced by an airfoil. These forces are described by Equation \ref{eq:1} on the first page. Figure \ref{fig:1} and Figure \ref{fig:4} show that airfoils with a larger \hyperlink{c}{Camber} experience more lift force. The airfoils shown in Figure \ref{fig:2} and Figure \ref{fig:5} experience the same increase in \hyperlink{CD}{Drag Coefficient} as they increase their Camber-to-Cord ratio. Both coefficients increased with increasing angle of attack. On the range from -8$^{\circ}$ to 8$^{\circ}$ shown in the graphs, the Drag Coefficient increased as angle of attack became either more positive or more negative.\newline
+
+Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers used in this lab. Clicking on the \color{blue}hyperlink number \color{black} below each NACA number will jump to the plot of its lift, drag, or moment coefficients compared to angle of attack. \newline
+
+\begin{table}[bp]
 	\centering
-	\title{Table 1: Initial Position, Velocity, and Circulation of Each Vortex \newline}
-	\title{\emph{A link to a GIF for each vortex is in its far left column.}}
-	\begin{tabular}{ | c | c | c | c | c | c | c | c |}
+	\title{Table 1: Airfoils Modeled by Program \newline}
+	\title{\emph{A link to the graph for each airfoil is in its bottom row.}} \label{table:1}
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
 		\hline
-		GIF & $f_m$ (Hz) & 1$^{st}$ [$x_0$,$y_0$,$z_0$] & 1$^{st}$ [$\dot{x_0}$,$\dot{y_0}$,$\dot{z_0}$] & $\Gamma_1$ & 2$^{nd}$ [$x_0$,$y_0$,$z_0$] & 2$^{nd}$ [$\dot{x_0}$,$\dot{y_0}$,$\dot{z_0}$] & $\Gamma_2$ \\ \hline
-		\href{https://imgur.com/U4cND6X}{1} & 10 & [1.0,0,1.0] & [0,0,0] & 1.0 & [-1.0,0,1.0] & [0,0,0] & 1.0 \\ \hline
-		\href{https://imgur.com/lviamWB}{2} & 10 & [2.0,0,2.0] & [0,0,0] & 1.0 & [-2.0,0,2.0] & [0,0,0] & 1.0 \\ \hline
-		\href{https://imgur.com/6jT1mT0}{3} & 100 & [1.0,0,1.0] & [0,0,0] & 1.0 & [-1.0,0,1.0] & [0,0,0] & 1.0 \\ \hline
-		\href{https://imgur.com/PtazOFB}{4} & 1 & [1.0,0,1.0] & [0,0,0] & 1.0 & [-1.0,0,1.0] & [0,0,0] & 1.0 \\ \hline	
-		\href{https://imgur.com/wSpWEQV}{5} & 10 & [1.0,0,1.0] & [0,0,0] & 1.0 & [-1.0,0,1.0] & [0,0,0] & -1.0 \\ \hline
-		\href{https://imgur.com/aZzMnJV}{6} & 10 & [1.0,0,1.0] & [0,0,0] & 2.0 & [-1.0,0,1.0] & [0,0,0] & 1.0 \\ \hline
-		\href{https://imgur.com/nKVGuJ9}{7} & 10 & [0.75,0,0.75] & [0.2,0,0] & 2.5 & [-0.8,0,0.6] & [0,0,0] & 2.5 \\ \hline
-		\href{https://imgur.com/UZyBsYO}{8} & 10 & [1.0,0,1.0] & [0.006,0,0.008] & 1.0 & [-1.0,0,1.0] & [0,0,0] & 1.0 \\ \hline
-		\href{https://imgur.com/tctJPyS}{9} & 10 & [1.0,0,1.0] & [0.2,0,0.1] & 3.0 & [-1.0,0,1.0] & [0.2,0,0.1] & 3.0 \\ \hline
+		 \textbf{Profile} & 1430 & 2430 & 3430 & 1210 & 2210 & 3210 & 2230 & 2230 & 2230 \\ \hline
+		 \textbf{\emph{Re}} & 10,000 & 10,000 & 10,000 & 10,000 & 10,000 & 10,000 & 10,000 & 20,000 & 30,000 \\ 
+		 \textbf{Link} & \ref{fig:1} & \ref{fig:2} & \ref{fig:3} & \ref{fig:4} & \ref{fig:5} & \ref{fig:6} & \ref{fig:7} & \ref{fig:8} & \ref{fig:9} \\ \hline \hline
+		 \newline
+		 \textbf{Profile} & 1120 & 1120 & 1120 & 2230 & 2235 & 2240 & 2120 & 2220 & 2320 \\ \hline
+		 \textbf{\emph{Re}} & 10,000 & 20,000 & 30,000 & 10,000 & 10,000 & 10,000 & 10,000 & 10,000 & 10,000 \\ 
+		 \textbf{Link} & \ref{fig:10} & \ref{fig:11} & \ref{fig:12} & \ref{fig:13} & \ref{fig:14} & \ref{fig:15} & \ref{fig:16} & \ref{fig:17} & \ref{fig:18} \\ \hline
 	\end{tabular}
 \end{table}
 
-Pairs of vortex rings can move together along a line, appearing to play leapfrog with each other. This phenomenon can occur when the circulation of one vortex ring pulls a second vortex ring forward, and once the second vortex ring has its own inertia moving it forward it begins to pull the first vortex ring. For this assignment, a set of 4 points marking the top and bottom of 2 vortex rings was modeled to leapfrog off of each other, and different graphs and GIFs were created of this behavior. The code used to solve this problem, as well as output data and graphs from the nine drafts of this project, can be found in the LeapFrog branch (\emph{JoeSpencer1-LeapFrog}) of this \href{https://github.com/JoeSpencer1/497R-Projects.git}{GitHub Repository}. \newline
+One difficulty that was encountered during the analysis of these airfoils was making smooth graphs for them over their entire angle range. This was difficult because the airfoils compared were sometimes significantly different. For example, Airfoils 1 and 2 had very close \hyperlink{NACA}{NACA Numbers}, with the only difference between them being their first digit. This 1-digit difference meant, though, that Airfoil 2 had twice as much \hyperlink{c}{Camber}. This meant that although their behaviors could be plotted on the same plane in Figures \ref{fig:1}, \ref{fig:2}, and \ref{fig:3}, they were very different. This made it difficult to plot converging solutions for the different coefficients of these wing types on the same plane.\newline
 
-\hyperlink{CD}{Coefficient of Drag} \hyperlink{CL}{Coefficient of Lift} \hyperlink{CM}{Coefficient of Moment} \hyperlink{alpha}{$\alpha$} \hyperlink{AP}{Airfoil Polar} \hyperlink{LC}{Lift Coefficient} \hyperlink{ST}{Stall} \hyperlink{c}{Chord} \hyperlink{Camber}{Camber} \hyperlink{Th}{thickness} \hyperlink{Vinf}{Freestream Velocity} \hyperlink{Re}{Reynolds Number} \hyperlink{M}{Mach Number} \hyperlink{NACA}{NACA Airfoil}
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure1.png}
+  \caption{Lift Coefficient Compared to Varying Camber Length}\label{fig:1}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure2.png}
+  \caption{Drag Coefficient Compared to Varying Camber Length}\label{fig:2}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure3.png}
+  \caption{Moment Coefficient Compared to Varying Camber Length}\label{fig:3}
+\endminipage
+\end{figure}
 
-I used the Julia programming language to model these leapfrogging vortices. Julia was especially handy for this project because it could perform calculations on large matrices quickly. Another feature of Julia that became especially handy for this project is its ability to publish figures easily for help visualizing data. Initially, data was written to a file, but recording data to a file was later skipped in the final version to instead dedicate runtime to examining different initial conditions.\newline
+The plots in Figure \ref{fig:1} and Figure \ref{fig:4} appear to have a similar upward slope, which is expected. As the wing tilts upwards with an increasing angle of attack \hyperref{aplha}{$\alpha$}, its \hyperlink{CL}{Lift Coefficient} increases from negative to positive for both airfoils. A notable difference, though, is that for the airfoils with their maximum camber further forward shown in Figure \ref{fig:5} had a much greater drag coefficient at lower angles than those in Figure \ref{fig:2}.
 
-Vortices can be described in vector form by Equation 1. This equation shows that the velocity at a point around a vortex is proportional to its circulation, $\vec{\Gamma}$, divided by its distance from the center, $\vec{r}$. $\vec{\Gamma}$ and $\vec{r}$ are crossed to obtain $\vec{V}$, meaning that if $\vec{\Gamma}$ is in the y-direction and $\vec{r}$ is in the x-direction, then the velocity induced by the vortex will be in the y-direction. This also means that an initial velocity is not required for leapfrogging vortices, since the circulation itself will induce that. For my completion of this lab, I used a cross-section of the vortex rings and the x and z-axes with $\vec{\Gamma}$ entirely on the y-axis, pointing into or out of the page.  \newline
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure4.png}
+  \caption{Lift Coefficient Compared to Varying Camber Length}\label{fig:4}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure5.png}
+  \caption{Drag Coefficient Compared to Varying Camber Length}\label{fig:5}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure6.png}
+  \caption{Moment Coefficient Compared to Varying Camber Length}\label{fig:6}
+\endminipage
+\end{figure}
 
-Although $\vec{\Gamma}$ and $\vec{r}$ are crossed, the denominator of Equation 1 contains an r$^2$ term, which means that circulation has a reciprocal relationship with distance, as also expected intuitively. So, in a case where the vortices are further apart, they will be induce less motion in each other. If the vorticity is increased, the vortices will be induced more strongly and move more quickly in their leapfrogging pattern. \newline
+Adjusting the Reynolds Number of an airfoil also changed its behavior significantly. The unit-less Reynolds number of an airfoil, described by Equation 4, can change for an aircraft even as its velocity or the air density changes.
 
-This project allowed some freedom to choose initial conditions. In the final version of the project, I have tried 9 different sets of initial conditions. Each vortex was centered around the x-axis. In Table 1, the starting conditions for each set of leapfrogging vortices are listed. This variety of initial conditions yielded a variety of different results, which will be discussed. Table 1 shows the initial position and velocity coordinates and the initial vorticity for each set of leapfrogging vortices. As shown in the table, differences in each of these initial conditions were tested. \newline
+\begin{equation} \label{eq:4}
+\begin{aligned}
+        	Re = \frac{uL}{\nu} \\
+	= \frac{\rho uL}{\mu} 
+\end{aligned}
+\end{equation}
+\newline
 
-The final program for modeling leapfrogging vortices also allowed the user to adjust the number of steps the program would simulate and the length of each time step, but these parameters were left at 0.1 seconds and 1,000 steps for most of the program. Shorter and longer time steps between measurements were tried, but the lower frequency shown in \href{https://imgur.com/PtazOFB}{GIF 8} diverged from the actual solution for the leapfrogging vortices, and the higher calculation frequency modeled in \href{https://imgur.com/6jT1mT0}{GIF 9} only slowed down the program while measuring fewer vortices that were not substantially different. \newline
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure7.png}
+  \caption{NACA 2230 Lift Coefficients Varied by Reynolds Number}\label{fig:7}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure8.png}
+  \caption{NACA 2230 Drag Coefficients Varied by Reynolds Number}\label{fig:8}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure9.png}
+  \caption{NACA 2230 Moment Coefficients Varied by Reynolds Number}\label{fig:9}
+\endminipage
+\end{figure}
 
-Once I understood that I was to model the top and bottom points of 2 vortices, it was relatively smooth sailing to establish a working code. To make this model I used the DeliniatedFiles, Printf, and Plots libraries in Julia. After I had created a good model, I decided to animate it. I eventually found that to be fairly simple. I used the \textcolor{Dandelion}{@animate} function to make a gif for each vortex. These can be viewed either by clicking the colored number links in the table, or by going to the LeapFrog branch of the \href{https://github.com/JoeSpencer1/497R-Projects.git}{GitHub Repository} mentioned previously. \newline
+Both the NACA 2230 Airfoil shown in Figure \ref{fig:7} and the NACA 1120 Airfoil in Figure \ref{fig:10} appear to increase in \hyperlink{CL}{Lift Coefficient} more rapidly at lower \ref{Re}{Reynolds Numbers}. Their \hyperlink{CD}{Drag Coefficients} are seen to be higher at low Reynolds Numbers in both Figure \ref{fig:8} and Figure \ref{fig:11}. At low Reynolds numbers their \hyperlink{CM}{Moment Coefficients} are both higher, and then either increase more slowly or decrease more quickly.
 
-\subsubsection*{Results and Discussion}
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure10.png}
+  \caption{NACA 1120 Lift Coefficients Varied by Reynolds Number}\label{fig:10}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure11.png}
+  \caption{NACA 1120 Drag Coefficients Varied by Reynolds Number}\label{fig:11}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure12.png}
+  \caption{NACA 1120 Moment Coefficients Varied by Reynolds Number}\label{fig:12}
+\endminipage
+\end{figure}
 
-After I had created the functions mentioned in the Methods section, I put them to work analyzing different airfoils. I first completed the example in the \href{https://flow.byu.edu/Xfoil.jl/stable/}{Xfoil.jl Documentation} provided with the lab, using \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Demo.jl}{this code}. After that, I created figures that measured the effect of angle of attack on lift, drag, and moment coefficients for various airfoils and conditions.
+Figure \ref{fig:13} shows that varying the \hyperlink{Th}{Wing Thickness} only slightly can have huge impacts on the Lift, Drag, and Moment of an airfoil. In the case of Lift and Moment, a few percent difference in thickness can even change its sign or slope. A wing's thickness varies the position of its surface at all points along its profile, which add up to flow to be redirected in significantly different ways.
 
-This lab examined how vortices can perpetuate each other. The following nine figures show the different paths followed by each vortex pair in this experiment. The results shown in these graphs provide insights about when the phenomenon of vortex leapfrogging occurs, and when it does not.\newline
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure13.png}
+  \caption{Lift Coefficients Varied by Maximum Camber Location}\label{fig:13}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure14.png}
+  \caption{Drag Coefficients Varied by Maximum Camber Location}\label{fig:14}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure15.png}
+  \caption{Moment Coefficients Varied by Maximum Camber Location}\label{fig:15}
+\endminipage
+\end{figure}
 
-One interesting relationship to note in the vortex rings that this experiment found is that for vortex rings that go on the longest, the velocity is inversely proportional to the distance. This can be recalled from Equation \ref{eq:1}, which showed that the magnitude of velocity is directly proportional to circulation and ultimately inversely proportional to distance. The 
-\href{https://imgur.com/U4cND6X,}{videos} included in this report show that show that for the vortices that continued longest, the highest velocity occurred when \emph{r} was smallest, and lowest velocity came when \emph{r} between the top and bottom vortices of the ring was greatest. \newline
+Although \hyperlink{Th}{Wing Thickness} has been shown to significantly impact an airfoil's Lift, Drag, and Moment Coefficients, Figure \ref{fig:16} shows that the position of the \hyperlink{Camber}{Maximum Camber} does not seem to significantly impact the Lift Coefficient. Figure \ref{fig:17} shows that drag coefficient is hardly impacted either. Moment coefficient is perhaps changed the most, shown in Figure \ref{fig:18}, but this is still much less than the change caused by wing thickness shown in Figure \ref{fig:15}.
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure16.png}
+  \caption{Lift Coefficients Varied by Maximum Camber Location}\label{fig:16}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure17.png}
+  \caption{Drag Coefficients Varied by Maximum Camber Location}\label{fig:17}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{Figure18.png}
+  \caption{Moment Coefficients Varied by Maximum Camber Location}\label{fig:18}
+\endminipage
+\end{figure}
+
+I found in this airfoil analysis that an airfoil experiences different \hyperlink{CL}{Lift}, \hyperlink{CL}{Drag}, and \hyperlink{CM}{Moment} forces at different \hyperlink{alpha}{Angles of Attack}. I found that in general, Lift force increases with increasing angle of attack, and drag force behaves as a parabola with a minimum near zero. Zooming out further beyond the 16-degree domain of these graphs would show that these coefficients actually behave as sinusoidal waves as the airfoil's angle of attack moves around in a circle.\newline
+
+A surprising finding was that the Lift and Drag coefficients experienced by an airfoil are not significantly impacted by its maximum camber location, as seen in Figure 18. It must not actually impact where airflow is actually redirected. Thicker wings appear to experience greater Drag and lower Lift, as seen in Figures 13. and 14. A higher Reynolds Number appears to correspond to a faster increase in the \hyperlink{CL}{Lift Coefficient}, but also a much higher \hyperlink{CD}{Drag Coefficient}.
+
+For this project, I also completed the example in the \href{https://flow.byu.edu/Xfoil.jl/stable/}{Xfoil.jl Documentation} provided with the lab, using \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Demo.jl}{this code}.
 
 \clearpage
 
@@ -149,7 +243,7 @@ One interesting relationship to note in the vortex rings that this experiment fo
 
 	\item \hypertarget{AP}{Polar} - The Airfoil Polar is a plot showing the  \hyperlink{CL}{Lift} and  \hyperlink{CD}{Drag} coefficients corresponding with each \hyperlink{alpha}{Angle of Attack} for an airfoil. Examining the ratios of lift to drag is instrumental in choosing the optimal Angle of Attack.
 	
-	\item \hypertarget{PFC)(Potential-Flow Code} - A potential-flow code calculates the \hyperlink{CL}{lift}, \hyperlink{CD}{drag}, and \hyperlink{CM}{moment} forces an airfoil experiences at many different points along it. Potential-flow theory assumes constant, incompressible, inviscid fluid flow. It calculates the coefficient for each of these small points and then combines them to find the coefficients along the entire wing.
+	\item \hypertarget{PFC}{Potential-Flow Code} - A potential-flow code calculates the \hyperlink{CL}{lift}, \hyperlink{CD}{drag}, and \hyperlink{CM}{moment} forces an airfoil experiences at many different points along it. Potential-flow theory assumes constant, incompressible, inviscid fluid flow. It calculates the coefficient for each of these small points and then combines them to find the coefficients along the entire wing.
 	
 	\item \hypertarget{Re}{Reynolds Number, $Re$} - The Reynolds Number is a unit-less number for fluid flow described by the equation below. It can be used to predict patterns in the fluid's flow, using its flow speed $u$, characteristic length $L$, and kinetic viscosity $\nu$, or else by its density $\rho$, flow speed $u$, characteristic length $L$, and fluid density $\mu$.
 		\begin{equation} \label{eq:17}

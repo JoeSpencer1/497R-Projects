@@ -1,11 +1,12 @@
 #=---------------------------------------------------------------
-9/12/2022
-Airfoil_Analysis v6 Airfoil_Functions.jl
-I have consolidated the functions in this version of airfoil
-functions. I still have a function to load an airfoil, but I
-will only use homemade airfoils for Airfoil version 6.
+9/13/2022
+Airfoil_Analysis v7 Airfoil_Functions.jl
+Some minor adjustments to formatting made version 7 more ready
+for submission.
 ---------------------------------------------------------------=#
-numitr = 1000
+numitr = 20000
+len = 1
+res = 100
 
 function load(filename)
     for i in 1:1
@@ -53,16 +54,16 @@ function create(mpth, n)
         end
         
     end
-    writefile(x, y, m, p, th)
+    writefile(n2, x, y, m, p, th)
     return([x, y])
 end
 
-function writefile(x, y, m, p, th)
+function writefile(n, x, y, m, p, th)
     num0 = m * 100000 + p * 1000 + th * 100
     num = trunc(Int64, num0)
     filename = string("Documents/GitHub/497R-Projects/naca" , string(num) , "new.txt")
     printfile = open(filename, "w")
-    for i in 1:41
+    for i in 1:n
         write(printfile, string(x[i]))
         write(printfile, "\t")
         write(printfile, string(y[i]))
@@ -132,9 +133,9 @@ function plot2coefficients(lowest, highest, a, la, resa, b, lb, resb , figuretit
     savefig(figuretitle)
 end
 
-function plot3coefficients(lowest, res, highest, a, la, b, lb, c, lc, figuretitle, type)
+function plot3coefficients(lowest, res, highest, a, la, b, lb, c, lc, figuretitle, ytitle)
     angle = lowest:res:highest
-    plot(angle[:], a[:], title = type, label = la, xlabel = "Angle of Attack, degrees", ylabel = "Coefficient")
+    plot(angle[:], a[:], label = la, xlabel = "Angle of Attack, degrees", ylabel = ytitle)
     plot!(angle[:], b[:], label = lb)
     plot!(angle[:], c[:], label = lc)
     savefig(figuretitle)
