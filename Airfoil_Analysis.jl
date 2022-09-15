@@ -68,11 +68,11 @@ const l7b, d7b, dp7b, m7b, c7b = limscoef(x7, y7, len, numitr, 2e5, -8, 8)
 
 const l7c, d7c, dp7c, m7c, c7c = limscoef(x7, y7, len, numitr, 3e5, -8, 8)
 
-plot3coefficients(-8, len, 8, l7a, "NACA 2209, Re = 10,000", l7b, "Re = 20,000", l7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure7.png", "Lift Coefficient")
+plot3coefficients(-8, len, 8, l7a, "NACA 2209, Re = 100,000", l7b, "Re = 200,000", l7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure7.png", "Lift Coefficient")
 
-plot3coefficients(-8, len, 8, d7a, "NACA 2209, Re = 10,000", d7b, "Re = 20,000", d7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure8.png", "Drag Coefficient")
+plot3coefficients(-8, len, 8, d7a, "NACA 2209, Re = 100,000", d7b, "Re = 200,000", d7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure8.png", "Drag Coefficient")
 
-plot3coefficients(-8, len, 8, m7a, "NACA 2209, Re = 10,000", m7b, "Re = 20,000", m7c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure9.png", "Moment Coefficient")
+plot3coefficients(-8, len, 8, m7a, "NACA 2209, Re = 100,000", m7b, "Re = 200,000", m7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure9.png", "Moment Coefficient")
 
 const x8, y8 = create(1115, res)
 
@@ -82,11 +82,11 @@ const l8b, d8b, dp8b, m8b, c7b = limscoef(x8, y8, len, numitr, 2e5, -8, 8)
 
 const l8c, d8c, dp8c, m8c, c7c = limscoef(x8, y8, len, numitr, 3e5, -8, 8)
 
-plot3coefficients(-8, len, 8, l8a, "NACA 1115, Re = 10,000", l8b, "Re = 20,000", l8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure10.png", "Lift Coefficient")
+plot3coefficients(-8, len, 8, l8a, "NACA 1115, Re = 100,000", l8b, "Re = 200,000", l8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure10.png", "Lift Coefficient")
 
-plot3coefficients(-8, len, 8, d8a, "NACA 1115, Re = 10,000", d8b, "Re = 20,000", d8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure11.png", "Drag Coefficient")
+plot3coefficients(-8, len, 8, d8a, "NACA 1115, Re = 100,000", d8b, "Re = 200,000", d8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure11.png", "Drag Coefficient")
 
-plot3coefficients(-8, len, 8, m8a, "NACA 1115, Re = 10,000", m8b, "Re = 20,000", m8c, "Re = 30,000", "Documents/GitHub/497R-Projects/Figure12.png", "Moment Coefficient")
+plot3coefficients(-8, len, 8, m8a, "NACA 1115, Re = 100,000", m8b, "Re = 200,000", m8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure12.png", "Moment Coefficient")
 
 #=---------------------------------------------------------------
 This section examines different airfoil thicknesses and cambers.
