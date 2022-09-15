@@ -1,8 +1,8 @@
 #=---------------------------------------------------------------
-9/13/2022
-Airfoil_Analysis v7 Airfoil_Functions.jl
-Some minor adjustments to formatting made version 7 more ready
-for submission.
+9/15/2022
+Airfoil_Analysis v8 Airfoil_Functions.jl
+This file is unchanged. Airfoils were adjusted in the main file
+Airfoil_Analysis.jl.
 ---------------------------------------------------------------=#
 numitr = 20000
 len = 1
