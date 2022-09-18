@@ -119,17 +119,16 @@ end
 function findα0(x, y)
     place = 1
     α0 = 0
+    if y[1] > 0
+        while y[place] > 0
+            place += 1
+        end
+    end
     if y[1] < 0
         while y[place + 1] < 0
             place += 1
         end
         α0 = x[place] - (x[place + 1] - x[place]) * y[place] / (y[place + 1] - y[place])
-    end
-    if y[1] > 0
-        while y[place + 1] > 0
-            place += 1
-        end
-        α0 = x[place] + (x[place + 1] - x[place]) * y[place] / (y[place + 1] - y[place])
     end
     return α0
 end
