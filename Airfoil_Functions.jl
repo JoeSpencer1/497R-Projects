@@ -1,8 +1,8 @@
 #=---------------------------------------------------------------
-9/15/2022
-Airfoil_Analysis v8 Airfoil_Functions.jl
-This file is unchanged. Airfoils were adjusted in the main file
-Airfoil_Analysis.jl.
+9/17/2022
+Airfoil_Analysis v9 Airfoil_Functions.jl
+This file makes the labels on plots larger. I've also added a
+function to find the x-intercept (α0)
 ---------------------------------------------------------------=#
 numitr = 20000
 len = 1
@@ -107,17 +107,34 @@ end
 function convergecoef(x, y, increment, iterations, re)
     alpha = range(x, y, re, increment, numitr)
     c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)
-    return lowest, highest, c_l, c_d, c_dp, c_m, converged
+    return alpha, lowest, highest, c_l, c_d, c_dp, c_m, converged
 end
 
 function limscoef(x, y, increment, iterations, re, min, max)
     alpha = min:increment:max
     c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=iterations, zeroinit=false, printdata=false)
-    return c_l, c_d, c_dp, c_m, converged
+    return alpha, c_l, c_d, c_dp, c_m, converged
 end
 
-function plotcoefficients(lowest, res, highest, c_l, c_d, c_dp, c_m, figuretitle, type)
-    angle = lowest:res:highest
+function findα0(x, y)
+    place = 1
+    α0 = 0
+    if y[1] < 0
+        while y[place + 1] < 0
+            place += 1
+        end
+        α0 = x[place] - (x[place + 1] - x[place]) * y[place] / (y[place + 1] - y[place])
+    end
+    if y[1] > 0
+        while y[place + 1] > 0
+            place += 1
+        end
+        α0 = x[place] + (x[place + 1] - x[place]) * y[place] / (y[place + 1] - y[place])
+    end
+    return α0
+end
+
+function plotcoefficients(angle, c_l, c_d, c_dp, c_m, figuretitle, type)
     plot(angle[:], c_l[:], title = type, label = "Cl", xlabel = "Angle of Attack, degrees", ylabel = "Coefficient") 
     plot!(angle[:], c_d[:], label = "Cd")
     plot!(angle[:], c_dp[:], label = "Cdp")
@@ -125,18 +142,16 @@ function plotcoefficients(lowest, res, highest, c_l, c_d, c_dp, c_m, figuretitle
     savefig(figuretitle)
 end
 
-function plot2coefficients(lowest, highest, a, la, resa, b, lb, resb , figuretitle, type)
-    anglea = lowest:resa:highest
-    angleb = lowest:resb:highest
-    plot(anglea[:], a[:], title = type, label = la, xlabel = "Angle of Attack, degrees", ylabel = "Coefficient")
-    plot!(angleb[:], b[:], label = lb)
+function plot3coefficients(angle, a, la, b, lb, c, lc, figuretitle, ytitle)
+    plot(angle[:], a[:], label = la, xlabel = "Angle of Attack, degrees", ylabel = ytitle, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, linestyle = :solid)
+    plot!(angle[:], b[:], label = lb, linestyle = :dashdot)
+    plot!(angle[:], c[:], label = lc, linestyle = :dot)
     savefig(figuretitle)
 end
 
-function plot3coefficients(lowest, res, highest, a, la, b, lb, c, lc, figuretitle, ytitle)
-    angle = lowest:res:highest
-    plot(angle[:], a[:], label = la, xlabel = "Angle of Attack, degrees", ylabel = ytitle)
-    plot!(angle[:], b[:], label = lb)
-    plot!(angle[:], c[:], label = lc)
+function plot3notitle(angle, a, b, c, figuretitle, ytitle)
+    plot(angle[:], a[:], xlabel = "Angle of Attack, degrees", ylabel = ytitle, legend = false, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, background_color_legend = nothing, linestyle = :solid)
+    plot!(angle[:], b[:], linestyle = :dashdot)
+    plot!(angle[:], c[:], line = :dot)
     savefig(figuretitle)
 end
