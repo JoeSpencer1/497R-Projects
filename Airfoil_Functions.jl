@@ -1,12 +1,13 @@
 #=---------------------------------------------------------------
-9/17/2022
-Airfoil_Analysis v9 Airfoil_Functions.jl
-This file makes the labels on plots larger. I've also added a
-function to find the x-intercept (α0)
+9/19/2022
+Airfoil_Analysis v10 Airfoil_Functions.jl
+I have added more functions to graph cd vs. Re, Plot Re vs Drag,
+Plot Lift vs Drag, and find stall angles.
 ---------------------------------------------------------------=#
 numitr = 20000
 len = 1
 res = 100
+rearray = 10
 
 function load(filename)
     for i in 1:1
@@ -131,6 +132,64 @@ function findα0(x, y)
         α0 = x[place] - (x[place + 1] - x[place]) * y[place] / (y[place + 1] - y[place])
     end
     return α0
+end
+
+function cdvsre(x, y, alpha, rel, reu, iterations, type, figuretitle)
+    re = Array{Float64}(undef, rearray, 1)
+    cd = Array{Float64}(undef, rearray, 1)
+    in = (reu - rel) / rearray
+    re[1] = rel
+    for i in 2:rearray
+        re[i] = rel + (i - 1) * in
+    end
+    for i in 1:10
+        c_l, c_d, c_dp, c_m, converged = solve_alpha(alpha, re[i]; mach=0.0, iter=numitr, ncrit=9)
+        cd[i] = c_d
+    end
+    plotredrag(re, cd, type, figuretitle)
+end
+
+function findslope(x, y, α0)
+    i = 1
+    while x[i] <= α0
+        i += 1
+    end
+    i += 3
+    slope = y[i] / (x[i] - α0)
+    return slope
+end
+
+function findstall(x, y, α0)
+    i = 1
+    stall = Array{Float64}(undef, 2, 1)
+    while x[i] <= α0
+        i += 1
+    end
+    while i < length(y) - 1 && y[i + 1] < y[i + 2]
+        i += 1
+    end
+    if i == length(y) - 1
+        fail = string("The stall angle of attack is not within the provided angle range from ", string(x[1]), " to ", string(x[length(x)], ".\n"))
+        print(fail)
+        stall[1] = 0
+        stall[2] = 0
+    end
+    if i < length(y) - 1
+        slope = (y[i] - y[i - 1])
+        stall[2] = y[i] + (slope + y[i] - y[i + 1]) / 2
+        stall[1] = (stall[2] - y[i]) / (x[2] - x[1])
+    end    
+    return stall
+end
+
+function plotliftdrag(c_l, c_d, type, figuretitle)
+    plot(c_l[:], c_d[:], title = type, legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient")
+    savefig(figuretitle)
+end
+
+function plotredrag(re, cd, type, figuretitle)
+    plot(re[:], cd[:], title = type, legend = false, xlabel = "Reynolds Number", ylabel = "Drag Coefficient")
+    savefig(figuretitle)
 end
 
 function plotcoefficients(angle, c_l, c_d, c_dp, c_m, figuretitle, type)

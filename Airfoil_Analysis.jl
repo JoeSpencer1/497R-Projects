@@ -1,8 +1,8 @@
 #=---------------------------------------------------------------
-9/17/2022
+9/19/2022
 Airfoil_Analysis v9 Airfoil_Analysis.jl
-Plot labels were enlarged in version 9. I've also added a
-function to find the x-intercept (α0).
+I have added more functions to graph cd vs. Re, Plot Re vs Drag,
+Plot Lift vs Drag, and find stall angles.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -71,7 +71,7 @@ const a7c, l7c, d7c, dp7c, m7c, c7c = limscoef(x7, y7, len, numitr, 3e5, -8, 8)
 
 plot3notitle(a7a, l7a,l7b, l7c, "Documents/GitHub/497R-Projects/Figure7.png", "Lift Coefficient")
 
-plot3coefficients(a7a, d7a, "NACA 2209, Re = 100,000", d7b, "Re = 200,000", d7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure8.png", "Drag Coefficient")
+plot3coefficients(a7a, d7a, "Re = 100,000", d7b, "Re = 200,000", d7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure8.png", "Drag Coefficient")
 
 plot3notitle(a7a, m7a, m7b, m7c, "Documents/GitHub/497R-Projects/Figure9.png", "Moment Coefficient")
 
@@ -85,7 +85,7 @@ const a8c, l8c, d8c, dp8c, m8c, c7c = limscoef(x8, y8, len, numitr, 3e5, -8, 8)
 
 plot3notitle(a8a, l8a, l8b, l8c, "Documents/GitHub/497R-Projects/Figure10.png", "Lift Coefficient")
 
-plot3coefficients(a8a, d8a, "NACA 1115, Re = 100,000", d8b, "Re = 200,000", d8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure11.png", "Drag Coefficient")
+plot3coefficients(a8a, d8a, "Re = 100,000", d8b, "Re = 200,000", d8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure11.png", "Drag Coefficient")
 
 plot3notitle(a8a, m8a, m8b, m8c, "Documents/GitHub/497R-Projects/Figure12.png", "Moment Coefficient")
 
@@ -129,4 +129,12 @@ plot3coefficients(a12, d12, "NACA 2114", d13, "NACA 2214", d14, "NACA 2314", "Do
 
 plot3notitle(a12, m12, m13, m14, "Documents/GitHub/497R-Projects/Figure18.png", "Moment Coefficient")
 
-const αlast = findα0(a14, l14)
+const α14 = findα0(a14, l14)
+
+const slopelast = findslope(a14, l14, α14)
+
+const stalllast = findstall(a14, l14, α14)
+
+plotliftdrag(l14, d14, "NACA 2314", "Documents/GitHub/497R-Projects/Figure19.png")
+
+cdvsre(x14, y14, 1.0, 10000, 150000, numitr, "NACA 2314", "Documents/GitHub/497R-Projects/Figure20.png")
