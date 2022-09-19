@@ -58,7 +58,7 @@ The \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Air
 
 \subsubsection*{Results and Discussion}
 
-This research found that adjusting the Reynolds number, angle of attack, thickness, and camber amount and position all affect the forces experienced by an airfoil. These forces are described by Equation \ref{eq:1} on the first page. Figure \ref{fig:1} and Figure \ref{fig:4} show that airfoils with a larger \hyperlink{c}{Camber} experience more lift force. The airfoils shown in Figure \ref{fig:2} and Figure \ref{fig:5} experience the same increase in \hyperlink{CD}{Drag Coefficient} as they increase their Camber-to-Cord ratio. Both coefficients increased with increasing angle of attack. On the range from -8$^{\circ}$ to 8$^{\circ}$ shown in the graphs, the Drag Coefficient increased as angle of attack became either more positive or more negative.\newline
+This research found that adjusting the Reynolds number, angle of attack, thickness, and camber amount and position all affect the forces experienced by an airfoil. These forces are described by Equation \ref{eq:1} on the first page. Figure \ref{fig:1} and Figure \ref{fig:2} show that airfoils with a larger \hyperlink{c}{Camber} experience more lift force. The airfoils shown in Figure \ref{fig:1} and Figure \ref{fig:2} experience the same increase in \hyperlink{CD}{Drag Coefficient} as they increase their Camber-to-Cord ratio. Both coefficients increased with increasing angle of attack. On the range from -8$^{\circ}$ to 8$^{\circ}$ shown in the graphs, the Drag Coefficient increased as angle of attack became either more positive or more negative.\newline
 
 Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers used in this lab. Clicking on the \color{blue}hyperlink number \color{black} below each NACA number will jump to the plot of its lift, drag, or moment coefficients compared to angle of attack. \newline
 
@@ -70,63 +70,33 @@ Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers use
 		\hline
 		 \textbf{Profile} & 1310 & 2310 & 3310 & 1412 & 2412 & 3412 & 2209 & 2209 & 2209 \\ \hline
 		 \textbf{\emph{Re}} & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 200,000 & 300,000 \\ 
-		 \textbf{Link} & \ref{fig:1} & \ref{fig:2} & \ref{fig:3} & \ref{fig:4} & \ref{fig:5} & \ref{fig:6} & \ref{fig:7} & \ref{fig:8} & \ref{fig:9} \\ \hline \hline
+		 \textbf{Link} & \ref{fig:1} & \ref{fig:1} & \ref{fig:1} & \ref{fig:2} & \ref{fig:2} & \ref{fig:2} & \ref{fig:3} & \ref{fig:3} & \ref{fig:3} \\ \hline \hline
 		 \newline
 		 \textbf{Profile} & 1115 & 1115 & 1115 & 2208 & 2213 & 2218 & 2114 & 2214 & 2314 \\ \hline
 		 \textbf{\emph{Re}} & 100,000 & 200,000 & 300,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 \\ 
-		 \textbf{Link} & \ref{fig:10} & \ref{fig:11} & \ref{fig:12} & \ref{fig:13} & \ref{fig:14} & \ref{fig:15} & \ref{fig:16} & \ref{fig:17} & \ref{fig:18} \\ \hline
+		 \textbf{Link} & \ref{fig:4} & \ref{fig:4} & \ref{fig:4} & \ref{fig:5} & \ref{fig:5} & \ref{fig:5} & \ref{fig:6} & \ref{fig:6} & \ref{fig:6} \\ \hline
 	\end{tabular}
 \end{table}
 
-\begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure1.png}
-  \caption{Lift Coefficient Compared to Varying Camber Length}\label{fig:1}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure2.png}
-  \caption{Drag Coefficient Compared to Varying Camber Length}\label{fig:2}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure3.png}
-  \caption{Moment Coefficient Compared to Varying Camber Length}\label{fig:3}
-\endminipage
-\end{figure}
-
 \begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure1.png}} \label{fig:1}
+  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure2.png}} \label{fig:1}
+  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure3.png}} \label{fig:1}
+  \caption{This figure shows the Lift \textbf{(a)}, Drag \textbf{(b)}, and moment \textbf{(c)} coefficients of airfoils of varying camber length.}
   \label{run5}
 \end{figure}
 
-One difficulty that was encountered during the analysis of these airfoils was making smooth graphs for them over their entire angle range. This was difficult because the airfoils compared were sometimes significantly different. For example, Airfoils 1 and 2 had very close \hyperlink{NACA}{NACA Numbers}, with the only difference between them being their first digit. This 1-digit difference meant, though, that Airfoil 2 had twice as much \hyperlink{c}{Camber}. This meant that although their behaviors could be plotted on the same plane in Figures \ref{fig:1}, \ref{fig:2}, and \ref{fig:3}, they were very different. This made it difficult to plot converging solutions for the different coefficients of these wing types on the same plane.\newline
+One difficulty that was encountered during the analysis of these airfoils was making smooth graphs for them over their entire angle range. This was difficult because the airfoils compared were sometimes significantly different. For example, Airfoils 1 and 2 had very close \hyperlink{NACA}{NACA Numbers}, with the only difference between them being their first digit. This 1-digit difference meant, though, that Airfoil 2 had twice as much \hyperlink{c}{Camber}. This meant that although their behaviors could be plotted on the same plane in Figures \ref{fig:1}, a, b, and c, they were very different. This made it difficult to plot converging solutions for the different coefficients of these wing types on the same plane.\newline
 
-The plots in Figure \ref{fig:1} and Figure \ref{fig:4} appear to have a similar upward slope, which is expected. As the wing tilts upwards with an increasing angle of attack \hyperref{aplha}{$\alpha$}, its \hyperlink{CL}{Lift Coefficient} increases from negative to positive for both airfoils. A notable difference, though, is that for the airfoils with their maximum camber further forward shown in Figure \ref{fig:2} had a greater drag coefficient at lower angles than those in Figure \ref{fig:5}.
+The plots in Figure \ref{fig:1} and Figure \ref{fig:2} appear to have a similar upward slope, which is expected. As the wing tilts upwards with an increasing angle of attack \hyperref{aplha}{$\alpha$}, its \hyperlink{CL}{Lift Coefficient} increases from negative to positive for both airfoils. A notable difference, though, is that for the airfoils with their maximum camber further forward shown in Figure \ref{fig:1} had a greater drag coefficient at lower angles than those in Figure \ref{fig:2}.
 
 \begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure4.png}
-  \caption{Lift Coefficient Compared to Varying Camber Length}\label{fig:4}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure5.png}
-  \caption{Drag Coefficient Compared to Varying Camber Length}\label{fig:5}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure6.png}
-  \caption{Moment Coefficient Compared to Varying Camber Length}\label{fig:6}
-\endminipage
-\end{figure}
-
-\begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure4.png}} \label{fig:2}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure5.png}} \label{fig:2}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure6.png}} \label{fig:2}
+  \caption{Figure \textbf{(a)} shows the Lift Coefficients, and Figures \textbf{(b)} and \textbf{(c)} show the Drag and Moment Coefficients for these Airfoils of varying camber length.}
   \label{run5}
 \end{figure}
 
@@ -141,30 +111,15 @@ Adjusting the Reynolds Number of an airfoil also changed its behavior significan
 \newline
 
 \begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure7.png}
-  \caption{NACA 2209 Lift Coefficients Varied by Reynolds Number}\label{fig:7}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure8.png}
-  \caption{NACA 2209 Drag Coefficients Varied by Reynolds Number}\label{fig:8}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure9.png}
-  \caption{NACA 2209 Moment Coefficients Varied by Reynolds Number}\label{fig:9}
-\endminipage
-\end{figure}
-
-\begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure7.png}}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure8.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure9.png}}
+  \caption{Figure \textbf{(a)} shows an Airfoil's Lift Coefficient varied by Reynolds number. Figures \textbf{(b)} and \textbf{(c)} do the same for its Drag and Moment Coefficients.}
   \label{run5}
 \end{figure}
 
-Both the NACA 2230 Airfoil shown in Figure \ref{fig:7} and the NACA 1120 Airfoil in Figure \ref{fig:10} appear to increase in \hyperlink{CL}{Lift Coefficient} more rapidly at lower \hyperlink{Re}{Reynolds Numbers}. Their \hyperlink{CD}{Drag Coefficients} appear higher at low Reynolds Numbers in both Figure \ref{fig:8} and Figure \ref{fig:11}. At low Reynolds numbers their \hyperlink{CM}{Moment Coefficients} are both higher, but decrease more quickly.
+Both the NACA 2230 Airfoil shown in Figure \ref{fig:3} and the NACA 1120 Airfoil in Figure \ref{fig:4} appear to increase in \hyperlink{CL}{Lift Coefficient} more rapidly at lower \hyperlink{Re}{Reynolds Numbers}. Their \hyperlink{CD}{Drag Coefficients} appear higher at low Reynolds Numbers in both Figure \ref{fig:3} and Figure \ref{fig:4}. At low Reynolds numbers their \hyperlink{CM}{Moment Coefficients} are both higher, but decrease more quickly.
 
 \begin{figure}[!htb]
 \minipage{0.32\textwidth}
@@ -181,64 +136,34 @@ Both the NACA 2230 Airfoil shown in Figure \ref{fig:7} and the NACA 1120 Airfoil
 \endminipage
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htb]
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure10.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure11.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure12.png}}
+  \caption{The Lift Coefficient of a NACA 1115 airfoil is shown in \textbf{(a)} at varying Reynolds numbers. Its Drag Coefficients are shown in \textbf{(b)} and its Moment Coefficient is shown in \textbf{(c)}}
   \label{run5}
 \end{figure}
 
-Figure \ref{fig:13} shows that varying the \hyperlink{Th}{Wing Thickness} only slightly can have huge impacts on the Lift, Drag, and Moment experienced by an airfoil. This is because adjusting a wing's thickness varies the position of its surface at each point along its profile, which add up to flow to be redirected in significantly different ways.
+Figure \ref{fig:5} shows that varying the \hyperlink{Th}{Wing Thickness} only slightly can have huge impacts on the Lift, Drag, and Moment experienced by an airfoil. This is because adjusting a wing's thickness varies the position of its surface at each point along its profile, which add up to flow to be redirected in significantly different ways.
 
 \begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure13.png}
-  \caption{Lift Coefficients Varied by Maximum Camber Location}\label{fig:13}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure14.png}
-  \caption{Drag Coefficients Varied by Maximum Camber Location}\label{fig:14}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure15.png}
-  \caption{Moment Coefficients Varied by Maximum Camber Location}\label{fig:15}
-\endminipage
-\end{figure}
-
-\begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure13.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure14.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure15.png}}
+  \caption{Figures \textbf{(a)}, \textbf{(b)}, and \textbf{(c)} show the changes in Lift, Drag, and Moment coefficients that occur when an airfoil's Maximum Camber location is adjusted.}
   \label{run5}
 \end{figure}
 
-Although \hyperlink{Th}{Wing Thickness} has been shown to significantly impact an airfoil's Lift, Drag, and Moment Coefficients, Figure \ref{fig:16} shows that the position of the \hyperlink{Camber}{Maximum Camber} does not seem to significantly impact the Lift Coefficient. Figure \ref{fig:17} shows that drag coefficient is hardly not impacted as much either. Moment coefficient is perhaps changed the most, shown in Figure \ref{fig:18}, but this is still much less than the change caused by wing thickness shown in Figure \ref{fig:15}.
+Although \hyperlink{Th}{Wing Thickness} has been shown to significantly impact an airfoil's Lift, Drag, and Moment Coefficients, Figure \ref{fig:6} shows that the position of the \hyperlink{Camber}{Maximum Camber} does not seem to significantly impact the Lift Coefficient. Figure \ref{fig:6} shows that drag coefficient is hardly not impacted as much either. Moment coefficient is perhaps changed the most, shown in Figure \ref{fig:6}, but this is still much less than the change caused by wing thickness shown in Figure \ref{fig:5}.
 
 \begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure16.png}
-  \caption{Lift Coefficients Varied by Maximum Camber Location}\label{fig:16}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure17.png}
-  \caption{Drag Coefficients Varied by Maximum Camber Location}\label{fig:17}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure18.png}
-  \caption{Moment Coefficients Varied by Maximum Camber Location}\label{fig:18}
-\endminipage
-\end{figure}
-
-\begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}} 
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
-  \caption{ \textbf{(a)} }
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure16.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure17.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure18.png}}
+  \caption{Figure \textbf{(a)} displays changes in an airfoil's Lift Coefficient according to Maximum Camber Location. Figure \textbf{(b)} shows what happens to its Drag Coefficient, and changes in the Moment Coefficient can be observed in Figure \textbf{(c)}.}
   \label{run5}
 \end{figure}
 
