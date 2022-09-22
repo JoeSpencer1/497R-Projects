@@ -147,3 +147,9 @@ polar("moment", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Moment C
 α7b = findα0(a7b, l7b)
 
 α7c = findα0(a7c, l7c)
+
+plotliftdrag(l9, d10, "Documents/GitHub/497R-Projects/Figure23.png")
+
+plotliftdrag(l10, d11, "Documents/GitHub/497R-Projects/Figure24.png")
+
+plotliftdrag(l11, d12, "Documents/GitHub/497R-Projects/Figure25.png")
