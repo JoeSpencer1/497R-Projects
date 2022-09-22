@@ -1,13 +1,14 @@
 #=---------------------------------------------------------------
-9/19/2022
-Airfoil_Analysis v10 Airfoil_Functions.jl
-I have added more functions to graph cd vs. Re, Plot Re vs Drag,
-Plot Lift vs Drag, and find stall angles.
+9/22/2022
+Airfoil_Analysis v11 Airfoil_Functions.jl
+I have updated my functions in this version of the code to
+ensure they all work correctly.
 ---------------------------------------------------------------=#
 numitr = 20000
 len = 1
 res = 100
 rearray = 10
+err = 0.15
 
 function load(filename)
     for i in 1:1
@@ -134,7 +135,7 @@ function findα0(x, y)
     return α0
 end
 
-function cdvsre(x, y, alpha, rel, reu, iterations, type, figuretitle)
+function polar(x, y, alpha, rel, reu, iterations, xt, yt, figuretitle)
     re = Array{Float64}(undef, rearray, 1)
     cd = Array{Float64}(undef, rearray, 1)
     in = (reu - rel) / rearray
@@ -143,10 +144,10 @@ function cdvsre(x, y, alpha, rel, reu, iterations, type, figuretitle)
         re[i] = rel + (i - 1) * in
     end
     for i in 1:10
-        c_l, c_d, c_dp, c_m, converged = solve_alpha(alpha, re[i]; mach=0.0, iter=numitr, ncrit=9)
+        c_l, c_d, c_dp, c_m, converged = solve_alpha(alpha, re[i]; mach=0.0, iter=iterations, ncrit=9)
         cd[i] = c_d
     end
-    plotredrag(re, cd, type, figuretitle)
+    plotredrag(re, cd, xt, yt, figuretitle)
 end
 
 function findslope(x, y, α0)
@@ -159,36 +160,38 @@ function findslope(x, y, α0)
     return slope
 end
 
-function findstall(x, y, α0)
+function findstall(x, y, α0, slope, max, re)
     i = 1
     stall = Array{Float64}(undef, 2, 1)
-    while x[i] <= α0
+    min = 1 + α0 - (α0 % 1)
+    alpha = min:1:max
+    c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=(numitr / 100), zeroinit=false, printdata=false)
+    while i < length(alpha) && c_l[i] <= ((alpha[i] * (1 - err)) - α0) * slope
         i += 1
     end
-    while i < length(y) - 1 && y[i + 1] < y[i + 2]
-        i += 1
-    end
-    if i == length(y) - 1
-        fail = string("The stall angle of attack is not within the provided angle range from ", string(x[1]), " to ", string(x[length(x)], ".\n"))
+    if i == length(c_l)
+        fail = string("The stall angle of attack is not within the provided angle range from ", string(alpha[1]), " to ", string(alpha[length(alpha)], ".\n"))
         print(fail)
         stall[1] = 0
         stall[2] = 0
     end
-    if i < length(y) - 1
-        slope = (y[i] - y[i - 1])
-        stall[2] = y[i] + (slope + y[i] - y[i + 1]) / 2
-        stall[1] = (stall[2] - y[i]) / (x[2] - x[1])
+    if i < length(c_l) - 1
+        slope = (c_l[i + 1] - c_l[i])
+        stall[1] = alpha[i]
+        print(string("Angle of Attack: ", string(stall[i]), " Degrees"))
+        stall[1] = c_l[i]
+        print(string("Lifg Coefficient: ", string(c_l[i])))
     end    
     return stall
 end
 
-function plotliftdrag(c_l, c_d, type, figuretitle)
-    plot(c_l[:], c_d[:], title = type, legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient")
+function plotliftdrag(c_l, c_d, figuretitle)
+    plot(c_l[:], c_d[:], legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient")
     savefig(figuretitle)
 end
 
-function plotredrag(re, cd, type, figuretitle)
-    plot(re[:], cd[:], title = type, legend = false, xlabel = "Reynolds Number", ylabel = "Drag Coefficient")
+function plotredrag(re, cd, xt, yt, figuretitle)
+    plot(re[:], cd[:], legend = false, xlabel = xt, ylabel = yt)
     savefig(figuretitle)
 end
 

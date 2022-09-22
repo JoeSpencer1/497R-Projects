@@ -1,8 +1,7 @@
 #=---------------------------------------------------------------
-9/19/2022
-Airfoil_Analysis v9 Airfoil_Analysis.jl
-I have added more functions to graph cd vs. Re, Plot Re vs Drag,
-Plot Lift vs Drag, and find stall angles.
+9/22/2022
+Airfoil_Analysis v11 Airfoil_Analysis.jl
+This code has updated functions as well as new graphs.
 ---------------------------------------------------------------=#
 # Use these libraries
 using Xfoil, Printf, Plots
@@ -131,10 +130,20 @@ plot3notitle(a12, m12, m13, m14, "Documents/GitHub/497R-Projects/Figure18.png", 
 
 const α14 = findα0(a14, l14)
 
-const slopelast = findslope(a14, l14, α14)
+const sl14 = findslope(a14, l14, α14)
 
-const stalllast = findstall(a14, l14, α14)
+const st14 = findstall(x14, y14, α14, sl14, 50, 1e5)
 
-plotliftdrag(l14, d14, "NACA 2314", "Documents/GitHub/497R-Projects/Figure19.png")
+plotliftdrag(l14, d14, "Documents/GitHub/497R-Projects/Figure19.png")
 
-cdvsre(x14, y14, 1.0, 10000, 150000, numitr, "NACA 2314", "Documents/GitHub/497R-Projects/Figure20.png")
+polar(x7, l7a, 1.0, 10000, 150000, numitr, "Reynolds Number", "Drag Coefficient", "Documents/GitHub/497R-Projects/Figure20.png")
+
+polar(x7, l7b, 1.0, 10000, 150000, numitr, "Reynolds Number", "Drag Coefficient", "Documents/GitHub/497R-Projects/Figure21.png")
+
+polar(x7, l7c, 1.0, 10000, 150000, numitr, "Reynolds Number", "Drag Coefficient", "Documents/GitHub/497R-Projects/Figure22.png")
+
+α7a = findα0(a7a, l7a)
+
+α7b = findα0(a7b, l7b)
+
+α7c = findα0(a7c, l7c)

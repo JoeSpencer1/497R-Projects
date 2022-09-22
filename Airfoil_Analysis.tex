@@ -12,6 +12,8 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{stfloats}
+\usepackage{array}
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -37,7 +39,7 @@ This project sought to identify how adjusting an airfoil's \hyperlink{c}{Chord},
 
 For this code, it also became necessary to create similar airfoils, only adjusted slightly for the size and position of their \hyperlink{Camber}{Camber}, and the maximum thickness as a percentage of the \hyperlink{c}{Chord}. To do this, a function was created in the previously mentioned \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file} to calculate the shape of an airfoil based on its \hyperlink{NACA}{NACA} (National Advisory Committee for Aeronautics) airfoil number. Although there are also other ways to describe an airfoil's profile, this seemed like a clear and efficient method.\newline
 
-Each of the digits in a \hyperlink{NACA}{NACA Airfoil} has its own purpose in defining an airfoil. The first digit is the ratio of the maximum \hyperlink{Camber}{Camber} to the \hyperlink{c}{Chord}, multiplied by ten. The second digit is the distance of the location of maximum camber from the leading edge of the wing, in tenths of the entire length of the wing. The third and fourth digit define the maxim wing thickness as a percentage of the Chord. The profiles of both the top and bottom of the wing can be described by Equations 2 and 3. In these Equations, $x$ represents the distance from the front of the wing, $y_{t}$ represents the wing thickness at $x$, $y_{c}$ represents the location of the wing's center at $x$, $t$ represents the maximum thickness as a decimal percentage of the \hyperlink{c}{chord}, $m$ denotes the wing's maximum camber as a percent of the wing's cord length, and $p$ is the distance of the maximum camber from the front of the wing, in tenths.
+Each of the digits in a \hyperlink{NACA}{NACA Airfoil} has its own purpose in defining an airfoil. The first digit is the ratio of the maximum \hyperlink{Camber}{Camber} to the \hyperlink{c}{Chord}, multiplied by ten. The second digit is the distance of the location of maximum camber from the leading edge of the wing, in tenths of the entire length of the wing. The third and fourth digit define the maxim wing thickness as a percentage of the Chord. The profiles of both the top and bottom of the wing can be described by Equations 2 and 3. In these Equations, $x$ represents the distance from the front of the wing, $y_{t}$ represents the wing thickness at $x$, $y_{c}$ represents the location of the wing's center at $x$, $t$ represents the maximum thickness as a decimal percentage of the \hyperlink{c}{chord}, $m$ denotes the wing's maximum camber as a percent of the wing's cord length, and $p$ is the distance of the maximum camber from the front of the wing, in tenths. \newline
 
 \begin{equation} \label{eq:2}
 \begin{aligned}
@@ -54,13 +56,15 @@ Each of the digits in a \hyperlink{NACA}{NACA Airfoil} has its own purpose in de
 
 The \href{https://docs.juliahub.com/Xfoil/Mlbda/0.4.0/}{Xfoil.jl} Julia wrapper, a potential-flow code, was employed to calculate the coefficients of lift, drag, and moment. A \hyperlink{PFC}{Potential-flow Code} divides the wing into many small plates and calculates the lift, drag, pressure drag, and moment coefficients for each of these points along its length. This program is repeated with different starting estimates for each coefficient until it either converges or is run a set number of times. In the interface that was developed, the user can adjust the limit of how many times the code can run before it stops.\newline
 
+A Potential-flow code assumes that the fluid is incompressible, that the flow is steady, and that the fluid is inviscid. These are safe assumptions for airflow below \hyperlink{M}{Mach} 0.3 for air, according to this \href{https://en.wikipedia.org/wiki/Compressible_flow}{Wikipedia Article}. \newline
+
 The \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Analysis.jl}{Julia file} created for this project and its accompanying \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file} could control separately for different input options. The final function uses a default angle step size of 1 degree, with 20,000 iterations, from maximum and minimum angles chosen by the user.\newline
 
 \subsubsection*{Results and Discussion}
 
 This research found that adjusting the Reynolds number, angle of attack, thickness, and camber amount and position all affect the forces experienced by an airfoil. These forces are described by Equation \ref{eq:1} on the first page. Figure \ref{fig:1} and Figure \ref{fig:2} show that airfoils with a larger \hyperlink{c}{Camber} experience more lift force. The airfoils shown in Figure \ref{fig:1} and Figure \ref{fig:2} experience the same increase in \hyperlink{CD}{Drag Coefficient} as they increase their Camber-to-Cord ratio. Both coefficients increased with increasing angle of attack. On the range from -8$^{\circ}$ to 8$^{\circ}$ shown in the graphs, the Drag Coefficient increased as angle of attack became either more positive or more negative.\newline
 
-Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers used in this lab. Clicking on the \color{blue}hyperlink number \color{black} below each NACA number will jump to the plot of its lift, drag, or moment coefficients compared to angle of attack. \newline
+Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers used in this lab. Clicking on the \color{blue}hyperlink number \color{black} below each NACA number will jump to the plot of its lift, drag, or moment coefficients compared to angle of attack. In many of the airfoils that I examined, the drag force was lowest at a $0^{\circ}$ angle of attack, but in some cases, for example in Figure \ref{fig:4}, the drag coefficient was lowest at a different angle. This is examined further in the \newline
 
 \begin{table}[bp]
 	\centering
@@ -69,38 +73,46 @@ Table 1 contains a list of all the airfoil NACA numbers and Reynolds numbers use
 	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
 		\hline
 		 \textbf{Profile} & 1310 & 2310 & 3310 & 1412 & 2412 & 3412 & 2209 & 2209 & 2209 \\ \hline
-		 \textbf{\emph{Re}} & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 200,000 & 300,000 \\ 
-		 \textbf{Link} & \ref{fig:1} & \ref{fig:1} & \ref{fig:1} & \ref{fig:2} & \ref{fig:2} & \ref{fig:2} & \ref{fig:3} & \ref{fig:3} & \ref{fig:3} \\ \hline \hline
+		 \textbf{\emph{Re}} & \multicolumn{3}{c|}{$1.0*10^5$}  & \multicolumn{3}{c|}{$1.0*10^5$} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ \\ \hline
+		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:1}} & \multicolumn{3}{c|}{\ref{fig:2}} & \multicolumn{3}{c|}{\ref{fig:3}} \\ \hline \hline
 		 \newline
 		 \textbf{Profile} & 1115 & 1115 & 1115 & 2208 & 2213 & 2218 & 2114 & 2214 & 2314 \\ \hline
-		 \textbf{\emph{Re}} & 100,000 & 200,000 & 300,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 & 100,000 \\ 
-		 \textbf{Link} & \ref{fig:4} & \ref{fig:4} & \ref{fig:4} & \ref{fig:5} & \ref{fig:5} & \ref{fig:5} & \ref{fig:6} & \ref{fig:6} & \ref{fig:6} \\ \hline
+		 \textbf{\emph{Re}} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ & \multicolumn{3}{c|}{$1.0*10^5$} & \multicolumn{3}{c|}{$1.0*10^5$} \\ \hline
+		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:4}}& \multicolumn{3}{c|}{\ref{fig:5}} & \multicolumn{2}{c|}{\ref{fig:6}} & \ref{fig:6}, \ref{fig:7} \\ \hline
 	\end{tabular}
 \end{table}
 
+With the airfoils shown in this table, it was found that increasing the \hyperlink{alpha}{Angle of Attack, $\alpha$} always increased the \hyperlink{CL}{Lift Coefficient}. This is also expected, since if an airplane is flying with a higher angle of attack, more of its bottom area will be exposed to the oncoming airstream and it will be lifted more forcefully. If a wing has a negative Angle of Attack, on the other hand, the oncoming air will flow past the top of the wing and push it downwards, decreasing the lift coefficient. If the wing were to fly upside-down or pointed downwards, it would have a negative lift coefficient, since the airstream would do the opposite of if it had a positive angle of attack in the same direction.\newline
+
+The \hyperlink{CD}{Drag Coefficients} examined in this analysis were all positive. This was to be expected, since drag force is always in the direction opposes an airfoil's motion. Most of the plots created in this plot had minimum drag forces at an \hyperlink{alpha}{Angle of Attack} near $0^{\circ}$. The \hyperlink{AP}{Airfoil Polar} in figure \ref{fig:7} shows that a NACA 2314 Airfoil experiences its lowest drag coefficient at an angle of attack different from where it experiences the greatest drag. Examination of figure \ref{fig:6} shows that if this airfoil needed to experience great drag force without lifting, for example in the case of an airplane landing, it would use a negative angle of attack. If it needed to minimum drag, it would use an angle of attack near $3^{\circ}$. At this angle, the airfoil would already have positive lift force, since it would have passed $\alpha_{0}$. \newline
+
+For most of the airfoils examined, the \hyperlink{CM}{Pitching Moment Coefficient} appeared to increase and decrease in the shape of an N near a zero-degree angle of attack. At low negative angles of attack, the pitching moment coefficient was positive, which would bring the airfoil's angle of attack closer to $0^{\circ}$.The NACA 2412 and 3412 airfoils in Figure \ref{fig:2} experienced a negative Moment Coefficient at all angles of attack, so these airfoils would require outside support from another airfoil to travel in a straight line.\newline
+
 \begin{figure}
   \centering
-  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure1.png}} \label{fig:1}
-  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure2.png}} \label{fig:1}
-  \subfloat[]{\includegraphics[width=.30\textwidth]{Figure3.png}} \label{fig:1}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure1.png}}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure2.png}}
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure3.png}}
   \caption{This figure shows the Lift \textbf{(a)}, Drag \textbf{(b)}, and moment \textbf{(c)} coefficients of airfoils of varying camber length.}
-  \label{run5}
+  \label{fig:1}
 \end{figure}
 
 One difficulty that was encountered during the analysis of these airfoils was making smooth graphs for them over their entire angle range. This was difficult because the airfoils compared were sometimes significantly different. For example, Airfoils 1 and 2 had very close \hyperlink{NACA}{NACA Numbers}, with the only difference between them being their first digit. This 1-digit difference meant, though, that Airfoil 2 had twice as much \hyperlink{c}{Camber}. This meant that although their behaviors could be plotted on the same plane in Figures \ref{fig:1}, a, b, and c, they were very different. This made it difficult to plot converging solutions for the different coefficients of these wing types on the same plane.\newline
 
-The plots in Figure \ref{fig:1} and Figure \ref{fig:2} appear to have a similar upward slope, which is expected. As the wing tilts upwards with an increasing angle of attack \hyperref{aplha}{$\alpha$}, its \hyperlink{CL}{Lift Coefficient} increases from negative to positive for both airfoils. A notable difference, though, is that for the airfoils with their maximum camber further forward shown in Figure \ref{fig:1} had a greater drag coefficient at lower angles than those in Figure \ref{fig:2}.
+The plots in Figure \ref{fig:1} and Figure \ref{fig:2} appear to have a similar upward slope, which is expected. As the wing tilts upwards with an increasing angle of attack \hyperref{aplha}{$\alpha$}, its \hyperlink{CL}{Lift Coefficient} increases from negative to positive for both airfoils. A notable difference, though, is that for the airfoils with their maximum camber further forward shown in Figure \ref{fig:1} had a greater drag coefficient at lower angles than those in Figure \ref{fig:2}. \newline
 
 \begin{figure}[!htb]
   \centering
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure4.png}} \label{fig:2}
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure5.png}} \label{fig:2}
-  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure6.png}} \label{fig:2}
+  \subfloat[]{\includegraphics[width=.32\textwidth]{Figure4.png}} \label{fig:2}
+  \subfloat[]{\includegraphics[width=.32\textwidth]{Figure5.png}} \label{fig:2}
+  \subfloat[]{\includegraphics[width=.32\textwidth]{Figure6.png}} \label{fig:2}
   \caption{Figure \textbf{(a)} shows the Lift Coefficients, and Figures \textbf{(b)} and \textbf{(c)} show the Drag and Moment Coefficients for these Airfoils of varying camber length.}
-  \label{run5}
+  \label{fig:2}
 \end{figure}
 
-Adjusting the Reynolds Number of an airfoil also changed its behavior significantly. The unit-less Reynolds number of an airfoil, described by Equation 4, can change for an aircraft even as its velocity or the air density changes.
+Adjusting the Reynolds Number of an airfoil also changed its behavior significantly. The unit-less Reynolds number of an airfoil, described by Equation 4, can change for an aircraft even as its velocity or the air density changes. \newline
+
+Another discovery in this analysis was that adjusting an airfoil's \hyperlink{Re}{Reynolds Number} also impacts its critical and stall angles of attack. This program was capable of calculating the critical angle of attack, the stall angle of attack, and the slope of lift vs. drag, which allowed the user to determine by how much drag would increase corresponding to each unit increase in lift. It is important to know this to understand the tradeoffs that will become necessary during use. The two airfoils examined at different Reynolds Numbers in this paper, shown in Figure \ref{fig:3} and Figure \ref{fig:4}, both showed that changing the Reynolds Number also affected the critical angle of attack and Airfoil Polar. This is also shown in Figure \ref{fig:8}. \newline
 
 \begin{equation} \label{eq:4}
 \begin{aligned}
@@ -110,31 +122,20 @@ Adjusting the Reynolds Number of an airfoil also changed its behavior significan
 \end{equation}
 \newline
 
+As seen in the equation above, the \hyperlink{Re}{Reynolds Number} depends on Velocity, wing Length or size, and the Viscosity of the medium through which it travels. Each of these quantities can easily change, so it is important to examine airfoils at a variety of different Reynolds Numbers. The \hyperlink{CD}{Drag} and \hyperlink{CM}{Moment Coefficients} shown in Figure \ref{fig:4} exemplify how changes in the Reynolds number can change an airfoil's required angle of attack. \newline
+
+This research found that for the same airfoil, shown in Figure \ref{fig:3}, changing the \hyperlink{Re}{Reynolds Number} changed the Critical \hyperlink{alpha}{Angle of Attack}. The Airfoil Functions file I created contained a function called "find$\alpha$0" that calculated the critical angle of attack. It found that for the same airfoil with different  Reynolds Numbers, the critical angles of attack were $-0.838^{\circ}$, $-1.621^{\circ}$, and $-1.956^{\circ}$. \newline
+
 \begin{figure}[!htb]
   \centering
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure7.png}}
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure8.png}} 
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure9.png}}
   \caption{Figure \textbf{(a)} shows an Airfoil's Lift Coefficient varied by Reynolds number. Figures \textbf{(b)} and \textbf{(c)} do the same for its Drag and Moment Coefficients.}
-  \label{run5}
+  \label{fig:3}
 \end{figure}
 
 Both the NACA 2230 Airfoil shown in Figure \ref{fig:3} and the NACA 1120 Airfoil in Figure \ref{fig:4} appear to increase in \hyperlink{CL}{Lift Coefficient} more rapidly at lower \hyperlink{Re}{Reynolds Numbers}. Their \hyperlink{CD}{Drag Coefficients} appear higher at low Reynolds Numbers in both Figure \ref{fig:3} and Figure \ref{fig:4}. At low Reynolds numbers their \hyperlink{CM}{Moment Coefficients} are both higher, but decrease more quickly.
-
-\begin{figure}[!htb]
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure10.png}
-  \caption{NACA 1115 Lift Coefficients Varied by Reynolds Number}\label{fig:10}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure11.png}
-  \caption{NACA 1115 Drag Coefficients Varied by Reynolds Number}\label{fig:11}
-\endminipage\hfill
-\minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{Figure12.png}
-  \caption{NACA 1115 Moment Coefficients Varied by Reynolds Number}\label{fig:12}
-\endminipage
-\end{figure}
 
 \begin{figure}[!htb]
   \centering
@@ -142,7 +143,7 @@ Both the NACA 2230 Airfoil shown in Figure \ref{fig:3} and the NACA 1120 Airfoil
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure11.png}} 
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure12.png}}
   \caption{The Lift Coefficient of a NACA 1115 airfoil is shown in \textbf{(a)} at varying Reynolds numbers. Its Drag Coefficients are shown in \textbf{(b)} and its Moment Coefficient is shown in \textbf{(c)}}
-  \label{run5}
+  \label{fig:4}
 \end{figure}
 
 Figure \ref{fig:5} shows that varying the \hyperlink{Th}{Wing Thickness} only slightly can have huge impacts on the Lift, Drag, and Moment experienced by an airfoil. This is because adjusting a wing's thickness varies the position of its surface at each point along its profile, which add up to flow to be redirected in significantly different ways.
@@ -153,7 +154,7 @@ Figure \ref{fig:5} shows that varying the \hyperlink{Th}{Wing Thickness} only sl
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure14.png}} 
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure15.png}}
   \caption{Figures \textbf{(a)}, \textbf{(b)}, and \textbf{(c)} show the changes in Lift, Drag, and Moment coefficients that occur when an airfoil's Maximum Camber location is adjusted.}
-  \label{run5}
+  \label{fig:5}
 \end{figure}
 
 Although \hyperlink{Th}{Wing Thickness} has been shown to significantly impact an airfoil's Lift, Drag, and Moment Coefficients, Figure \ref{fig:6} shows that the position of the \hyperlink{Camber}{Maximum Camber} does not seem to significantly impact the Lift Coefficient. Figure \ref{fig:6} shows that drag coefficient is hardly not impacted as much either. Moment coefficient is perhaps changed the most, shown in Figure \ref{fig:6}, but this is still much less than the change caused by wing thickness shown in Figure \ref{fig:5}.
@@ -164,7 +165,22 @@ Although \hyperlink{Th}{Wing Thickness} has been shown to significantly impact a
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure17.png}} 
   \subfloat[]{\includegraphics[width=.35\textwidth]{Figure18.png}}
   \caption{Figure \textbf{(a)} displays changes in an airfoil's Lift Coefficient according to Maximum Camber Location. Figure \textbf{(b)} shows what happens to its Drag Coefficient, and changes in the Moment Coefficient can be observed in Figure \textbf{(c)}.}
-  \label{run5}
+  \label{fig:6}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{Figure19.png}
+  \caption{An airfoil polar for the NACA 2314 Airfoil shown in Figure 6.}
+  \label{fig:7}
+\end{figure}
+
+\begin{figure}[!htb]
+  \centering
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure20.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure21.png}} 
+  \subfloat[]{\includegraphics[width=.35\textwidth]{Figure22.png}}
+  \caption{The three different Reynolds numbered shown in figure \textbf{(a)}, \textbf{(b)}, and \textbf{(c)}, representing a NACA 2209 airfoil in varying conditions, show that the Drag experienced by an airfoil can change significantly.}
+  \label{fig:8}
 \end{figure}
 
 I found in this airfoil analysis that an airfoil experiences different \hyperlink{CL}{Lift}, \hyperlink{CL}{Drag}, and \hyperlink{CM}{Moment} forces at different \hyperlink{alpha}{Angles of Attack}. I found that in general, Lift force increases with increasing angle of attack, and drag force behaves as a parabola with a minimum near zero. Zooming out further beyond the 16-degree domain of these graphs would show that these coefficients actually behave as sinusoidal waves as the airfoil's angle of attack moves around in a circle.\newline
