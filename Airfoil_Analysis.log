@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  22 SEP 2022 12:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  22 SEP 2022 13:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -735,31 +735,26 @@ Overfull \hbox (21.5081pt too wide) in paragraph at lines 164--167
 <Figure19.png, id=172, 602.25pt x 401.5pt>
 File: Figure19.png Graphic file (type png)
 <use Figure19.png>
-Package pdftex.def Info: Figure19.png  used on input line 172.
-(pdftex.def)             Requested size: 430.00462pt x 286.67822pt.
+Package pdftex.def Info: Figure19.png  used on input line 173.
+(pdftex.def)             Requested size: 215.0023pt x 143.33298pt.
 <Figure20.png, id=173, 602.25pt x 401.5pt>
 File: Figure20.png Graphic file (type png)
 <use Figure20.png>
-Package pdftex.def Info: Figure20.png  used on input line 179.
+Package pdftex.def Info: Figure20.png  used on input line 181.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
 <Figure21.png, id=174, 602.25pt x 401.5pt>
 File: Figure21.png Graphic file (type png)
 <use Figure21.png>
-Package pdftex.def Info: Figure21.png  used on input line 180.
+Package pdftex.def Info: Figure21.png  used on input line 182.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
 <Figure22.png, id=175, 602.25pt x 401.5pt>
 File: Figure22.png Graphic file (type png)
 <use Figure22.png>
-Package pdftex.def Info: Figure22.png  used on input line 181.
+Package pdftex.def Info: Figure22.png  used on input line 183.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
 
-Overfull \hbox (21.5081pt too wide) in paragraph at lines 179--182
+Overfull \hbox (21.5081pt too wide) in paragraph at lines 181--184
  [][][][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
-
  []
 
 
@@ -767,12 +762,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 188--189
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
+
+ []
+
 [5 <./Figure10.png> <./Figure11.png> <./Figure12.png> <./Figure13.png> <./Figur
 e14.png> <./Figure15.png>] [6 <./Figure16.png> <./Figure17.png> <./Figure18.png
->] [7 <./Figure19.png> <./Figure20.png> <./Figure21.png> <./Figure22.png>]
-[8
+> <./Figure19.png> <./Figure20.png> <./Figure21.png> <./Figure22.png>] [7
 
-] [9] (./Airfoil_Analysis.aux)
+]
+[8] (./Airfoil_Analysis.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -780,9 +780,9 @@ Package rerunfilecheck Info: File `Airfoil_Analysis.out' has not changed.
 (rerunfilecheck)             Checksum: EC9B13D1173F847BC67BAB2E25FEDC33;96.
  ) 
 Here is how much of TeX's memory you used:
- 13813 strings out of 478268
- 230769 string characters out of 5846347
- 533564 words of memory out of 5000000
+ 13812 strings out of 478268
+ 230763 string characters out of 5846347
+ 533681 words of memory out of 5000000
  31789 multiletter control sequences out of 15000+600000
  478664 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -806,10 +806,10 @@ ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
 2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2
 022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Airfoil_Analysis.pdf (9 pages, 820137 bytes).
+Output written on Airfoil_Analysis.pdf (8 pages, 827113 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 309 PDF objects out of 1000 (max. 8388607)
+ 246 compressed objects within 3 object streams
+ 48 named destinations out of 1000 (max. 500000)
  119 words of extra memory for PDF output out of 10000 (max. 10000000)
 

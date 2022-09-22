@@ -135,19 +135,34 @@ function findα0(x, y)
     return α0
 end
 
-function polar(x, y, alpha, rel, reu, iterations, xt, yt, figuretitle)
+function polar(type, x, y, alpha, rel, reu, iterations, xt, yt, figuretitle)
+    set_coordinates(x, y)
     re = Array{Float64}(undef, rearray, 1)
-    cd = Array{Float64}(undef, rearray, 1)
+    c = Array{Float64}(undef, rearray, 1)
+    c_l = Array{Float64}(undef, rearray, 1)
+    c_d = Array{Float64}(undef, rearray, 1)
+    c_dp = Array{Float64}(undef, rearray, 1)
+    c_m = Array{Float64}(undef, rearray, 1)
     in = (reu - rel) / rearray
     re[1] = rel
     for i in 2:rearray
         re[i] = rel + (i - 1) * in
     end
-    for i in 1:10
-        c_l, c_d, c_dp, c_m, converged = solve_alpha(alpha, re[i]; mach=0.0, iter=iterations, ncrit=9)
-        cd[i] = c_d
+    for i in 1:rearray
+        c_l[i], c_d[i], c_dp[i], c_m[i], converged = solve_alpha(alpha, re[i], iter=iterations, ncrit=9)
     end
-    plotredrag(re, cd, xt, yt, figuretitle)
+    if type == "lift"
+        plotredrag(re, c_l, xt, yt, figuretitle)
+    end
+    if type == "drag"
+        plotredrag(re, c_d, xt, yt, figuretitle)
+    end
+    if type == "polardrag"
+        plotredrag(re, c_dp, xt, yt, figuretitle)
+    end
+    if type == "moment"
+        plotredrag(re, c_m, xt, yt, figuretitle)
+    end
 end
 
 function findslope(x, y, α0)
@@ -186,12 +201,12 @@ function findstall(x, y, α0, slope, max, re)
 end
 
 function plotliftdrag(c_l, c_d, figuretitle)
-    plot(c_l[:], c_d[:], legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient")
+    plot(c_l[:], c_d[:], legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20,)
     savefig(figuretitle)
 end
 
 function plotredrag(re, cd, xt, yt, figuretitle)
-    plot(re[:], cd[:], legend = false, xlabel = xt, ylabel = yt)
+    plot(re[:], cd[:], legend = false, xlabel = xt, ylabel = yt, tickfontsize = 8, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20,)
     savefig(figuretitle)
 end
 
