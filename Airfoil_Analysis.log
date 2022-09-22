@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  22 SEP 2022 12:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.7.15)  22 SEP 2022 12:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -580,17 +580,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 89--90
 
  []
 
-<Figure1.png, id=104, 602.25pt x 401.5pt>
+<Figure1.png, id=106, 602.25pt x 401.5pt>
 File: Figure1.png Graphic file (type png)
 <use Figure1.png>
 Package pdftex.def Info: Figure1.png  used on input line 93.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure2.png, id=105, 602.25pt x 401.5pt>
+<Figure2.png, id=107, 602.25pt x 401.5pt>
 File: Figure2.png Graphic file (type png)
 <use Figure2.png>
 Package pdftex.def Info: Figure2.png  used on input line 94.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure3.png, id=106, 602.25pt x 401.5pt>
+<Figure3.png, id=108, 602.25pt x 401.5pt>
 File: Figure3.png Graphic file (type png)
 <use Figure3.png>
 Package pdftex.def Info: Figure3.png  used on input line 95.
@@ -610,17 +610,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 102--103
 
  []
 
-<Figure4.png, id=116, 602.25pt x 401.5pt>
+<Figure4.png, id=118, 602.25pt x 401.5pt>
 File: Figure4.png Graphic file (type png)
 <use Figure4.png>
 Package pdftex.def Info: Figure4.png  used on input line 106.
 (pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
-<Figure5.png, id=117, 602.25pt x 401.5pt>
+<Figure5.png, id=119, 602.25pt x 401.5pt>
 File: Figure5.png Graphic file (type png)
 <use Figure5.png>
 Package pdftex.def Info: Figure5.png  used on input line 107.
 (pdftex.def)             Requested size: 137.60461pt x 91.73654pt.
-<Figure6.png, id=118, 602.25pt x 401.5pt>
+<Figure6.png, id=120, 602.25pt x 401.5pt>
 File: Figure6.png Graphic file (type png)
 <use Figure6.png>
 Package pdftex.def Info: Figure6.png  used on input line 108.
@@ -650,17 +650,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 127--128
 
  []
 
-<Figure7.png, id=136, 602.25pt x 401.5pt>
+<Figure7.png, id=138, 602.25pt x 401.5pt>
 File: Figure7.png Graphic file (type png)
 <use Figure7.png>
 Package pdftex.def Info: Figure7.png  used on input line 131.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure8.png, id=137, 602.25pt x 401.5pt>
+<Figure8.png, id=139, 602.25pt x 401.5pt>
 File: Figure8.png Graphic file (type png)
 <use Figure8.png>
 Package pdftex.def Info: Figure8.png  used on input line 132.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure9.png, id=138, 602.25pt x 401.5pt>
+<Figure9.png, id=140, 602.25pt x 401.5pt>
 File: Figure9.png Graphic file (type png)
 <use Figure9.png>
 Package pdftex.def Info: Figure9.png  used on input line 133.
@@ -672,17 +672,17 @@ Overfull \hbox (21.5081pt too wide) in paragraph at lines 131--134
 
 [4 <./Figure4.png> <./Figure5.png> <./Figure6.png> <./Figure7.png> <./Figure8.p
 ng> <./Figure9.png>]
-<Figure10.png, id=153, 602.25pt x 401.5pt>
+<Figure10.png, id=155, 602.25pt x 401.5pt>
 File: Figure10.png Graphic file (type png)
 <use Figure10.png>
 Package pdftex.def Info: Figure10.png  used on input line 142.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure11.png, id=154, 602.25pt x 401.5pt>
+<Figure11.png, id=156, 602.25pt x 401.5pt>
 File: Figure11.png Graphic file (type png)
 <use Figure11.png>
 Package pdftex.def Info: Figure11.png  used on input line 143.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure12.png, id=155, 602.25pt x 401.5pt>
+<Figure12.png, id=157, 602.25pt x 401.5pt>
 File: Figure12.png Graphic file (type png)
 <use Figure12.png>
 Package pdftex.def Info: Figure12.png  used on input line 144.
@@ -692,17 +692,17 @@ Overfull \hbox (21.5081pt too wide) in paragraph at lines 142--145
  [][][][] 
  []
 
-<Figure13.png, id=158, 602.25pt x 401.5pt>
+<Figure13.png, id=160, 602.25pt x 401.5pt>
 File: Figure13.png Graphic file (type png)
 <use Figure13.png>
 Package pdftex.def Info: Figure13.png  used on input line 153.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure14.png, id=159, 602.25pt x 401.5pt>
+<Figure14.png, id=161, 602.25pt x 401.5pt>
 File: Figure14.png Graphic file (type png)
 <use Figure14.png>
 Package pdftex.def Info: Figure14.png  used on input line 154.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure15.png, id=160, 602.25pt x 401.5pt>
+<Figure15.png, id=162, 602.25pt x 401.5pt>
 File: Figure15.png Graphic file (type png)
 <use Figure15.png>
 Package pdftex.def Info: Figure15.png  used on input line 155.
@@ -712,17 +712,17 @@ Overfull \hbox (21.5081pt too wide) in paragraph at lines 153--156
  [][][][] 
  []
 
-<Figure16.png, id=167, 602.25pt x 401.5pt>
+<Figure16.png, id=169, 602.25pt x 401.5pt>
 File: Figure16.png Graphic file (type png)
 <use Figure16.png>
 Package pdftex.def Info: Figure16.png  used on input line 164.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure17.png, id=168, 602.25pt x 401.5pt>
+<Figure17.png, id=170, 602.25pt x 401.5pt>
 File: Figure17.png Graphic file (type png)
 <use Figure17.png>
 Package pdftex.def Info: Figure17.png  used on input line 165.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure18.png, id=169, 602.25pt x 401.5pt>
+<Figure18.png, id=171, 602.25pt x 401.5pt>
 File: Figure18.png Graphic file (type png)
 <use Figure18.png>
 Package pdftex.def Info: Figure18.png  used on input line 166.
@@ -732,22 +732,22 @@ Overfull \hbox (21.5081pt too wide) in paragraph at lines 164--167
  [][][][] 
  []
 
-<Figure19.png, id=170, 602.25pt x 401.5pt>
+<Figure19.png, id=172, 602.25pt x 401.5pt>
 File: Figure19.png Graphic file (type png)
 <use Figure19.png>
 Package pdftex.def Info: Figure19.png  used on input line 172.
 (pdftex.def)             Requested size: 430.00462pt x 286.67822pt.
-<Figure20.png, id=171, 602.25pt x 401.5pt>
+<Figure20.png, id=173, 602.25pt x 401.5pt>
 File: Figure20.png Graphic file (type png)
 <use Figure20.png>
 Package pdftex.def Info: Figure20.png  used on input line 179.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure21.png, id=172, 602.25pt x 401.5pt>
+<Figure21.png, id=174, 602.25pt x 401.5pt>
 File: Figure21.png Graphic file (type png)
 <use Figure21.png>
 Package pdftex.def Info: Figure21.png  used on input line 180.
 (pdftex.def)             Requested size: 150.50424pt x 100.33798pt.
-<Figure22.png, id=173, 602.25pt x 401.5pt>
+<Figure22.png, id=175, 602.25pt x 401.5pt>
 File: Figure22.png Graphic file (type png)
 <use Figure22.png>
 Package pdftex.def Info: Figure22.png  used on input line 181.
@@ -782,7 +782,7 @@ Package rerunfilecheck Info: File `Airfoil_Analysis.out' has not changed.
 Here is how much of TeX's memory you used:
  13813 strings out of 478268
  230769 string characters out of 5846347
- 533568 words of memory out of 5000000
+ 533564 words of memory out of 5000000
  31789 multiletter control sequences out of 15000+600000
  478664 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -806,10 +806,10 @@ ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
 2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2
 022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Airfoil_Analysis.pdf (9 pages, 820118 bytes).
+Output written on Airfoil_Analysis.pdf (9 pages, 820137 bytes).
 PDF statistics:
- 313 PDF objects out of 1000 (max. 8388607)
- 249 compressed objects within 3 object streams
+ 314 PDF objects out of 1000 (max. 8388607)
+ 250 compressed objects within 3 object streams
  49 named destinations out of 1000 (max. 500000)
  119 words of extra memory for PDF output out of 10000 (max. 10000000)
 
