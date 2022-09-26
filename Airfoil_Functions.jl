@@ -1,14 +1,13 @@
 #=---------------------------------------------------------------
-9/22/2022
-Airfoil_Analysis v11 Airfoil_Functions.jl
-I have updated my functions in this version of the code to
-ensure they all work correctly.
+9/26/2022
+Airfoil_Analysis v12 Airfoil_Functions.jl
+This version calculates α0 and αst for each airfoil.
 ---------------------------------------------------------------=#
 numitr = 20000
 len = 1
 res = 100
 rearray = 10
-err = 0.15
+err = 0.3
 
 function load(filename)
     for i in 1:1
@@ -177,27 +176,37 @@ end
 
 function findstall(x, y, α0, slope, max, re)
     i = 1
-    stall = Array{Float64}(undef, 2, 1)
-    min = 1 + α0 - (α0 % 1)
+    stall = 0
+    min = 1 + α0 - (α0 % 1.0)
     alpha = min:1:max
     c_l, c_d, c_dp, c_m, converged = Xfoil.alpha_sweep(x, y, alpha, re, iter=(numitr / 100), zeroinit=false, printdata=false)
-    while i < length(alpha) && c_l[i] <= ((alpha[i] * (1 - err)) - α0) * slope
+    while i < length(alpha) && c_l[i + 1] >= c_l[i]
         i += 1
     end
     if i == length(c_l)
         fail = string("The stall angle of attack is not within the provided angle range from ", string(alpha[1]), " to ", string(alpha[length(alpha)], ".\n"))
         print(fail)
-        stall[1] = 0
-        stall[2] = 0
+        stall = 0
     end
     if i < length(c_l) - 1
         slope = (c_l[i + 1] - c_l[i])
-        stall[1] = alpha[i]
-        print(string("Angle of Attack: ", string(stall[i]), " Degrees"))
-        stall[1] = c_l[i]
-        print(string("Lifg Coefficient: ", string(c_l[i])))
+        stall = alpha[i]
+        print(string("Critical Angle of Attack: ", string(stall), " Degrees\n"))
     end    
     return stall
+end
+
+function recordInfo(filename, x, y, a, l, max, re)
+    α0 = findα0(a, l)
+    sl = findslope(a, l, α0)
+    st = findstall(x, y, α0, sl, max, re)
+    intre::Int64 = re / 1000
+    filename = string("Documents/GitHub/497R-Projects/data_", string(filename), "_Re", string(intre), "k.txt")
+    open(filename, "w") do file
+        write(file, string(α0, "\n"))
+        write(file, string(sl, "\n"))
+        write(file, string(st))
+    end
 end
 
 function plotliftdrag(c_l, c_d, figuretitle)
@@ -230,4 +239,4 @@ function plot3notitle(angle, a, b, c, figuretitle, ytitle)
     plot!(angle[:], b[:], linestyle = :dashdot)
     plot!(angle[:], c[:], line = :dot)
     savefig(figuretitle)
-end
+end 
