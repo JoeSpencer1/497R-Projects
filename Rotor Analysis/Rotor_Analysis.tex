@@ -29,16 +29,25 @@
 
 The \hyperlink{BEM}{Blade Element Moment Theory}
 
+Axial induction factor $a$ Tangential induction factor $a'$
+
 \clearpage
 
 \section{Glossary}
 \begin{itemize}
 	
-	\item \hypertarget{BEM}{Blade Element Moment Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}.
+	\item \hypertarget{BEM}{Blade Element Moment Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. It calculates the 
 	
-	\item \hypertarget{BET}{Blade Element Theory} - Blade Element Theory
+	\item \hypertarget{BET}{Blade Element Theory} - Blade Element Theory calculates the forces on a turbine blade by dividing it into finite pieces and summing the forces on all of these pieces.
 	
-	\item \hypertarget{MT}{Momentum Theory} - Momentum Theory
+	\item \hypertarget{MT}{Momentum Theory} - Momentum Theory defines the power required to produce sufficient thrust to maintain momentum in a blade by the following equation, where $T$ is thrust, $\rho$ is density, $A$ is disc area, and $P$ is power:
+	\begin{equation}
+	\begin{aligned}
+        		P = \sqrt{\frac{T^{3}}{2 \rho A}}
+	\end{aligned}
+	\end{equation}
+	
+	\item \hyperlink{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$
 	
 \end{itemize}
 
