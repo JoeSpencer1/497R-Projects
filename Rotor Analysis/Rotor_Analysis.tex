@@ -36,9 +36,34 @@ Axial induction factor $a$ Tangential induction factor $a'$
 \section{Glossary}
 \begin{itemize}
 	
-	\item \hypertarget{BEM}{Blade Element Moment Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. It calculates the 
+	\item \hypertarget{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$, is the angle between the freest stream velocity and the velocity of the airfoil as it rotates. It is used in \hyperlink{BEM}{Blade Element Moment Theory} calculations.
+
+	\item \hypertarget{a}{Axial Induction Factor, $a$} - The Axial Induction Factor is the ratio of the reduction in air velocity at an airfoil to its free stream velocity.
 	
-	\item \hypertarget{BET}{Blade Element Theory} - Blade Element Theory calculates the forces on a turbine blade by dividing it into finite pieces and summing the forces on all of these pieces.
+	\item \hypertarget{BEM}{Blade Element Moment Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. These equations are used to recursively find the \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}
+	\begin{equation}
+	\begin{aligned}
+		\frac{1}{2} W^{2} N c C_{y} = 4 \pi U_{\infty} (1 - a) \times \Omega a' r^{2} \\
+		\frac{1}{2} \rho W^{2} N c C_{x} = 4 \pi \rho [(a' \Omega r)^{2} + \Omega^{2}_{\infty} a (1 - a)] r \\
+		\sin \phi = \frac{U_{\infty}}{W} (1 - a)
+	\end{aligned}
+	\end{equation}
+In these equations, $a$, $a'$, and $\phi$ are the previously mentioned axial and tangential induction factors and angle of rotation. The airfoil's apparent speed is represented by the letter $W$, $N$ is the number of propellers, $\rho$ is the fluid density, $c$ is the chord length, $C_{x}$ and $C_{y}$ are obtained by the equation below, $U_{\infty}$ is the fluid free velocity, $\Omega$ is the blade's angular speed, and $r$ is the radius to the tip of the blade.
+	\begin{equation}
+	\begin{aligned}
+		C_{x} = c_{l} \cos{\phi} + c_{d} \sin{\phi} \\
+		C_{y} = c_{l} \sin{\phi} + c_{d} \cos{\phi}
+	\end{aligned}
+	\end{equation}
+	
+	\item \hypertarget{BET}{Blade Element Theory} - Blade Element Theory calculates the forces on a turbine blade by dividing it into finite pieces and summing the forces on all of these pieces. This theory determines the induced velocity and efficiency of a point along a blade using these equations:
+	\begin{equation}
+	\begin{aligned}
+		v_{i} = \sqrt{\frac{T}{A} \frac{1}{2 \rho}} \\
+        		\eta = \frac{\tan{\phi}}{\tan{(\phi + \gamma)}}
+	\end{aligned}
+	\end{equation}
+In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$ the thrust it experiences, $A$ is its area, $\rho$ is the air density, $\phi$ is the angle to the airfoil's plane of rotation as it moves forward, and $\gamma$ is the difference between $\phi$ and $\beta$, what the airfoil's actual angle of rotation would be if it were stationary..
 	
 	\item \hypertarget{MT}{Momentum Theory} - Momentum Theory defines the power required to produce sufficient thrust to maintain momentum in a blade by the following equation, where $T$ is thrust, $\rho$ is density, $A$ is disc area, and $P$ is power:
 	\begin{equation}
@@ -47,7 +72,7 @@ Axial induction factor $a$ Tangential induction factor $a'$
 	\end{aligned}
 	\end{equation}
 	
-	\item \hyperlink{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$
+	\item \hypertarget{a'}{Tangential Induction Factor, $a'$} - The Tangential Induction Factor is the ratio of the increase in air velocity tangential to the airfoil to its free stream velocity.
 	
 \end{itemize}
 
