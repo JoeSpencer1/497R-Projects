@@ -1,6 +1,6 @@
 #=---------------------------------------------------------------
 9/26/2022
-Quick_Start v1 Quick_Start.jl
+Quick Start v1 Quick_Start.jl
 I used this tutorial to learn how to use the CCBlade.jl julia 
 extension.
 ---------------------------------------------------------------=#
@@ -37,7 +37,7 @@ r = propgeom[:, 1] * Rtip
 chord = propgeom[:, 2] * Rtip
 theta = propgeom[:, 3] * pi/180
 
-af = AlphaAF("Airfoils/naca4412.dat")
+af = AlphaAF("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Airfoils/naca4412.dat")
 
 sections = Section.(r, chord, theta, Ref(af))
 
@@ -51,19 +51,11 @@ out = solve.(Ref(rotor), sections, op)
 
 out.alpha*180/pi  # angle of attack in degrees
 
-figure()
-plot(r/Rtip, out.Np)
-plot(r/Rtip, out.Tp)
-xlabel("r/Rtip")
-ylabel("distributed loads (N/m)")
-legend(["flapwise", "lead-lag"])
+plot(r/Rtip, out.Np, label = "flapwise", xlabel = "r/Rtip", ylabel = "distributed loads (N/m)")
+plot!(r/Rtip, out.Tp, label = "lead-lag")
 
-figure()
-plot(r/Rtip, out.u/Vinf)
-plot(r/Rtip, out.v/Vinf)
-xlabel("r/Rtip")
-ylabel("(normalized) induced velocity at rotor disk")
-legend(["axial velocity", "swirl velocity"])
+plot(r/Rtip, out.u/Vinf, label = "axial velocity", xlabel = "r/Rtip", ylabel = "(normalized) induced velocity at rotor dixk")
+plot!(r/Rtip, out.v/Vinf, label = "swirl velocity")
 
 nJ = 20  # number of advance ratios
 
@@ -111,18 +103,10 @@ CTexp = exp[:, 2]
 CPexp = exp[:, 3]
 etaexp = exp[:, 4]
 
+plot(J, CT, xlabel = "J", label = "C_T")
+plot!(J, CQ * 2 * pi, label = "C_Q")
+plot!(Jexp, CTexp, color = "gray", label = "experimental")
+plot!(Jexp, CPexp, color = "gray", label = false)
 
-figure()
-plot(J, CT)
-plot(J, CQ*2*pi)
-plot(Jexp, CTexp, "ko")
-plot(Jexp, CPexp, "ko")
-xlabel(L"J")
-legend([L"C_T", L"C_P", "experimental"])
-
-figure()
-plot(J, eff)
-plot(Jexp, etaexp, "ko")
-xlabel(L"J")
-ylabel(L"\eta")
-legend(["CCBlade", "experimental"])
+plot(J, eff, xlabel = "J", ylabel = "\\eta", label = "CCBlade")
+plot!(Jexp, etaexp, label = "experimental")
