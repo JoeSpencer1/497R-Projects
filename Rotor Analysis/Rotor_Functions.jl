@@ -1,1 +1,1 @@
-using CCBlade, FLOWMath, Plots
+using CCBlade, FLOWMath, Plots, LaTeXStrings
