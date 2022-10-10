@@ -61,6 +61,40 @@ for i = 1:1
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_7.png")
 end
 
-# This section compares different propellor chord distributions.
-
 # This section compares different twist distributions.
+J4, eff4, CT4, CQ4 = Compute(10, twist = -0.5)
+J5, eff5, CT5, CQ5 = Compute(10, twist = 0.5)
+
+for i = 1:1
+    plot(J1, CT1, label = "twist = 0˚", xlabel = "\\alpha", ylabel = "\$C_{T}\$")
+    plot!(J4, CT4, label = "twist = -0.5˚")
+    plot!(J5, CT5, label = "twist = 0.5˚")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_8.png")
+    plot(J1, CQ1, label = "twist = 0˚", xlabel = "\\alpha", ylabel = "\$C_{Q}\$")
+    plot!(J4, CT4, label = "twist = -0.5˚")
+    plot!(J5, CT5, label = "twist = 0.5˚")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_9.png")
+    plot(J1, eff1, label = "twist = 0˚", xlabel = "\\alpha", ylabel = "\\eta")
+    plot!(J4, eff4, label = "twist = -0.5˚")
+    plot!(J5, eff5, label = "twist = 0.5˚")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_10.png")
+end
+
+# This section compares different propellor chord distributions.
+J6, eff6, CT6, CQ6 = Compute(10, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x4_7.txt")
+J7, eff7, CT7, CQ7 = Compute(10, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_11x7.txt")
+
+for i = 1:1
+    plot(J1, CT1, label = "APC 10x7", xlabel = "\\alpha", ylabel = "\$C_{T}\$")
+    plot!(J6, CT6, label = "APC 10x4.7")
+    plot!(J7, CT7, label = "APC 11x7")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_11.png")
+    plot(J1, CQ1, label = "APC 10x7", xlabel = "\\alpha", ylabel = "\$C_{Q}\$")
+    plot!(J6, CT6, label = "APC 10x4.7")
+    plot!(J7, CT7, label = "APC 11x7")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_12.png")
+    plot(J1, eff1, label = "APC 10x7", xlabel = "\\alpha", ylabel = "\\eta")
+    plot!(J6, eff6, label = "APC 10x4.7")
+    plot!(J7, eff7, label = "APC 11x7")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_13.png")
+end

@@ -140,7 +140,7 @@ This function loads the data for a six-column xfoil file. Entries are separated 
 """
 function Loaddata(filename)
     xfoildata = readdlm(filename, '\t', Float64, '\n')
-    alpha = xfoildata[:, 1] * pi/180
+    alpha = xfoildata[:, 1] * pi/180 # Convert degrees to radians
     cl = xfoildata[:, 2]
     cd = xfoildata[:, 3]
     return alpha, cl, cd
@@ -158,7 +158,7 @@ end
 # Compute
 The compute function finds J, eff, CT, and CQ for a rotor of provided geometry.
 """
-function Compute(Rtip; Rhub = 0.10 * Rtip, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt")
+function Compute(Rtip; Rhub = 0.10 * Rtip, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", twist = 0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = 0.10 * Rtip # Hub radius assumed 10% of tip radius
@@ -171,6 +171,13 @@ function Compute(Rtip; Rhub = 0.10 * Rtip, B = 2, rpm = 5400, filename = "/Users
     theta = rad(propgeom[:, 3]) # Convert degrees to radians
     # Find airfoil data at a variety of attack angles
     af = AlphaAF("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat")
+
+    # This section adds twist to a propellor's twist distribution if applicable.
+    if twist != 0
+        for i in 1:length(theta)
+            theta[i] += twist
+        end
+    end
 
     # This section reads in experimental data and estimates results.
     sections = Section.(r, chord, theta, Ref(af)) # Define properties for individual sections
