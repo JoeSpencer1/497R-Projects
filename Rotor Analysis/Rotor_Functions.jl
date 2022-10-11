@@ -100,28 +100,6 @@ function Convert(geom, rtip)
 end
 
 """
-# CTCPeff
-This function finds the coefficients of Thrust, Power, and Efficiency at different angles.
-"""
-function CDCPeff(rpm, rotor, sections; nJ = 20, rho = 1.225)
-    J = range(0.1, 0.6, length = nJ)  # advance ratio
-    Omega = rad(rpm) # Rotational Velocity in rad/s
-    n = rev(Omega) # Convert rad/s to rev/s
-    D = 2 * Rtip # Diameter to radius
-    eff = zeros(nJ)
-    CT = zeros(nJ)
-    CQ = zeros(nJ)
-    for i = 1:nJ
-        local Vinf = J[i] * D * n
-        local op = simple_op.(Vinf, Omega, r, rho)
-        outputs = solve.(Ref(rotor), sections, op)
-        T, Q = thrusttorque(rotor, sections, outputs)
-        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, Omega, rho, rotor, "propeller")
-    end
-    return J, eff, CT, CQ
-end
-
-"""
 # Loadexp
 This function loads experimental data from a file.
 """
@@ -155,14 +133,52 @@ function intom(Rtip)
 end
 
 """
+# CQCP
+This function does the simple calculation to convert CQ to CP.
+"""
+function CQCP(CP)
+    return CP / (2 * pi)
+end
+
+"""
+# CPCQ
+This function Converts CP to CQ.
+"""
+function CPCQ(CQ)
+    return CQ * 2 * pi
+end
+
+"""
+# CTCPeff
+This function finds the coefficients of Thrust, Power, and Efficiency at different angles.
+"""
+function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225)
+    Omega = rad(rpm) # Rotational Velocity in rad/s
+    J = range(0.1, 0.6, length = nJ)  # advance ratio
+    n = rev(Omega) # Convert rad/s to rev/s
+    eff = zeros(nJ)
+    CT = zeros(nJ)
+    CQ = zeros(nJ)
+    for i = 1:nJ
+        local Vinf = J[i] * D * n
+        local op = simple_op.(Vinf, Omega, r, rho)
+        outputs = solve.(Ref(rotor), sections, op)
+        T, Q = thrusttorque(rotor, sections, outputs)
+        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, Omega, rho, rotor, "propeller")
+    end
+    return J, eff, CT, CQ
+end
+
+"""
 # Compute
 The compute function finds J, eff, CT, and CQ for a rotor of provided geometry.
 """
-function Compute(Rtip; Rhub = 0.10 * Rtip, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", twist = 0)
+function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", twist = 0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
-    Rhub = 0.10 * Rtip # Hub radius assumed 10% of tip radius
+    Rhub = Rhub * Rtip # Hub radius assumed 10% of tip radius
     rotor = Rotor(Rhub, Rtip, B) # Create rotor
+    D = 2 * Rtip # Diameter to radius
 
     # Propellor geometry
     propgeom = readdlm(filename)
@@ -175,13 +191,13 @@ function Compute(Rtip; Rhub = 0.10 * Rtip, B = 2, rpm = 5400, filename = "/Users
     # This section adds twist to a propellor's twist distribution if applicable.
     if twist != 0
         for i in 1:length(theta)
-            theta[i] += twist
+            theta[i] += twist # Add twist to each segment.
         end
     end
 
     # This section reads in experimental data and estimates results.
     sections = Section.(r, chord, theta, Ref(af)) # Define properties for individual sections
-    J, eff, CT, CQ = CDCPeff(rpm, rotor, sections)
+    J, eff, CT, CQ = CDCPeff(rpm, rotor, sections, r, D) # This is an internal function in this file.
 
     # Return these outputs.
     return J, eff, CT, CQ

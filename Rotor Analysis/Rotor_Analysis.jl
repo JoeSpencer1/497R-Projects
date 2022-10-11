@@ -18,9 +18,11 @@ include("Rotor_Functions.jl")
 
 # The first section creates the propellor.
 J1, eff1, CT1, CQ1 = Compute(10)
+CP1 = CPCQ(CQ1)
 
 # This section reads in experimental data and estimates results.
 Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/10x7_3008.txt")
+CQexp1 = CQCP(CPexp1)
 
 #=---------------------------------------------------------------
 This section creates graphs. comparisons.
@@ -32,10 +34,10 @@ for i = 1:1
     plot!(Jexp1, CTexp1, label = "experimental")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_1.png")
     plot(J1, CQ1, label = "predicted", xlabel = "\\alpha", ylabel = "\$C_{Q}\$")
-#    plot!(Jexp, CQexp, label = "experimental")
+    plot!(Jexp1, CQexp1, label = "experimental (found from \$C_{P}\$)")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_2.png")
-    plot(Jexp1, CPexp1, label = "experimental", xlabel = "\\alpha", ylabel = "\$C_{P}\$")
-#    plot(J, CP, label = "predicted")
+    plot(J1, CP1, label = "predicted (found from \$C_{Q}\$)")
+    plot!(Jexp1, CPexp1, label = "experimental", xlabel = "\\alpha", ylabel = "\$C_{P}\$")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_3.png")
     plot(J1, eff1, label = "predicted", xlabel = "\\alpha", ylabel = "\\eta")
     plot!(Jexp1, etaexp1, label = "experimental")
@@ -43,21 +45,21 @@ for i = 1:1
 end
 
 # This section compares different tip radii.
-J2, eff2, CT2, CQ2 = Compute(12)
-J3, eff3, CT3, CQ3 = Compute(8)
+J2, eff2, CT2, CQ2 = Compute(20)
+J3, eff3, CT3, CQ3 = Compute(5)
 
 for i = 1:1
     plot(J1, CT1, label = "D = 10'", xlabel = "\\alpha", ylabel = "\$C_{T}\$")
-    plot!(J2, CT2, label = "D = 12'")
-    plot!(J3, CT3, label = "D = 8'")
+    plot!(J2, CT2, label = "D = 10.5'")
+    plot!(J3, CT3, label = "D = 9.5'")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_5.png")
     plot(J1, CQ1, label = "D = 10'", xlabel = "\\alpha", ylabel = "\$C_{Q}\$")
-    plot!(J2, CT2, label = "D = 12'")
-    plot!(J3, CT3, label = "D = 8'")
+    plot!(J2, CT2, label = "D = 10.5'")
+    plot!(J3, CT3, label = "D = 9.5'")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_6.png")
     plot(J1, eff1, label = "D = 10'", xlabel = "\\alpha", ylabel = "\\eta")
-    plot!(J2, eff2, label = "D = 12'")
-    plot!(J3, eff3, label = "D = 8'")
+    plot!(J2, eff2, label = "D = 10.5'")
+    plot!(J3, eff3, label = "D = 9.5'")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_7.png")
 end
 
