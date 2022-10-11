@@ -17,12 +17,12 @@ distribution, and twist distribution on relevant model outputs.
 include("Rotor_Functions.jl")
 
 # The first section creates the propellor.
-J1, eff1, CT1, CQ1 = Compute(10)
-CP1 = CPCQ(CQ1)
+J1, eff1, CT1, CQ1 = Compute(10) # Based on APC10x7 propellor, no rotation.
+CP1 = CPCQ(CQ1) # Calculate CP from CQ for use in plots later
 
 # This section reads in experimental data and estimates results.
-Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/10x7_3008.txt")
-CQexp1 = CQCP(CPexp1)
+Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/10x7_3008.txt") # This experimental data was provided by UIUC.
+CQexp1 = CQCP(CPexp1) # Calculate CQ from CP for comparison in plots.
 
 #=---------------------------------------------------------------
 This section creates graphs. comparisons.
@@ -45,10 +45,10 @@ for i = 1:1
 end
 
 # This section compares different tip radii.
-J2, eff2, CT2, CQ2 = Compute(20)
-J3, eff3, CT3, CQ3 = Compute(5)
+J2, eff2, CT2, CQ2 = Compute(20) # This is technically a different rotor, but it is simply scaled larger.
+J3, eff3, CT3, CQ3 = Compute(5) # Scaled smaller instead of larger.
 
-for i = 1:1
+for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     scatter(J1, CT1, label = "D = 10'", xlabel = "\\alpha, radians", ylabel = "\$C_{T}\$")
     scatter!(J2, CT2, markershape = :square, label = "D = 20'")
     scatter!(J3, CT3, markershape = :star5, label = "D = 5'")
@@ -64,10 +64,10 @@ for i = 1:1
 end
 
 # This section compares different twist distributions.
-J4, eff4, CT4, CQ4 = Compute(10, twist = -0.5)
-J5, eff5, CT5, CQ5 = Compute(10, twist = 0.5)
+J4, eff4, CT4, CQ4 = Compute(10, twist = -0.5) # Twist entire fin backwards 0.5˚
+J5, eff5, CT5, CQ5 = Compute(10, twist = 0.5) # Twist entire fin forwards 0.5˚
 
-for i = 1:1
+for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     scatter(J1, CT1, label = "twist = 0˚", xlabel = "\\alpha, radians", ylabel = "\$C_{T}\$")
     scatter!(J4, CT4, markershape = :square, label = "twist = -0.5˚")
     scatter!(J5, CT5, markershape = :star5, label = "twist = 0.5˚")
@@ -83,10 +83,12 @@ for i = 1:1
 end
 
 # This section compares different propellor chord distributions.
+# APC 10x4.7 airfoil. 
 J6, eff6, CT6, CQ6 = Compute(10, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x4_7.txt")
+# APC 11x7 airfoil.
 J7, eff7, CT7, CQ7 = Compute(10, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_11x7.txt")
 
-for i = 1:1
+for i = 1:1 # Visually compare the 2 airfoils calculated previously with the first airfoil
     scatter(J1, CT1, label = "APC 10x7", xlabel = "\\alpha", ylabel = "\$C_{T}\$")
     scatter!(J6, CT6, markershape = :square, label = "APC 10x4.7")
     scatter!(J7, CT7,  markershape = :star5,label = "APC 11x7")
