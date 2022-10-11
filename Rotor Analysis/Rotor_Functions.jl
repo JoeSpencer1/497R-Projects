@@ -137,7 +137,8 @@ end
 This function does the simple calculation to convert CQ to CP.
 """
 function CQCP(CP)
-    return CP / (2 * pi)
+    CQ = CP / (2 * pi)
+    return CQ
 end
 
 """
@@ -145,7 +146,8 @@ end
 This function Converts CP to CQ.
 """
 function CPCQ(CQ)
-    return CQ * 2 * pi
+    CP = CQ * (2 * pi)
+    return CP
 end
 
 """
@@ -190,7 +192,7 @@ function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, filename = "/U
 
     # This section adds twist to a propellor's twist distribution if applicable.
     if twist != 0
-        for i in 1:length(theta)
+        for i in eachindex(theta)
             theta[i] += twist # Add twist to each segment.
         end
     end
