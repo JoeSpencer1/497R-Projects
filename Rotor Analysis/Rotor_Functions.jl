@@ -1,19 +1,20 @@
 #=---------------------------------------------------------------
 10/10/2022
-Rotor Functions v3 Rotor_Functions.jl
+Rotor Functions v4 Rotor_Functions.jl
 This companion file for Rotor_Analysis will contain functions
 used in the main file. They are mostly just conversion or airfoil
 creation functions.
+Updated function docstrings for versioin 4.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles
 
 """
-# create
-This function creates an airfoil and calculates its coefficients
-of lift and drag at various points. So far this is just good for
-NACA airfoils.
-The name is the diameter x pitch.
+    create(; mpth = 4412, n = 14)
+Creates a NACA airfoil from its 4-digit number.
+# Arguments
+- mpth - The airfoil's NACA number. Default 4412.
+- n - The number of points that will be modeled on each side of the airfoil. Default 14.
 """
 function create(; mpth = 4412, n = 14)
     nd = n * 1.0 # Converts n to a decimal.
@@ -50,9 +51,16 @@ function create(; mpth = 4412, n = 14)
 end
 
 """
-# coeff
-This function finds the coefficients of an airfoil. Like create(),
-it is borrowed from my Airfoil Analysis project.
+    coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max = 15)
+Find the coefficients of an airfoil. Like create(), is borrowed from the Airfoil Analysis project.
+# Arguments
+- x - Airfoil's x-coordinates.
+- y - Airfoil's y-coordinates.
+- increment - Distance between angles of attack. Default 1.
+- iterations - Number of times Xfoil alpha_sweep code needs to try before failing to converge. Default 100.
+- re - Reynolds number used in alpha_sweep function. Default 1e6
+- min - minimum angle of attack. Default -15˚.
+- max - maximum angle of attack. Default 15˚.
 """
 function coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max = 15)
     alpha = min:increment:max # Establish values of alhpha over range
@@ -62,48 +70,59 @@ function coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max =
 end
 
 """
-# rads
-This simple function converts rpm to rad/s
+   rads(rpm)
+Converts rpm to rad/s by a known factor.
+# Arguments
+- rpm - Rotational velocity in revolutions per minute
 """
 function rads(rpm)
     return rpm * 2 * pi / 60 # This allows you to call a function to convert.
 end
 
 """
-# rad
-This function converts rad to degress.
+    rad(deg)
+Converts degress to radians.
+# Arguments
+- deg - Rotational distance in degrees.
 """
 function rad(deg)
     return deg * pi / 180 # Simple multiplication for radians to degrees
 end
 
 """
-# rev
-Convers deg to radians
+    rev(rad)
+Convers radians to revolutions
+# Arguments
+- rad - The quantity of radians revolved.
 """
 function rev(rad)
     return rad / (2 * pi) # Convert radians to revolutions.
 end
 
 """
-# TransonicDrag
-This function, copied from Guided_Example.jl, finds the drag based on a mach number.
+    TransonicDrag
+This struct was copied from Guided_Example.jl. It finds the drag based on a mach number.
 """
 struct TransonicDrag <: MachCorrection
     Mcc  # crest critical Mach number
 end
 
 """
-# Convert
-This function multiplies a proportion by the propellor tip length.
+    Convert(geom, rtip)
+Mltiplies a proportion by the propellor tip length.
+# Arguments
+- geom - Airfoil geometry on a unit scale, to be multiplied by rtip.
+- rtip - Airfoil tip radius multiplication factor.
 """
 function Convert(geom, rtip)
     return geom[:] * rtip # This changes the geometry to terms of rtip instead of 1.
 end
 
 """
-# Loadexp
-This function loads experimental data from a file.
+    Loadexp(filename)
+Loads experimental data from a file.
+# Arguments
+- filename - Address of experimental data file to be loaded.
 """
 function Loadexp(filename) # Function designed to read 4-column experimental data.
     exp = readdlm(filename, '\t', Float64, '\n') # File is divided by tabs and endlines.
@@ -115,8 +134,10 @@ function Loadexp(filename) # Function designed to read 4-column experimental dat
 end
 
 """
-# Loaddata
-This function loads the data for a six-column xfoil file. Entries are separated by tabs.
+    Loaddata(filename)
+Loads the data for a six-column xfoil file. Entries are separated by tabs.
+# Arguments
+- filename - Address of airfoil file to be loaded.
 """
 function Loaddata(filename)
     xfoildata = readdlm(filename, '\t', Float64, '\n') # Divided by tabs and newlines
@@ -127,25 +148,31 @@ function Loaddata(filename)
 end
 
 """
-# intom
-This function converts the tip radius in inches to meters.
+    intom(Rtip)
+Convert the tip radius in inches to meters.
+# Arguments
+- Rtip - Tip radius in inches
 """
 function intom(Rtip)
     return Rtip / 2.0 * 0.254 # Also converts diameter to radius.
 end
 
 """
-# CQCP
-This function does the simple calculation to convert CQ to CP. CQ = CP/2pi
+    CQCP(CP)
+Does the simple calculation to convert power coefficient CP to torque coefficient CQ. CQ = CP/2pi
+# Arguments
+- CP - Power coefficient
 """
 function CQCP(CP)
     CQ = CP / (2 * pi) # Performs arithmetic
     return CQ
 end
 
-"""
-# CPCQ
-This function Converts CP to CQ. CP = CQ * 2pi
+"""  
+    CPCQ(CQ)
+Converts torque coefficient CQ to power coefficient CP. CP = CQ * 2pi. Similar to CQCP(CP)
+# Arguments
+- CQ - Torque coefficient
 """
 function CPCQ(CQ)
     CP = CQ * (2 * pi) # Perform arithmetic
@@ -153,8 +180,16 @@ function CPCQ(CQ)
 end
 
 """
-# CTCPeff
-This function finds the coefficients of Thrust, Power, and Efficiency at different angles.
+    CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225)
+Find the coefficients of Thrust, Power, and Efficiency at different angles.
+# Arguments
+- rpm - Revolutions per minute of rotor.
+- rotor - Rotor geometry created previouly in the Rotor function in the Compute section.
+- sections - section properties along rotor defined in Compute function.
+- r - Propellor radius from file multiplied by propellor radius.
+- D - Propellor outer diameter.
+- nJ - Lengths of advance ratios. Default 20.
+- rho - Air density. Default 1.225. 
 """
 function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225)
     Omega = rad(rpm) # Rotational Velocity in rad/s
@@ -174,8 +209,16 @@ function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225)
 end
 
 """
-# Compute
-The compute function finds J, eff, CT, and CQ for a rotor of provided geometry.
+    Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", twist = 0
+Find J, eff, CT, and CQ for a rotor of provided geometry.
+# Arguments
+- Rtip - Airfoil tip radius.
+- Rhub - Airfoil hub radius, in decimal of tip radius. Default 0.1
+- Re0 - Reynolds number. Default 10^6
+- B - Blade count. Default 2
+- rpm - Revolutions per minute. Default 5400
+- filename - Airfoil to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt"
+- twist - twist of entire airfoil in degrees. Default 0.
 """
 function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, filename = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", twist = 0)
     # The first section creates the propellor.

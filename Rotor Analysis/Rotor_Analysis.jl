@@ -1,6 +1,6 @@
 #=---------------------------------------------------------------
 10/10/2022
-Rotor Analysis v3 Rotor_Analysis.jl
+Rotor Analysis v4 Rotor_Analysis.jl
 This file will use the functions in Rotor_Functions.jl to create
 and analyze rotors using CCBlade. I am following the example code
 to get it to work.
@@ -12,6 +12,7 @@ and efficiency (η).
 Compare to experimental data found on the UIUC propeller 
 database. Consider the affect of at least the radius, chord 
 distribution, and twist distribution on relevant model outputs.
+Updated function docstrings for versioin 4.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
