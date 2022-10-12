@@ -20,14 +20,46 @@
 
 \author{Joe Spencer}
 \title{Rotor Analysis}
-\date{September 27, 2022}
+\date{October 12, 2022}
 \maketitle
 
 \subsubsection*{Methods}
 
+A rotor's performance can be computed using  \hyperlink{BEM}{Blade Element Moment Theory}. This computation makes it possible to estimate how well a rotor will perform under various conditions without having to produce and test many prototypes. The Blade Element Momentum Theory calculations for this lab were conducted using BYU FLOW Lab's \href{https://flow.byu.edu/CCBlade.jl/stable/}{CCBlade.jl} header file. Used together with other julia header files, including \href{https://flow.byu.edu/Xfoil.jl/dev/}{Xfoil.jl}, A rotor's \hyperlink{CP}{Power}, \hyperlink{CT}{Thrust}, and \hyperlink{CQ}{Torque} distributions could be calculated, as well as its. \hyperlink{eta}{Efficiency}. \newline
+
+Since it combines two theories to obtain the power, thrust, torque, and efficiency of an airfoil, CCBlade uses a system of equations to find them. The following equations are solved in this system to find the  \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}. A detailed description of other variables in this system of equations can be found in the \hyperlink{BEM}{Glossary}. \newline
+
+\begin{equation}
+\begin{aligned}
+	\frac{1}{2} W^{2} N c C_{y} = 4 \pi U_{\infty} (1 - a) \times \Omega a' r^{2} \\
+	\frac{1}{2} \rho W^{2} N c C_{x} = 4 \pi \rho [(a' \Omega r)^{2} + \Omega^{2}_{\infty} a (1 - a)] r \\
+	\sin \phi = \frac{U_{\infty}}{W} (1 - a)
+\end{aligned}
+\end{equation}
+
+Once these equations are solved, Axial Induction Factor and Tangential Induction Factor provide the ratios of increase and reduction in fluid flow velocity in the normal and tangential directions to the rotor. The angle of rotation provides the angle that the airfoil should form with the free stream velocity to achieve this result. The system of three equations shown is possible because it combines equations from both theories. \newline
+
+After this system of equations is solved, the solutions for $a$, $a'$, and $\phi$ are used to find $C_{P}$, $C_{T}$, $C_{Q}$ and $\eta$ for an airfoil. The user can compare these values at different angles of attack to determine which advance ratio is best for an application. Different \hyperlink{T}{Twist Distributions}, \hyperlink{D/D}{Hub-to-tip Ratios}, \hyperlink{c}{Chord Distributions}, and \hyperlink{APC}{Propellor Types} can also be investigated to compare their performances. \newline
+
 \subsubsection*{Results and Discussion}
 
-The \hyperlink{BEM}{Blade Element Moment Theory}
+This research led to a few discoveries that will be useful to optimize a rotor in the next assignment. These discoveries refined the size, shape, velocity, and blade quantity of rotors and gave insights into what results from changing each variable quantity. \newline
+
+I first compared experimental rotor data with my own CCBlade computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github Repository} containing some experimental data, which I used to test the functions I created. As shown in the Figure 1, 
+
+\begin{figure}
+  \centering
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_2.png}}
+
+  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \subfloat[Whatsit]{\includegraphics[width = .35\textwidth]{Plots/Figure_4.png}}
+  \label{fig:1}
+  \caption{Testing BEM Output Against Experimental Data. These plots show that although there are some differences, the Blade Element Momentum code provides a faithful estimate of the constants experienced by a rotor.}
+\end{figure}
+
+\href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file}
+The \hyperlink{BEM}{Blade Element Momentum Theory}
 
 Axial induction factor $a$ Tangential induction factor $a'$
 
@@ -43,11 +75,11 @@ Axial induction factor $a$ Tangential induction factor $a'$
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$, is the angle between the freest stream velocity and the velocity of the airfoil as it rotates. It is used in \hyperlink{BEM}{Blade Element Moment Theory} calculations.
+	\item \hypertarget{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$, is the angle between the freest stream velocity and the velocity of the airfoil as it rotates. It is used in \hyperlink{BEM}{Blade Element Momentum Theory} calculations.
 
 	\item \hypertarget{a}{Axial Induction Factor, $a$} - The Axial Induction Factor is the ratio of the reduction in air velocity at an airfoil to its free stream velocity.
 	
-	\item \hypertarget{BEM}{Blade Element Moment Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. These equations are used to recursively find the \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}
+	\item \hypertarget{BEM}{Blade Element Momentum Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. These equations are used to recursively find the \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}
 	\begin{equation}
 	\begin{aligned}
 		\frac{1}{2} W^{2} N c C_{y} = 4 \pi U_{\infty} (1 - a) \times \Omega a' r^{2} \\
