@@ -1,9 +1,7 @@
 #=---------------------------------------------------------------
 10/17/2022
-Rotor Functions v5 Rotor_Functions.jl
-The function to plot two rotors over the same domain uses 
-pointers. I still haven't figured out how to compare sets of
-pointers to find the error.
+Rotor Functions v6 Rotor_Functions.jl
+A short in-line loop was added to calculate error.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic
