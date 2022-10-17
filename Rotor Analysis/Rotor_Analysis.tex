@@ -27,6 +27,19 @@
 
 A rotor's performance can be computed using  \hyperlink{BEM}{Blade Element Moment Theory}. This computation makes it possible to estimate how well a rotor will perform under various conditions without having to produce and test many prototypes. The Blade Element Momentum Theory calculations for this lab were conducted using BYU FLOW Lab's \href{https://flow.byu.edu/CCBlade.jl/stable/}{CCBlade.jl} header file. Used together with other julia header files, including \href{https://flow.byu.edu/Xfoil.jl/dev/}{Xfoil.jl}, A rotor's \hyperlink{CP}{Power}, \hyperlink{CT}{Thrust}, and \hyperlink{CQ}{Torque} distributions could be calculated, as well as its. \hyperlink{eta}{Efficiency}. \newline
 
+Some non-dimensional numbers in rotor analysis are the coefficients of power, thrust, and torque. Each of these coefficients relates a useful quantity to other known quantities including the air density, the blade diameter, and rotor's rotational velocity. Figure \ref{fig:1} shows that changing the blade diameter does not change any of these coefficients. This same result would happen if air density or blade diameter were changed. Although the propellor would move at a different velocity and experience different forces, its coefficients would be unchanged. \newline
+
+Other non-dimensional constants in airfoil analysis include the \hyperlink{J}{Advance Ratio} and \hyperlink{lambda}{Tip Speed Ratio}, the \hyperlink{a}{Axial} and \hyperlink{a'}{Tangential} Induction factors, the \hyperlink{eta}{Efficiency}, and the \hyperlink{sigma}{Rotor Solidity}. Some of these terms are closely related. For example, the tip speed ratio is simply $\pi$ divided by the advance ratio, and the power coefficient is the torque coefficient multiplied by a factor of $2 \pi$. Each number provides a benchmark reference that can relate similar airfoils under different conditions. \newline 
+
+\begin{figure}
+  \label{fig:1}
+  \centering
+  \subfloat[Power Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_5.png}}
+  \subfloat[Torque Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_6.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_7.png}}
+  \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
+\end{figure}
+
 Since it combines two theories to obtain the power, thrust, torque, and efficiency of an airfoil, CCBlade uses a system of equations to find them. The following equations are solved in this system to find the  \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}. A detailed description of other variables in this system of equations can be found in the \hyperlink{BEM}{Glossary}. \newline
 
 \begin{equation}
@@ -45,18 +58,40 @@ After this system of equations is solved, the solutions for $a$, $a'$, and $\phi
 
 This research led to a few discoveries that will be useful to optimize a rotor in the next assignment. These discoveries refined the size, shape, velocity, and blade quantity of rotors and gave insights into what results from changing each variable quantity. \newline
 
-I first compared experimental rotor data with my own CCBlade computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github Repository} containing some experimental data, which I used to test the functions I created. As shown in the Figure 1, 
+I first compared experimental rotor data with my own CCBlade computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github Repository} containing some experimental data, which I used to test the functions I created. Figure \ref{fig:2} shows that the code found solutions that were fairly close to experimental data. This is useful, because obtaining airfoil performance data in a physical experiment is very difficult. There are also many factors which could potentially invalidate these experimental results that are hard to control. \newline
+
+The graphs of the torque coefficient and the pressure coefficient have the same shape. They are the same, related by a $2 \pi$ factor. Future plots will only display the torque coefficient because of this.
 
 \begin{figure}
   \centering
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_1.png}}
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_2.png}}
+  \subfloat[Thrust Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Torque Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_2.png}}
 
-  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_3.png}}\hspace{1em}
-  \subfloat[Whatsit]{\includegraphics[width = .35\textwidth]{Plots/Figure_4.png}}
-  \label{fig:1}
-  \caption{Testing BEM Output Against Experimental Data. These plots show that although there are some differences, the Blade Element Momentum code provides a faithful estimate of the constants experienced by a rotor.}
+  \subfloat[Power Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_4.png}}
+  \label{fig:2}
+  \caption{Testing BEM Output Against Experimental Data. \newline Although there are some differences, Blade Element Momentum code provides a faithful estimate of the constants experienced by a rotor.}
 \end{figure}
+
+\begin{figure}
+  \label{fig:3}
+  \centering
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_8.png}}
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_9.png}}
+  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_10.png}}
+  \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
+\end{figure}
+
+\begin{figure}
+  \label{fig:4}
+  \centering
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_11.png}}
+  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_12.png}}
+  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_13.png}}
+  \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
+\end{figure}
+
+After checking the outputfunctions created in 
 
 \href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file}
 The \hyperlink{BEM}{Blade Element Momentum Theory}
@@ -145,7 +180,7 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{APC}{Propellor Identification} - A Propellor is identified by 2 numbers, which represent its diameter and its pitch, both in inches. For example, an APC 10 x 7 propellor is made by Advanced Precision Composites. It has a 10-inch diameter and a 7-inch pitch per revolution.
+	\item \hypertarget{APC}{Propellor Identification} - A Propellor is identified by 2 numbers, which represent its diameter and its pitch, both in inches. For example, an APC 10x7 propellor is made by Advanced Precision Composites. It has a 10-inch diameter and a 7-inch pitch per revolution.
 	
 	\item \hypertarget{sigma}{Rotor Solidity, $\sigma$} - Rotor Solidity describes the ratio of a turbine's chord length, $c$, to its spacing, $s$. This is found by the following equation, in which $n_{b}$ is the number of blades, $r_{h}$ is the hub radius, and $r_{t}$ is the tip radius.
 	\begin{equation}
