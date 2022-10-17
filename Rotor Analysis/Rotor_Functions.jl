@@ -224,7 +224,7 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - foilname - Airfoil to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat"
 - twist - twist of entire airfoil in degrees. Default 0.
 """
-function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat", twist = 0, expr = 0)
+function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.

@@ -199,8 +199,9 @@ for i = 1:1
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_17.png")
 end
 
+#=
 # This section compares different tip radii.
-J9, eff9, CT9, CQ2 = Compute(10, ) # This is technically a different rotor, but it is simply scaled larger.
+J9, eff9, CT9, CQ2 = Compute(10) # This is technically a different rotor, but it is simply scaled larger.
 J10, eff10, CT10, CQ10 = Compute(10) # Scaled smaller instead of larger.
 
 for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
@@ -217,11 +218,7 @@ for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled ver
     scatter!(J0, eff11, markershape = :star5, label = "D = 5'")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_7.png")
 end
-
-
-
-
-
+=#
 
 Rtip = 10/2.0 * 0.0254  # inches to meters
 Rhub = 0.10*Rtip
@@ -304,3 +301,4 @@ for i = 1:nJ
 end
 scatter(Jexp, eff, label = "predicted", xlabel = "J", ylabel = "\\eta", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
 scatter!(Jexp, etaexp, markershape = :square, label = "experimental")
+
