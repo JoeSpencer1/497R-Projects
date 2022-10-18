@@ -20,7 +20,7 @@
 
 \author{Joe Spencer}
 \title{Rotor Analysis}
-\date{October 12, 2022}
+\date{October 17, 2022}
 \maketitle
 
 \subsubsection*{Methods}
@@ -32,12 +32,12 @@ Some non-dimensional numbers in rotor analysis are the coefficients of power, th
 Other non-dimensional constants in airfoil analysis include the \hyperlink{J}{Advance Ratio} and \hyperlink{lambda}{Tip Speed Ratio}, the \hyperlink{a}{Axial} and \hyperlink{a'}{Tangential} Induction factors, the \hyperlink{eta}{Efficiency}, and the \hyperlink{sigma}{Rotor Solidity}. Some of these terms are closely related. For example, the tip speed ratio is simply $\pi$ divided by the advance ratio, and the power coefficient is the torque coefficient multiplied by a factor of $2 \pi$. Each number provides a benchmark reference that can relate similar airfoils under different conditions. \newline 
 
 \begin{figure}
-  \label{fig:1}
   \centering
   \subfloat[Power Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_5.png}}
   \subfloat[Torque Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_6.png}}
   \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_7.png}}
   \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
+  \label{fig:1}
 \end{figure}
 
 Since it combines two theories to obtain the power, thrust, torque, and efficiency of an airfoil, CCBlade uses a system of equations to find them. The following equations are solved in this system to find the  \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}. A detailed description of other variables in this system of equations can be found in the \hyperlink{BEM}{Glossary}. \newline
@@ -58,45 +58,76 @@ After this system of equations is solved, the solutions for $a$, $a'$, and $\phi
 
 This research led to a few discoveries that will be useful to optimize a rotor in the next assignment. These discoveries refined the size, shape, velocity, and blade quantity of rotors and gave insights into what results from changing each variable quantity. \newline
 
-I first compared experimental rotor data with my own CCBlade computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github Repository} containing some experimental data, which I used to test the functions I created. Figure \ref{fig:2} shows that the code found solutions that were fairly close to experimental data. This is useful, because obtaining airfoil performance data in a physical experiment is very difficult. There are also many factors which could potentially invalidate these experimental results that are hard to control. \newline
-
-The graphs of the torque coefficient and the pressure coefficient have the same shape. They are the same, related by a $2 \pi$ factor. Future plots will only display the torque coefficient because of this.
+\textbf{1. \emph{Comparison to Experimental Data}} \newline
 
 \begin{figure}
   \centering
-  \subfloat[Thrust Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_1.png}}
-  \subfloat[Torque Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_2.png}}
+  \subfloat[Thrust Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Torque Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_2.png}}
 
-  \subfloat[Power Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure_3.png}}\hspace{1em}
-  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_4.png}}
+  \subfloat[Power Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \subfloat[Efficiency]{\includegraphics[width = .30\textwidth]{Plots/Figure_4.png}}
+  \caption{Testing BEM Output Against Experimental Data. \newline Although there are some differences, Blade Element Momentum code provides a good estimate of the constants experienced by a rotor.}
   \label{fig:2}
-  \caption{Testing BEM Output Against Experimental Data. \newline Although there are some differences, Blade Element Momentum code provides a faithful estimate of the constants experienced by a rotor.}
 \end{figure}
 
+I first compared experimental rotor data with my own CCBlade computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github Repository} containing some experimental data, which I used to test the functions I created. Figure \ref{fig:2} shows that the code found solutions close to experimental data. This is useful, because obtaining airfoil performance data in a physical experiment is very difficult. There are also many factors which could potentially invalidate these experimental results that are hard to control. \newline
+
+A loop calculated the error by finding the square root of the average of the squared residuals. The calculated errors were 28.8 percent for efficiency, 37.7 percent for the thrust coefficient, and 51.4 percent for both the thrust and torque coefficients. These were much larger than the errors calculated in the provided data, which were 9.1 percent, 7.8 percent, and 5.4 percent. This may have been do to different methods of data collection or measurement. \newline
+
+The graphs of the torque coefficient and the pressure coefficient have the same shape. They are related by a $2 \pi$ factor. Future plots will only display the torque coefficient because of this. \newline
+
+\textbf{2. \emph{Radius}} \newline
+
 \begin{figure}
+  \centering
+  \subfloat[Thrust]{\includegraphics[width = .35\textwidth]{Plots/Figure_11.png}}
+  \subfloat[Torque]{\includegraphics[width = .35\textwidth]{Plots/Figure_12.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_13.png}}
+  \caption{Comparison Between Rotors of Different Length and Pitch \newline Increasing a rotor's length appears to slightly increase its coefficients of thrust and torque. Decreasing a rotor's pitch dramatically decreases its efficiency at higher advance ratios.}
   \label{fig:3}
-  \centering
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_8.png}}
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_9.png}}
-  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_10.png}}
-  \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
 \end{figure}
+
+As shown in figure \ref{fig:1}, the radius factor is not included in any of the non-dimensional numbers investigated in this lab. If the size of the rotor is scaled then no effect occurs. Increasing a rotor's diameter while keeping other factors the same can have an effect, though. Figure \ref{fig:3} Shows a NACA 10x7 and 11x7 rotor compared to each other. The longer NACA 11x7 propellor exhibits greater coefficients of thrust and torque with a similar efficiency. \newline
+
+\textbf{3. \emph{Chord Distribution}} \newline
 
 \begin{figure}
-  \label{fig:4}
   \centering
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_11.png}}
-  \subfloat[Whatnot]{\includegraphics[width = .35\textwidth]{Plots/Figure_12.png}}
-  \subfloat[Whatwhat]{\includegraphics[width = .35\textwidth]{Plots/Figure_13.png}}
-  \caption{Comparison Between Similar Rotors of Varying Diameter \newline Adjusting a propellor's radius does not change the power, thrust, or torque coefficients as long as its geometry remains the same.}
+  \subfloat[Thrust]{\includegraphics[width = .35\textwidth]{Plots/Figure_21.png}}
+  \subfloat[Torque]{\includegraphics[width = .35\textwidth]{Plots/Figure_22.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_23.png}}
+  \caption{Comparison Between Rotors of Different Chord Magnitude \newline In these plots, a rotor is thickened or thinned by 20 percent.}
+  \label{fig:4}
 \end{figure}
 
-After checking the outputfunctions created in 
+Figure \ref{fig:4} shows that increasing or decreasing a rotor's chord distribution has insignificant impact on its efficiency. Changing the magnitude of the chord has an enormous impact on the torque and power coefficients, though. Thickening a rotor will dramatically increase the thrust and torque coefficients. So, in general to increase the thrust a rotor generates, it should be thickened. \newline
 
-\href{https://github.com/JoeSpencer1/497R-Projects/blob/Airfoil-Analysis/Airfoil_Functions.jl}{header file}
-The \hyperlink{BEM}{Blade Element Momentum Theory}
+\textbf{4, \emph{Twist Distribution}} \newline
 
-Axial induction factor $a$ Tangential induction factor $a'$
+The amount a rotor is twisted can be modified so it redirects airflow and thrust differently to produces different effects. The three rotors in figure \ref{fig:5} are twisted different amounts, and their thrust, torque, and efficiencies all varied significantly. The rotor with a $-5^{\circ}$ twist had the lowest thrust, torque, and efficiency. Its efficiency plot is at zero because the force generated by air flowing past rotor acts against its motion. \newline
+
+\begin{figure}
+  \centering
+  \subfloat[Thrust]{\includegraphics[width = .35\textwidth]{Plots/Figure_8.png}}
+  \subfloat[Torque]{\includegraphics[width = .35\textwidth]{Plots/Figure_9.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_10.png}}
+  \caption{Comparison Between Twist Angles \newline These rotors are identical besides the angle with which they were uniformly twisted.}
+  \label{fig:5}
+\end{figure}
+
+\textbf{5, \emph{Blade Count}} \newline
+
+Increasing the number of blades in a rotor appears to increase both the thrust and torque it generates. While the thrust and torque increase, though, the efficiency decreases as rotor blades begin to decrease airflow instead of generating more thrust.
+
+\begin{figure}
+  \centering
+  \subfloat[Thrust]{\includegraphics[width = .35\textwidth]{Plots/Figure_18.png}}
+  \subfloat[Torque]{\includegraphics[width = .35\textwidth]{Plots/Figure_19.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_20.png}}
+  \caption{Comparison Between Twist Angles \newline Although thrust and torque increase with each added rotor blade, efficiency decreases.}
+  \label{fig:6}
+\end{figure}
 
 \clearpage
 

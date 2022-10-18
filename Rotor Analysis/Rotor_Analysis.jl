@@ -30,7 +30,7 @@ for i in 1:1
             error = error + (eff1[i] - etaexp1[i]) ^ 2 # Sum of squared differences
             mag = mag + eff1[i] * eff1[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(etaexp1) * sqrt(mag)) # Square root for average and divide by length
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
         print("\neta error = ", error, "%\n") # Print in string.
     end
 
@@ -41,7 +41,7 @@ for i in 1:1
             error = error + (CT1[i] - CTexp1[i]) ^ 2 # Sum of squared differences
             mag = mag + CTexp1[i] * CTexp1[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(CTexp1) * sqrt(mag)) # Square root for average and divide by length
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
         print("C_T error = ", error, "%\n") # Print in string.
     end
 
@@ -52,8 +52,8 @@ for i in 1:1
             error = error + (CP1[i] - CPexp1[i]) ^ 2 # Sum of squared differences
             mag = mag + CPexp1[i] * CPexp1[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(CPexp1) * sqrt(mag)) # Square root for average and divide by length
-        print("C_T error = ", error, "%\n") # Print in string.
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
+        print("C_P error = ", error, "%\n") # Print in string.
     end
 end
 
@@ -163,7 +163,7 @@ for j in 1:1
             error = error + (eff8[i] - etaexp8[i]) ^ 2 # Sum of squared differences
             mag = mag + eff8[i] * eff8[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(etaexp8) * sqrt(mag)) # Square root for average and divide by length
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
         print("\neta error = ", error, "%\n") # Print in string.
     end
 
@@ -174,7 +174,7 @@ for j in 1:1
             error = error + (CT8[i] - CTexp8[i]) ^ 2 # Sum of squared differences
             mag = mag + CTexp8[i] * CTexp8[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(CTexp8) * sqrt(mag)) # Square root for average and divide by length
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
         print("C_T error = ", error, "%\n") # Print in string.
     end
 
@@ -185,8 +185,8 @@ for j in 1:1
             error = error + (CP8[i] - CPexp8[i]) ^ 2 # Sum of squared differences
             mag = mag + CPexp8[i] * CPexp8[i] # Add to total magnitude
         end
-        error = sqrt(error) * 100 / (length(CPexp8) * sqrt(mag)) # Square root for average and divide by length
-        print("C_T error = ", error, "%\n") # Print in string.
+        error = sqrt(error) * 100 / sqrt(mag) # Square root for average and divide by length
+        print("C_P error = ", error, "%\n") # Print in string.
     end
 end
 
