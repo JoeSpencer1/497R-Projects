@@ -1,7 +1,8 @@
 #=---------------------------------------------------------------
 10/17/2022
 Rotor Functions v6 Rotor_Functions.jl
-A short in-line loop was added to calculate error.
+This is the header file that I have finished for the initial
+submission.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic
@@ -187,9 +188,9 @@ Find the coefficients of Thrust, Power, and Efficiency at different angles.
 - D - Propellor outer diameter.
 - nJ - Lengths of advance ratios. Default 20.
 - rho - Air density. Default 1.225.
-- expr - the provided range of the experimental J values.
+- expr - the provided range of the experimental J values. Default 0 (none)
 """
-function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225, expr)
+function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225, expr = 0)
     Omega = rads(rpm) # Rotational Velocity in rad/s
     if expr == 0
         J = range(0.1, 0.6, length = nJ)  # advance ratio
@@ -223,8 +224,9 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - propgeom - Propellor to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt"
 - foilname - Airfoil to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat"
 - twist - twist of entire airfoil in degrees. Default 0.
+- chordfact - Magnitude of chord factor. Default 1.
 """
-function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0)
+function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.
@@ -235,6 +237,7 @@ function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho =
     propgeom = readdlm(propname)
     r = Convert(propgeom[:, 1], Rtip) # Translate geometry from propellor percentatge to actual distance
     chord = Convert(propgeom[:, 2], Rtip) # Translate chord to actual distance
+    chord = chord .* chordfact
     theta = rad(propgeom[:, 3]) # Convert degrees to radians
     # Find airfoil data at a variety of attack angles
     af = AlphaAF(foilname)
