@@ -8,7 +8,7 @@ include("Rotor_Functions.jl")
 
 # Create a standard domain. This is based on known values.
 J0 = range(0.1, 0.6, length = 20) # This is an actual array. Other J values returned are pointers.
-J0a, eff0, CT0, CQ0 = Compute(10)# This provides default data.
+J0a, eff0, CT0, CQ0 = Compute()# This provides default data.
 
 # This section reads in experimental data and estimates results.
 Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/10x7_6014.txt") # This experimental data was provided by UIUC.
@@ -16,7 +16,7 @@ CQexp1 = CQCP(CPexp1) # Calculate CQ from CP for comparison in plots.
 
 # The first section creates the propellor.
 Je1p = pointer(Jexp1) # Converts Jexp1 to a pointer to pass it into the Compute() function.
-J1, eff1, CT1, CQ1 = Compute(10, rpm = 6014, nJ = 24, expr = Je1p) # Based on APC10x7 propellor, no rotation.
+J1, eff1, CT1, CQ1 = Compute(rpm = 6014, Re0 = 1e6, nJ = 24, expr = Je1p) # Based on APC10x7 propellor, no rotation.
 # This function without the pointer in its argument did not work the second time I tried it.
 # J1, eff1, CT1, CQ1 = Compute(10, rpm = 6014, nJ = 24, expr = Jexp1) 
 CP1 = CPCQ(CQ1) # Calculate CP from CQ for use in plots later
@@ -81,8 +81,8 @@ for i = 1:1
 end
 
 # This section compares different tip radii.
-J2, eff2, CT2, CQ2 = Compute(20) # This is technically a different rotor, but it is simply scaled larger.
-J3, eff3, CT3, CQ3 = Compute(5) # Scaled smaller instead of larger.
+J2, eff2, CT2, CQ2 = Compute(Rtip = 20) # This is technically a different rotor, but it is simply scaled larger.
+J3, eff3, CT3, CQ3 = Compute(Rtip = 5) # Scaled smaller instead of larger.
 
 for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     plt5 = scatter(J0, CT0, label = "D = 10'", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
@@ -102,8 +102,8 @@ for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled ver
 end
 
 # This section compares different twist distributions.
-J4, eff4, CT4, CQ4 = Compute(10, twist = -0.5) # Twist entire fin backwards 0.5˚
-J5, eff5, CT5, CQ5 = Compute(10, twist = 0.5) # Twist entire fin forwards 0.5˚
+J4, eff4, CT4, CQ4 = Compute(twist = -0.5) # Twist entire fin backwards 0.5˚
+J5, eff5, CT5, CQ5 = Compute(twist = 0.5) # Twist entire fin forwards 0.5˚
 
 for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     plt8 = scatter(J0, CT0, label = "0˚", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
@@ -124,9 +124,9 @@ end
 
 # This section compares different propellor chord distributions.
 # APC 10x4.7 airfoil. 
-J6, eff6, CT6, CQ6 = Compute(10, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x4_7.txt")
+J6, eff6, CT6, CQ6 = Compute(propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x4_7.txt")
 # APC 11x7 airfoil.
-J7, eff7, CT7, CQ7 = Compute(10, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_11x7.txt")
+J7, eff7, CT7, CQ7 = Compute(propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_11x7.txt")
 
 for i = 1:1 # Visually compare the 2 airfoils calculated previously with the first airfoil
     plt11 = scatter(J0, CT0, label = "10x7", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
@@ -151,7 +151,7 @@ CQexp8 = CQCP(CPexp8) # Calculate CQ from CP for comparison in plots.
 
 # The first section creates the propellor.
 Je8p = pointer(Jexp8) # Converts Jexp8 to a pointer to pass it into the Compute() function.
-J8, eff8, CT8, CQ8 = Compute(10, rpm = 5400, expr = Je8p, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/5.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat") # Based on APC10x7 propellor, no rotation.
+J8, eff8, CT8, CQ8 = Compute(rpm = 5400, expr = Je8p, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/5.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat") # Based on APC10x7 propellor, no rotation.
 CP8 = CPCQ(CQ8) # Calculate CP from CQ for use in plots later
 
 # Calculate error.
@@ -235,8 +235,8 @@ for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled ver
 end
 
 # This section finds the effect of increasing or decreasing the chord.
-J11, eff11, CT11, CQ11 = Compute(10, chordfact = 0.8)
-J12, eff12, CT12, CQ12 = Compute(10, chordfact = 1.2)
+J11, eff11, CT11, CQ11 = Compute(chordfact = 0.8)
+J12, eff12, CT12, CQ12 = Compute(chordfact = 1.2)
 
 for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     plt21 = scatter(J0, CT0, label = "100% Chord", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
@@ -254,3 +254,5 @@ for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled ver
     scatter!(J0, eff12, markershape = :star5, label = "120% Chord")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_23.png")
 end
+
+print("Done.")

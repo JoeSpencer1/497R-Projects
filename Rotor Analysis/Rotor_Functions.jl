@@ -213,10 +213,10 @@ function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225, expr = 0)
 end
 
 """
-    Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat", twist = 0)
+    Compute(;Rtip = 10, Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0)
 Find J, eff, CT, and CQ for a rotor of provided geometry.
 # Arguments
-- Rtip - Airfoil tip radius.
+- Rtip - Airfoil tip radius. Default 10
 - Rhub - Airfoil hub radius, in decimal of tip radius. Default 0.1
 - Re0 - Reynolds number. Default 10^6
 - B - Blade count. Default 2
@@ -226,11 +226,20 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - twist - twist of entire airfoil in degrees. Default 0.
 - chordfact - Magnitude of chord factor. Default 1.
 """
-function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
+function Compute(;Rtip = 10, Rhub = 0.10, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.
-    rotor = Rotor(Rhub, Rtip, B) # Create rotor
+    if Re0 != 0 # I tried to make the rotor function work with different reynolds numbers, but its output was even further off.
+        pg = PrandtlGlauert() # Gives a correction for the mach number.
+        td = TransonicDrag(0.65) # Another mach number correction. I may not use either of these.
+        sf = TurbulentSkinFriction(Re0) # Convert Reynolds number into useable form.
+        du = DuSeligEggers() # Calculate rotation correction factor.
+        rotor = Rotor(Rhub, Rtip, B#=, rotation = du, re = sf, mach = td=#) # Create rotor with skin friction.
+    end
+    if Re0 == 0
+        rotor = Rotor(Rhub, Rtip, B) # Create rotor
+    end
     D = 2 * Rtip # Diameter to radius
 
     # Propellor geometry
@@ -255,4 +264,8 @@ function Compute(Rtip; Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, nJ = 20, rho =
 
     # Return these outputs.
     return J, eff, CT, CQ
+end
+
+struct TransonicDrag <: MachCorrection
+    Mcc  # crest critical Mach number
 end
