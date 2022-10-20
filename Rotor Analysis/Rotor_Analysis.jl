@@ -214,8 +214,8 @@ for i = 1:1
 end
 
 # This section compares different tip radii.
-J9, eff9, CT9, CQ9 = Compute(10, B = 1) # This is technically a different rotor, but it is simply scaled larger.
-J10, eff10, CT10, CQ10 = Compute(10, B = 4) # Scaled smaller instead of larger.
+J9, eff9, CT9, CQ9 = Compute(B = 1) # This is technically a different rotor, but it is simply scaled larger.
+J10, eff10, CT10, CQ10 = Compute(B = 4) # Scaled smaller instead of larger.
 
 for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
     plt18 = scatter(J0, CT0, label = "2 Blades", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
