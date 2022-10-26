@@ -8,47 +8,6 @@ More functions will be added as the need arrises.
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic
 
 """
-    create(; mpth = 4412, n = 14)
-Creates a NACA airfoil from its 4-digit number.
-# Arguments
-- mpth - The airfoil's NACA number. Default 4412.
-- n - The number of points that will be modeled on each side of the airfoil. Default 14.
-"""
-function create(; mpth = 4412, n = 14)
-    nd = n * 1.0 # Converts n to a decimal.
-    n2 = n * 2 + 1 # Gives total array length.
-    x = Array{Float64}(undef, n2, 1) # x-coordinate array
-    y = Array{Float64}(undef, n2, 1) # y-coordinate array
-    for i in 1:n2  
-        # Populates x array.
-        if i < (n + 2) # Beginning items start at 1 and go down to 0
-            x[i] = 1 - (i - 1) / nd
-        end
-        if i > (n + 1) # Entries in second half of list go back to 1
-            x[i] = (i - n - 1) / nd
-        end
-    end
-    th = mod(mpth, 100) / 100 # Last 2 digits describe thickness
-    p = (mod(mpth, 1000) - th * 100) / 1000 # 2nd digit is p
-    m = (mpth - p * 1000 - th* 100) / 100000 # 1st digit is m
-    for i in 1:n2
-        if i < n + 1 # This general equation is for top of fin
-            y[i] = 5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
-        end
-        if i > n # Same general equation, for bottom of fin
-            y[i] = -5 * th * (0.2969 * sqrt(x[i]) - 0.1260 * x[i] - 0.3516 * x[i] ^ 2 + 0.2843 * x[i] ^ 3 - 0.1015 * x[i] ^ 4)
-        end
-        if x[i] <= p # Fin adjustment at front
-            y[i] += (2 * p * x[i] - x[i] ^ 2) * m / p ^ 2
-        end
-        if x[i] > p # Fin adjustmant at rear
-            y[i] += ((1 - 2 * p) + 2 * p * x[i] - x[i] ^ 2) * m / (1 - p) ^ 2
-        end
-    end
-    return x, y
-end
-
-"""
     coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max = 15)
 Find the coefficients of an airfoil. Like create(), is borrowed from the Airfoil Analysis project.
 # Arguments
@@ -213,7 +172,7 @@ function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225, expr = 0)
 end
 
 """
-    Compute(;Rtip = 10, Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0)
+    Compute(;Rtip = 10, Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Optimization/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Optimization/Rotors/naca4412_1e6.dat", twist = 0)
 Find J, eff, CT, and CQ for a rotor of provided geometry.
 # Arguments
 - Rtip - Airfoil tip radius. Default 10
@@ -226,7 +185,7 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - twist - twist of entire airfoil in degrees. Default 0.
 - chordfact - Magnitude of chord factor. Default 1.
 """
-function Compute(;Rtip = 10, Rhub = 0.10, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
+function Compute(;Rtip = 10, Rhub = 0.10, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Optimization/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Optimization/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.
