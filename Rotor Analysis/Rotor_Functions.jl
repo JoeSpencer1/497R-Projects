@@ -13,6 +13,8 @@ Creates a NACA airfoil from its 4-digit number.
 # Arguments
 - mpth - The airfoil's NACA number. Default 4412.
 - n - The number of points that will be modeled on each side of the airfoil. Default 14.
+# outputs
+- The x and y coordinates at different points along the propellor surface.
 """
 function create(; mpth = 4412, n = 14)
     nd = n * 1.0 # Converts n to a decimal.
@@ -59,6 +61,13 @@ Find the coefficients of an airfoil. Like create(), is borrowed from the Airfoil
 - re - Reynolds number used in alpha_sweep function. Default 1e6
 - min - minimum angle of attack. Default -15˚.
 - max - maximum angle of attack. Default 15˚.
+# outputs
+- Angles of attack alpha
+- Lift coefficient c_l at each alpha
+- Drag coefficient c_d at each alpha
+- Polar drag coeffient c_dp at each alpha
+- Moment coefficient c_m at each alpha
+- A vector called converged stating whether a converted solution was found at each alpha
 """
 function coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max = 15)
     alpha = min:increment:max # Establish values of alhpha over range
@@ -72,6 +81,8 @@ end
 Converts rpm to rad/s by a known factor.
 # Arguments
 - rpm - Rotational velocity in revolutions per minute
+# Outputs
+- rpm value multiplied by a 2pi/60 factor to convert to rad/s
 """
 function rads(rpm)
     return rpm * 2 * pi / 60 # This allows you to call a function to convert.
@@ -82,6 +93,8 @@ end
 Converts degress to radians.
 # Arguments
 - deg - Rotational distance in degrees.
+# Outputs
+- degree value multiplied by pi/180 for conversion to radians.
 """
 function rad(deg)
     return deg * pi / 180 # Simple multiplication for radians to degrees
@@ -92,6 +105,8 @@ end
 Convers radians to revolutions
 # Arguments
 - rad - The quantity of radians revolved.
+# Outputs
+- rad value divided by 2pi to obtain the same value in revolutions
 """
 function rev(rad)
     return rad / (2 * pi) # Convert radians to revolutions.
@@ -111,6 +126,8 @@ Mltiplies a proportion by the propellor tip length.
 # Arguments
 - geom - Airfoil geometry on a unit scale, to be multiplied by rtip.
 - rtip - Airfoil tip radius multiplication factor.
+# Outputs
+- product of the tip radius and the geometry in fractions of the tip radius. This function converts the geometry to its actual value.
 """
 function Convert(geom, rtip)
     return geom[:] * rtip # This changes the geometry to terms of rtip instead of 1.
@@ -121,6 +138,11 @@ end
 Loads experimental data from a file.
 # Arguments
 - filename - Address of experimental data file to be loaded.
+# Outputs
+- Jexp - Experimental nondimensional angles.
+- CTexp - Experimental twist coefficients.
+- CPexp - Experimental power coefficients. Note that the torque coefficient CQexp has to be derived from this.
+- etaexp - Experimental efficiencies.
 """
 function Loadexp(filename) # Function designed to read 4-column experimental data.
     exp = readdlm(filename, '\t', Float64, '\n') # File is divided by tabs and endlines.
@@ -136,6 +158,10 @@ end
 Loads the data for a six-column xfoil file. Entries are separated by tabs.
 # Arguments
 - filename - Address of airfoil file to be loaded.
+# Outputs
+- alpha - Angles of attack from the file.
+- cl - Lift coefficients from the file.
+- cd - Drag coefficients from the file.
 """
 function Loaddata(filename)
     xfoildata = readdlm(filename, '\t', Float64, '\n') # Divided by tabs and newlines
@@ -150,6 +176,8 @@ end
 Convert the tip radius in inches to meters.
 # Arguments
 - Rtip - Tip radius in inches
+# Outputs
+- Tip radius in meters. This divides the tip diameter by 2 and then multiplies by an in-to-m conversion factor.
 """
 function intom(Rtip)
     return Rtip / 2.0 * 0.0254 # Also converts diameter to radius.
@@ -160,6 +188,8 @@ end
 Does the simple calculation to convert power coefficient CP to torque coefficient CQ. CQ = CP/2pi
 # Arguments
 - CP - Power coefficient
+# Outputs
+- CQ - The torque coefficient, found by dividing the power coefficient by 2pi.
 """
 function CQCP(CP)
     CQ = CP / (2 * pi) # Performs arithmetic
@@ -171,6 +201,8 @@ end
 Converts torque coefficient CQ to power coefficient CP. CP = CQ * 2pi. Similar to CQCP(CP)
 # Arguments
 - CQ - Torque coefficient
+# Outputs
+- CP - The power coefficient, found by multiplying the torque coefficient by 2pi.
 """
 function CPCQ(CQ)
     CP = CQ * (2 * pi) # Perform arithmetic
@@ -189,6 +221,11 @@ Find the coefficients of Thrust, Power, and Efficiency at different angles.
 - nJ - Lengths of advance ratios. Default 20.
 - rho - Air density. Default 1.225.
 - expr - the provided range of the experimental J values. Default 0 (none)
+# Outputs
+- J - A vector of non-dimensional angles of attack.
+- eff - Efficiencies to go with each angle of attack.
+- CT - Thrust coefficient corresponding to each entry of J.
+- CQ - Torque coefficients corresponding to each J.
 """
 function CDCPeff(rpm, rotor, sections, r, D; nJ = 20, rho = 1.225, expr = 0)
     Omega = rads(rpm) # Rotational Velocity in rad/s
@@ -225,6 +262,11 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - foilname - Airfoil to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat"
 - twist - twist of entire airfoil in degrees. Default 0.
 - chordfact - Magnitude of chord factor. Default 1.
+# Outputs
+- J - A vector of non-dimensional angles of attack.
+- eff - The efficiency corresponding to each J.
+- CT - The thrust coefficient corresponding to each J.
+- CQ - The torque coefficient corresponding to each J.
 """
 function Compute(;Rtip = 10, Rhub = 0.10, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
