@@ -65,6 +65,9 @@ CP is the coefficient of power, and η is the efficiency.
 for i = 1:1
     plt1 = scatter(Jexp1, CT1, label = "predicted", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
     scatter!(Jexp1, CTexp1, markershape = :square, label = "experimental")
+    display(plt1)
+    # savefig(#="/Users/joe/Desktop/Figure_1.png"=#"/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_1.png")
+    # savefig("/Users/joe/Desktop/Figure_1.png")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_1.png")
 
     plt2 = scatter(Jexp1, CQ1, label = "predicted", xlabel = "J", ylabel = "\$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
@@ -253,6 +256,27 @@ for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled ver
     scatter!(J0, eff11, markershape = :square, label = "80% Chord")
     scatter!(J0, eff12, markershape = :star5, label = "120% Chord")
     savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_23.png")
+end
+
+# This section compares different tip radii.
+J13, eff13, CT13, CQ13 = Compute(Rtip = 20, str = 2) # This is technically a different rotor, but it is simply scaled larger.
+J14, eff14, CT14, CQ14 = Compute(Rtip = 5, str = 0.5) # Scaled smaller instead of larger.
+
+for i = 1:1 # Create similar plots. Skip the CP plot, because it is a scaled version of CQ.
+    plt5 = scatter(J0, CT0, label = "D = 10'", xlabel = "J", ylabel = "\$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
+    scatter!(J0, CT13, markershape = :square, label = "D = 20'")
+    scatter!(J0, CT14, markershape = :star5, label = "D = 5'")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_24.png")
+    
+    plt6 = scatter(J0, CQ0, label = "D = 10'", xlabel = "J", ylabel = "\$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
+    scatter!(J0, CQ13, markershape = :square, label = "D = 20'")
+    scatter!(J0, CQ14, markershape = :star5, label = "D = 5'")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_25.png")
+    
+    plt7 = scatter(J0, eff0, label = "D = 10'", xlabel = "J", ylabel = "\\eta", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomright)
+    scatter!(J0, eff13, markershape = :square, label = "D = 20'")
+    scatter!(J0, eff14, markershape = :star5, label = "D = 5'")
+    savefig("/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Plots/Figure_26.png")
 end
 
 print("Done.")
