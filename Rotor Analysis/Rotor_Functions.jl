@@ -1,9 +1,7 @@
 #=---------------------------------------------------------------
-10/17/2022
-Rotor Functions v6 Rotor_Functions.jl
-This is the header file that I have finished for the initial
-submission.
-Functions are listed alphabetically.
+10/28/2022
+Rotor Functions v8 Rotor_Functions.jl
+This code is updated to work in any computer.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic
@@ -75,7 +73,7 @@ function coeff(x, y; increment = 1, iterations = 100, re = 1e6, min = -15, max =
 end
 
 """
-    Compute(;Rtip = 10, Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0)
+    Compute(;Rtip = 10, Rhub = 0.10, Re0 = 1e6, B = 2, rpm = 5400, propgeom = "Rotor Analysis/Rotors/APC_10x7.txt", foilname = "Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0)
 Find J, eff, CT, and CQ for a rotor of provided geometry.
 # Arguments
 - Rtip - Airfoil tip radius. Default 10
@@ -84,8 +82,8 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - Re0 - Reynolds number. Default 10^6
 - B - Blade count. Default 2
 - rpm - Revolutions per minute. Default 5400
-- propgeom - Propellor to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt"
-- foilname - Airfoil to be used. Default "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412.dat"
+- propgeom - Propellor to be used. Default "Rotor Analysis/Rotors/APC_10x7.txt"
+- foilname - Airfoil to be used. Default "Rotor Analysis/Rotors/naca4412.dat"
 - twist - twist of entire airfoil in degrees. Default 0.
 - chordfact - Magnitude of chord factor. Default 1.
 # Outputs
@@ -94,7 +92,7 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - CT - The thrust coefficient corresponding to each J.
 - CQ - The torque coefficient corresponding to each J.
 """
-function Compute(;Rtip = 10, Rhub = 0.10, str = 1.0, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/APC_10x7.txt", foilname = "/Users/joe/Documents/GitHub/497R-Projects/Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
+function Compute(;Rtip = 10, Rhub = 0.10, str = 1.0, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "Rotor Analysis/Rotors/APC_10x4_7.txt", foilname = "Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.
