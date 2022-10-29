@@ -61,8 +61,6 @@ After this system of equations is solved, the solutions for $a$, $a'$, and $\phi
 
 This research led to a few discoveries that will be useful to optimize a rotor in the next assignment. These discoveries refined the size, shape, velocity, and blade quantity of rotors and gave insights into what results from changing each variable quantity. \newline
 
-\textbf{1. \emph{Comparison to Experimental Data}} \newline
-
 \begin{figure}
   \centering
   \subfloat[Thrust Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_1.png}}
@@ -76,6 +74,8 @@ This research led to a few discoveries that will be useful to optimize a rotor i
   \label{fig:2}
 \end{figure}
 
+\textbf{1. \emph{Comparison to Experimental Data}} \newline
+
 I first compared experimental rotor data with my own CCBlade.jl computations. CCBlade.jl has a \href{https://github.com/byuflowlab/CCBlade.jl}{github repository} containing some experimental data, which I used to test the functions I created. Figure \ref{fig:2} shows that the code found solutions close to experimental data. This is useful, because obtaining airfoil performance data in a physical experiment is very difficult. There are also many factors which could potentially invalidate these experimental results that are hard to control. \newline
 
 A loop calculated the error using the root mean squares method. To this, it first found the average of the squared residuals by squaring each individual residual, adding the total together, and then dividing by the number of points calculated. Afterwards, the square root of this total was found, as shown in the below equation, where $y_{p}$ and $y_{a}$ are predicted and actual results. \newline
@@ -87,8 +87,6 @@ A loop calculated the error using the root mean squares method. To this, it firs
 \end{equation}
 
  The calculated errors were 28.8 percent for efficiency, 37.7 percent for the thrust coefficient, and 51.4 percent for both the thrust and torque coefficients. These were much larger than the errors calculated in the provided data, which were 9.1 percent, 7.8 percent, and 5.4 percent. This may have been do to different methods of data collection or measurement. The graphs of the torque coefficient and the pressure coefficient have the same shape. They are related by a $2 \pi$ factor. Future plots will only display the torque coefficient because of this. \newline
-
-\textbf{2. \emph{Radius}} \newline
 
 \begin{figure}
   \centering
@@ -112,11 +110,11 @@ A loop calculated the error using the root mean squares method. To this, it firs
   \label{fig:4}
 \end{figure}
 
+\textbf{2. \emph{Radius}} \newline
+
 As shown in figure \ref{fig:1}, the radius factor is not included in any of the non-dimensional numbers investigated in this lab. If the size of the rotor is scaled then no effect occurs. Increasing a rotor's diameter while keeping other factors the same can have an effect, though. Figure \ref{fig:3} shows a NACA 10x7 and 11x7 rotor compared to each other. The longer NACA 11x7 propellor exhibits greater coefficients of thrust and torque with a similar efficiency. \newline
 
 Figure \ref{fig:4} shows three rotors that have the same profile, chord distribution, and chord length. Their only difference is that they are different lengths. The longest airfoil in figure 4 had the lowest coefficients of thrust and torque, but the highest efficiency. comparison between figures 1, 3, and 4 reveals that if a propellor is only magnified, then none of its coefficients are changed. If the length is increased while keeping other properties the same, then the efficiency is higher but the coefficients of thrust and torque are lower. If the pitch per revolution is decreased, then the efficiency drops at higher non-dimensional angles of attack. 
-
-\textbf{3. \emph{Chord Distribution}} \newline
 
 \begin{figure}
   \centering
@@ -129,9 +127,9 @@ Figure \ref{fig:4} shows three rotors that have the same profile, chord distribu
   \label{fig:5}
 \end{figure}
 
-Figure \ref{fig:5} shows that increasing or decreasing a rotor's chord distribution has negative impact on its efficiency. Changing the magnitude of the chord has an enormous impact on the torque and power coefficients, though. Thickening a rotor will dramatically increase the thrust and torque coefficients. In general, to increase the thrust a rotor generates, it should be thickened. \newline
+\textbf{3. \emph{Chord Distribution}} \newline
 
-\textbf{4, \emph{Twist Distribution}} \newline
+Figure \ref{fig:5} shows that increasing or decreasing a rotor's chord distribution has negative impact on its efficiency. Changing the magnitude of the chord has an enormous impact on the torque and power coefficients
 
 \begin{figure}
   \centering
@@ -142,22 +140,24 @@ Figure \ref{fig:5} shows that increasing or decreasing a rotor's chord distribut
   \captionsetup{aboveskip=0pt,font=it}
   \caption*{These rotors are identical besides the angle with which they were uniformly twisted. Increasing the twist angle of a rotor increases both its thrust and torque, as seen in subfigures a) and b), while also increasing its efficiency, as in subfigure c). The rotor with the $-0.5^{\circ}$ twist angle in subfigure c) has zero efficiency at every $J$ measured, meaning that the thrust it produces is in the opposite direction of the oncoming wind.}
   \label{fig:6}
-\end{figure}
+\end{figure}, though. Thickening a rotor will dramatically increase the thrust and torque coefficients. In general, to increase the thrust a rotor generates, it should be thickened. \newline
+
+\textbf{4, \emph{Twist Distribution}} \newline
 
 The amount a rotor is twisted can be modified so it redirects airflow and thrust differently to produces different effects. The rotor in figure \ref{fig:6} are twisted different amounts, and their thrust, torque, and efficiencies all varied significantly. The rotor with a $-0.5^{\circ}$ twist had the lowest thrust, torque, and efficiency. Its efficiency plot is at zero because the force generated by air flowing past rotor acts against its motion. In conclusion, changing a rotor's twist distribution so it is either positive or negative reduces the rotor's efficiency if it is twisted away from its optimal inflow angle. Increasing the twist angle of a rotor increases the thrust and torque coefficients, while decreasing the twist angle decreases both coefficients. \newline
-
-\textbf{5, \emph{Blade Count}} \newline
 
 \begin{figure}
   \centering
   \subfloat[Thrust]{\includegraphics[width = .35\textwidth]{Plots/Figure_18.png}}
   \subfloat[Torque]{\includegraphics[width = .35\textwidth]{Plots/Figure_19.png}}
   \subfloat[Efficiency]{\includegraphics[width = .35\textwidth]{Plots/Figure_20.png}}
-  \caption{Comparison between twist angles}
+  \caption{Comparison between blade counts}
   \captionsetup{aboveskip=0pt,font=it}
   \caption*{Although thrust and torque increase with each added rotor blade, efficiency decreases. Increasing a rotor's blade count increases both its a) thrust and b) torque coefficients, but subfigure c) shows that the rotor's efficiency decreases slightly each time a blade is added to the rotor.}
   \label{fig:7}
 \end{figure}
+
+\textbf{5, \emph{Blade Count}} \newline
 
 Increasing the number of blades in a rotor appears to increase both the thrust and torque it generates. While the thrust and torque increase, though, the efficiency decreases as the rotor's torque coefficient grows more rapidly than its thrust coefficient.
 
