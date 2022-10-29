@@ -92,7 +92,7 @@ Find J, eff, CT, and CQ for a rotor of provided geometry.
 - CT - The thrust coefficient corresponding to each J.
 - CQ - The torque coefficient corresponding to each J.
 """
-function Compute(;Rtip = 10, Rhub = 0.10, str = 1.0, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "Rotor Analysis/Rotors/APC_10x4_7.txt", foilname = "Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
+function Compute(;Rtip = 10, Rhub = 0.10, str = 1.0, Re0 = 0, B = 2, rpm = 5400, nJ = 20, rho = 1.225, re = 1e6, propname = "Rotor Analysis/Rotors/APC_10x7.txt", foilname = "Rotor Analysis/Rotors/naca4412_1e6.dat", twist = 0, expr = 0, chordfact = 1.0)
     # The first section creates the propellor.
     Rtip = intom(Rtip)  # Diameter to radius, inches to meters
     Rhub = Rhub * Rtip # Hub radius argument is a decmimal of the tip.

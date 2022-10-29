@@ -7,6 +7,7 @@ This code is updated to work in any computer.
 include("Rotor_Functions.jl")
 
 # Create a standard domain. This is based on known values.
+
 J0 = range(0.1, 0.6, length = 20) # This is an actual array. Other J values returned are pointers.
 J0a, eff0, CT0, CQ0 = Compute()# This provides default data.
 
@@ -144,6 +145,7 @@ Jexp8, CTexp8, CPexp8, etaexp8 = Loadexp("Rotor Analysis/Rotors/0.txt") # This e
 CQexp8 = CQCP(CPexp8) # Calculate CQ from CP for comparison in plots.
 
 # The first section creates the propellor.
+
 Je8p = pointer(Jexp8) # Converts Jexp8 to a pointer to pass it into the Compute() function.
 J8, eff8, CT8, CQ8 = Compute(rpm = 5400, expr = Je8p, propname = "Rotor Analysis/Rotors/5.txt", foilname = "Rotor Analysis/Rotors/naca4412.dat") # Based on APC10x7 propellor, no rotation.
 CP8 = CPCQ(CQ8) # Calculate CP from CQ for use in plots later
@@ -215,6 +217,7 @@ scatter!(J0, CT0, markershape = :square, label = "2 Blades")
 scatter!(J0, CT10, markershape = :star5, label = "4 Blades")
 savefig("Rotor Analysis/Plots/Figure_18.png")
     
+
 plt19 = scatter(J0, CQ9, label = "1 Blade", xlabel = "J", ylabel = "\$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
 scatter!(J0, CQ0, markershape = :square, label = "2 Blades'")
 scatter!(J0, CQ10, markershape = :star5, label = "4 Blades")
