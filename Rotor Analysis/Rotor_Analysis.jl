@@ -256,7 +256,7 @@ scatter!(J0, CT0, markershape = :star5, label = "D = 10'")
 scatter!(J0, CT13, markershape = :square, label = "D = 20'")
 savefig("Rotor Analysis/Plots/Figure_24.png")
     
-plt22 = scatter(J0, CQ14, label = "D = 5'", xlabel = "J", ylabel = "\$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :bottomleft)
+plt22 = scatter(J0, CQ14, label = "D = 5'", xlabel = "J", ylabel = "\$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, background_color_legend = nothing, legend = :topright)
 scatter!(J0, CQ0, markershape = :star5, label = "D = 10'")
 scatter!(J0, CQ13, markershape = :square, label = "D = 20'")
 savefig("Rotor Analysis/Plots/Figure_25.png")
