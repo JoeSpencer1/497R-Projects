@@ -1,8 +1,10 @@
 #=---------------------------------------------------------------
 10/25/2022
-Rotor Design v1 Rotor_Optimization.jl
+Rotor Design v1 Rotor_Design.jl
 For now, the companion file for this main file is the same file
 that went with the last project, Rotor Analysis.
+Function outputs are efficiency, power coefficient, and rotational velocity.
+I think the function arguments for adjustible variables should be: chord distribution, rotation, and twist distribution.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
