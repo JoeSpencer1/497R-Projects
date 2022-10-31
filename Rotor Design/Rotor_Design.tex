@@ -52,14 +52,24 @@ There are several variable factors that can be adjusted and several performance 
 	\item The rotational velocity.
 \end{itemize}
 
-To these variables, i will add more constraints, like that the blade count cannot exceed 10, and that the rotational velocity cannot exceed 150,000 rpm. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the power coefficient and efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
+To these variables, i will add more constraints, like that the blade count cannot exceed 10, and that the rotational velocity cannot exceed 150,000 rpm. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the total power produced and the efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
 
 This relation can be modeled using the following equation. The best rotor is found by minimizing $f(x)$. In this analysis, $f(x)$ represents the ratio of the rotor efficiency and the power it produces divided by its rotational velocity, $\omega$, in RPM. Optimizing this function should produce a rotor that moves slowly and very efficiently.
 
 \begin{equation}
 \begin{aligned}
 	f(x) = f(x_{1}, x_{2}, x_{3}...)\\
-	      = \frac{\eta C_{P}}{\omega}
+	      = \frac{\eta P}{\omega}
+\end{aligned}
+\end{equation}
+
+The equations to find power and efficiency are already related. They both contain the power coefficient, $C_{P}$, which can be found by \hyperlink{BEM}{blade element momentum theory}. In addition, the equation for power contains the cube of the rotational velocity in revolutions per second, $n$, which is similar to the rotational velocity in radians per second.
+
+\begin{equation}
+\begin{aligned}
+	\eta = J \frac{C_{T}}{C_{P}} \\
+	P = \rho n^{3} D^{5} C_{P} \\
+	n = \frac{\omega}{2 \pi}
 \end{aligned}
 \end{equation}
 
