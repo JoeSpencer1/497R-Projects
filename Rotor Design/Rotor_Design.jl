@@ -1,6 +1,6 @@
 #=---------------------------------------------------------------
-10/25/2022
-Rotor Design v1 Rotor_Design.jl
+10/31/2022
+Rotor Design v2 Rotor_Design.jl
 For now, the companion file for this main file is the same file
 that went with the last project, Rotor Analysis.
 Function outputs are efficiency, power coefficient, and rotational velocity.
@@ -14,7 +14,7 @@ J0 = range(0.1, 0.6, length = 20) # This is an actual array. Other J values retu
 J0a, eff0, CT0, CQ0 = Compute()# This provides default data.
 
 # This section reads in experimental data and estimates results.
-Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("/Users/joe/Documents/GitHub/497R-Projects/Rotor Optimization/Rotors/10x7_6014.txt") # This experimental data was provided by UIUC.
+Jexp1, CTexp1, CPexp1, etaexp1 = Loadexp("Rotor Optimization/Rotors/10x7_6014.txt") # This experimental data was provided by UIUC.
 CQexp1 = CQCP(CPexp1) # Calculate CQ from CP for comparison in plots.
 
 # The first section creates the propellor.
