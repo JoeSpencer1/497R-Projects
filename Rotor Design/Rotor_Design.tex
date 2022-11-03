@@ -55,11 +55,11 @@ There are several variable factors that can be adjusted and several performance 
 
 To these variables, i will add more constraints, like that the blade count cannot exceed 10, and that the rotational velocity cannot exceed 150,000 rpm. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the total power produced and the efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
 
-This relation can be modeled using the following equation. The best rotor is found by minimizing $f(x)$. In this analysis, $f(x)$ represents the ratio of the rotor efficiency and the power it produces divided by its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently.
+This relation can be modeled using the following equation. The best rotor is found by minimizing $f(x)$. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently while still producing enough power.
 
 \begin{equation}
 \begin{aligned}
-	f(x) = \frac{\eta P}{\omega} = f(x_{1}, x_{2}, x_{3}...)
+	f(x) = \frac{\eta}{P \omega} = f(x_{1}, x_{2}, x_{3}...)
 \end{aligned}
 \end{equation}
 
