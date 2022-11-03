@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
 10/31/2022
-test v1 test.jl
+test v2 test.jl
 I used this file to prove that all of the functions worked. I
-used this file to divide the code into functions.
+used this file to divide the code into functions. This file also
+contains a copy of the optim.jl code that I tried.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic, Optim, Setfield
@@ -52,3 +53,31 @@ for i = 1:1
     obj = eff * P / omega
     print(obj)
 end
+
+function simple!(g, x)
+    # objective
+    f = 4*x[1]^2 - x[1] - x[2] - 2.5 + x[3]
+
+    # constraints
+    g[1] = -x[2]^2 + 1.5*x[1]^2 - 2*x[1] + 1
+    g[2] = x[2]^2 + 2*x[1]^2 - 2*x[1] - 4.25
+    g[3] = x[1]^2 + x[1]*x[2] - 10.0
+
+    return f
+end
+x0 = [1.0; 2.0; 2.8]  # starting point
+ng = 3  # number of constraints
+# xopt, fopt, info = minimize(simple!, x0, ng)
+# x0 = [1.0; 2.0]  # starting point
+lx = [-5.0, -5, -10]  # lower bounds on x
+ux = [5.0, 5, 10]  # upper bounds on x
+# ng = 3  # number of constraints
+# lg = -Inf*ones(ng)  # lower bounds on g
+# ug = zeros(ng)  # upper bounds on g
+options = Options(solver=IPOPT())  # choosing IPOPT solver
+
+xopt, fopt, info = minimize(simple!, x0, ng, lx, ux, lg, ug, options)
+
+println("xstar = ", xopt)
+println("fstar = ", fopt)
+println("info = ", info)
