@@ -1,14 +1,15 @@
 #=---------------------------------------------------------------
-11/3/2022
-Rotor Functions v3 Rotor_Functions.jl
-This code has a working mutable struct called RotorTest. I still
-want to divide the header into smaller functions.
+11/5/2022
+Rotor Functions v4 Rotor_Functions.jl
+I moved the optimizer function to the header file. I still need
+to create another function that can provide the rotor geometry
+without needint entry into the optimize function.
 ---------------------------------------------------------------=#
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic, SNOW, Setfield
 
 """
-   Analysis(c, twist, v, rpm; nb = 3, d = 20, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+   analysis(c, twist, v, rpm; nb = 3, d = 20, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
@@ -22,7 +23,7 @@ Root function that calls other functions to analyze a rotor.
 - rfile - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
 - ffile - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
 """
-function Analysis(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+function analysis(c, twist, v, rpm, nb, d, rhub, rho, rfile, ffile)
     rtest = Rotortest(c, twist, v, rpm)
     rread = readdlm(rfile) # Read rotor file.
     fread = ffile # Rename airfoil file.
@@ -47,7 +48,7 @@ function Analysis(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfi
     rotor = Rotor(rhub, rtip, nb) # Create rotor.
 
     # Find efficiency and power of the rotor at this rpm.
-    J = rotor.v / (d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    J = rtest.v / (d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
     n = omega / (2 * pi) # Velocity in revolutions per second
     Vinf = J * d * n # Calculates freestream velocity
     op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
@@ -62,12 +63,69 @@ function Analysis(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfi
 end
 
 """
+    optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+This function uses the SNOW code to find the optimal properties of the rotor.
+# Arguments
+- c - Chord length.
+- twist - Twist, in degrees.
+- v - Air velocity, in meters per second.
+- rpm - Rotational velocity, in rpm.
+- nb - The number of blades in the rotor. Default 3.
+- d - The rotor's diameter. Default 20 feet.
+- rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
+- rho - The air density. Default 1.225.
+- rfile - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
+- ffile - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
+"""
+function optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+    x0 = [c; twist; v; rpm; nb; d; rhub; rho; rfile; ffile]  # starting point
+    ng = 3  # number of constraints
+    lx = [0.1, -45, 0, 0.1, nb, d, rhub, rho, rfile, ffile]  # lower bounds on x
+    ux = [100.0, 45, 300, 10000, nb, d, rhub, rho, rfile, ffile]  # upper bounds on x
+    ng = 3  # number of constraints
+    lg = -Inf*ones(ng)  # lower bounds on g
+    ug = zeros(ng)  # upper bounds on g
+    options = Options(solver=IPOPT())  # choosing IPOPT solver
+
+    xopt, fopt, info = minimize(simple!, x0, ng, lx, ux, lg, ug, options)
+
+    println("xstar = ", xopt)
+    println("fstar = ", fopt)
+    println("info = ", info)
+end
+
+"""
+    simple!(g, x)
+This function is called from the optimize() function. It performs the rotor analysis over and over.
+# Arguments
+- x - This array contains the data contained in the Rotortest struct, in order.
+- x[1] - Chord length.
+- x[2] - Twist, in degrees.
+- x[3] - Air velocity, in meters per second.
+- x[4] - Rotational velocity, in rpm.
+- x[5] - The number of blades in the rotor. Default 3.
+- x[6] - The rotor's diameter. Default 20 feet.
+- x[7] - Ratio of the hub length to tip lentgh. Defulat 0.1.
+- x[8] - The air density. Default 1.225.
+- x[9] - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
+- x[10] - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
+"""
+function simple!(g, x)
+    # objective
+    f = analysis(x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10])
+
+    # constraints
+    # none
+    return f
+end
+
+"""
     Rotortest
 this struct creates a new rotor with updated properties.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
 - twist - Rotor's twist. Twist is uniform across entire rotor.
-- v - The rotor's velocity, in m/s.
+- v - The air velocity, in m/s.
 - rpm - The rotor's rotational velocity, in rpm.
 """
 mutable struct Rotortest
