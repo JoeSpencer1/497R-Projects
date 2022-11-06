@@ -1,10 +1,13 @@
 #=---------------------------------------------------------------
 11/5/2022
-Rotor Functions v4 Rotor_Functions.jl
-I moved the optimizer function to the header file. I still need
-to create another function that can provide the rotor geometry
-without needint entry into the optimize function.
+Rotor Functions v5 Rotor_Functions.jl
+I established the rotor and airfoil as global variables so I nondim
+longer have to pass them into functions. This had become a
+problem when they were passed into the optimizer function, since
+they cannot really be optimized.
 ---------------------------------------------------------------=#
+rread
+fread
 
 using CCBlade, FLOWMath, Xfoil, Plots, LaTeXStrings, DelimitedFiles, PointerArithmetic, SNOW, Setfield
 
@@ -20,13 +23,9 @@ Root function that calls other functions to analyze a rotor.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
-- rfile - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
-- ffile - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
 """
-function analysis(c, twist, v, rpm, nb, d, rhub, rho, rfile, ffile)
+function analysis(c, twist, v, rpm, nb, d, rhub, rho)
     rtest = Rotortest(c, twist, v, rpm)
-    rread = readdlm(rfile) # Read rotor file.
-    fread = ffile # Rename airfoil file.
 
     # Rotor geometry
     d = d * 0.0254 # Diameter inches to meters
@@ -63,7 +62,7 @@ function analysis(c, twist, v, rpm, nb, d, rhub, rho, rfile, ffile)
 end
 
 """
-    optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+    optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225)
 This function uses the SNOW code to find the optimal properties of the rotor.
 # Arguments
 - c - Chord length.
@@ -74,15 +73,13 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
-- rfile - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
-- ffile - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
 """
-function optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
-    x0 = [c; twist; v; rpm; nb; d; rhub; rho; rfile; ffile]  # starting point
+function optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225)
+    x0 = [c; twist; v; rpm; nb; d; rhub; rho]  # starting point
     ng = 3  # number of constraints
-    lx = [0.1, -45, 0, 0.1, nb, d, rhub, rho, rfile, ffile]  # lower bounds on x
-    ux = [100.0, 45, 300, 10000, nb, d, rhub, rho, rfile, ffile]  # upper bounds on x
-    ng = 3  # number of constraints
+    lx = [0.1, -45, 0, 0.1, nb, d, rhub, rho]  # lower bounds on x
+    ux = [100.0, 45, 300, 10000, nb, d, rhub, rho]  # upper bounds on x
+    ng = 8  # number of constraints
     lg = -Inf*ones(ng)  # lower bounds on g
     ug = zeros(ng)  # upper bounds on g
     options = Options(solver=IPOPT())  # choosing IPOPT solver
@@ -107,15 +104,14 @@ This function is called from the optimize() function. It performs the rotor anal
 - x[6] - The rotor's diameter. Default 20 feet.
 - x[7] - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - x[8] - The air density. Default 1.225.
-- x[9] - The file containint rotor information. Default "Rotor Design/Rotors/APC_10x7.txt".
-- x[10] - The file containint airfoil information. Default "Rotor Design/Rotors/naca4412_1e6.txt".
 """
 function simple!(g, x)
-    # objective
-    f = analysis(x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10])
-
     # constraints
-    # none
+    # None
+
+    # objective
+    f = analysis(x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8])
+
     return f
 end
 
