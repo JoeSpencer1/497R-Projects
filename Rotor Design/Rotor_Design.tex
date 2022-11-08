@@ -53,13 +53,13 @@ There are several variable factors that can be adjusted and several performance 
 	\item The rotational velocity.
 \end{itemize}
 
-To these variables, i will add more constraints, like that the blade count cannot exceed 10, and that the rotational velocity cannot exceed 150,000 rpm. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the total power produced and the efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
+To these variables, i will add more constraints. The rotational velocity cannot exceed 10,000 rpm, the camber cannot exceed 100 percent of the chord length, the twist angle cannot exceed 45 degrees, and the airfoil's forward velocity cannot exceed 300 meters per second. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the total power produced and the efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
 
 This relation can be modeled using the following equation. The best rotor is found by minimizing $f(x)$. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently while still producing enough power.
 
 \begin{equation}
 \begin{aligned}
-	f(x) = \frac{\eta}{P \omega} = f(x_{1}, x_{2}, x_{3}...)
+	f(x) = \frac{\eta P}{\omega} = f(x_{1}, x_{2}, x_{3}...)
 \end{aligned}
 \end{equation}
 
@@ -73,7 +73,40 @@ The equations to find power and efficiency are already related. They both contai
 \end{aligned}
 \end{equation}
 
-I have elected to allow some values to be variable in the objective function describing the rotor. Other values, including basic rotor profile taken from the original file, will be held constant.  The values that can be changed include the rotor's diameter $D$, the blade camber thickness $c$, the blade count, $n_{b}$ the angle of rotation $\phi$, the rotational velocity $\omega$, and the twist distribution $t$. 
+\subsubsection*{Results and Discussion}
+
+This investigation found that given certain constraints, different types of rotors are better suited to different environments. The optimized results for each blade count are shown in table 1. 
+\begin{table}[bp]
+	\centering
+	\title{Table 1: Airfoils Modeled by Program \newline}
+	\title{\emph{A link to the graph for each airfoil is in its bottom row.}} \label{table:1}
+	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
+		\hline
+		 \textbf{Profile} & 1310 & 2310 & 3310 & 1412 & 2412 & 3412 & 2209 & 2209 & 2209 \\ \hline
+		 \textbf{\emph{Re}} & \multicolumn{3}{c|}{$1.0*10^5$}  & \multicolumn{3}{c|}{$1.0*10^5$} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ \\ \hline
+		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:1}} & \multicolumn{3}{c|}{\ref{fig:2}} & \multicolumn{3}{c|}{\ref{fig:3}, \ref{fig:8}}\\ \hline 
+		 $\mathbf{\alpha_{0}}$ & -0.28$^{\circ}$ & -1.00$^{\circ}$ & -1.92$^{\circ}$ & -0.64$^{\circ}$ & -1.37$^{\circ}$ & -2.10$^{\circ}$ & -0.84$^{\circ}$ & -1.62$^{\circ}$ & -1.96$^{\circ}$ \\ \hline
+		 $\mathbf{\alpha_{st}}$ & 10$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ & 13$^{\circ}$ & 11$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ \\ \hline \hline
+		 \newline
+		 \textbf{Profile} & 1115 & 1115 & 1115 & 2208 & 2213 & 2218 & 2114 & 2214 & 2314 \\ \hline
+		 \textbf{\emph{Re}} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ & \multicolumn{3}{c|}{$1.0*10^5$} & \multicolumn{3}{c|}{$1.0*10^5$} \\ \hline
+		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:4}}& \multicolumn{3}{c|}{\ref{fig:5}} & \multicolumn{2}{c|}{\ref{fig:6}} & \ref{fig:6}, \ref{fig:7} \\ \hline
+		 $\mathbf{\alpha_{0}}$ & -0.69$^{\circ}$ & -0.86$^{\circ}$ & -0.88$^{\circ}$ & -0.86$^{\circ}$ & -1.55$^{\circ}$ & -1.48$^{\circ}$ & -1.39$^{\circ}$ & -1.51$^{\circ}$ & -1.53$^{\circ}$ \\ \hline
+		 $\mathbf{\alpha_{st}}$ & 12$^{\circ}$ & 15$^{\circ}$ & 16$^{\circ}$ & 10$^{\circ}$ & 12$^{\circ}$ & 11$^{\circ}$ & 10$^{\circ}$ & 13$^{\circ}$ & 14$^{\circ}$ \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\begin{figure}
+  \centering
+  \subfloat[Thrust Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Torque Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_2.png}}
+
+  \subfloat[Power Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \subfloat[Efficiency]{\includegraphics[width = .30\textwidth]{Plots/Figure_4.png}}
+  \caption{Testing BEM Output Against Experimental Data. \newline Although there are some differences, Blade Element Momentum code provides a good estimate of the constants experienced by a rotor.}
+  \label{fig:2}
+\end{figure}
 
 \clearpage
 
