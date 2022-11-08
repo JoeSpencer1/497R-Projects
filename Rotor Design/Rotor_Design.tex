@@ -20,42 +20,20 @@
 
 \author{Joe Spencer}
 \title{Rotor Optimization}
-\date{November 5, 2022}
+\date{November 8, 2022}
 \maketitle
 
 \subsubsection*{Methods}
 
-This project will determine the optimal combination of design variables. It will use an optimizer to do this. The optimizer will be confined within these limitations:
+This project will determine the optimal combination of design variables. It will use an optimizer to do this. The optimizer will be confined within several limitations that will maintain it in the domain of rotors that could actually be created without breaking. While increasing the objective function, the rotor's bending moment in the normal and tangential directions may not exceed 110\% of the original provided bending moments, and its torque cannot exceed 110\% of the original torque. \newline
 
-\begin{itemize}
-	\item It should obviously increase and hopefully maximize the objective function.
-	\item The root bending moment may not be greater than 110\% of the original.
-	\item The torque requirement may not be greater than 110\% of the original.
-\end{itemize}
+These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible. These can also be modified depending on what is most important to the user. In one situation, they may be important, while in others they may not. Some of these include the power coefficient, the total power produced, the operating velocity, and the efficiency. \newline
 
-The main purpose of the above requirements is to provide boundaries for safe use of the propellor. Other requirements besides these are more flexible. These can also be modified depending on what is most important to the user.
+There are several variable factors that can be adjusted and several performance measure that can still be used to determine a better propellor design. The rotor's blade length and width can be changed together or separately, depending on the situation. The blade count, shape, and twist distribution can be adjusted when the rotor is manufactured. Other variables including the rotational velocity and the angle of rotation can be modified during use. In this project, constraints were added to some of these values while other values were left flexible to be optimized. \newline
 
-\begin{itemize}
-	\item The power coefficient.
-	\item The total power produced by the rotor.
-	\item The rotor's efficiency.
-\end{itemize}
+The values that were selected as free variables are the rotational velocity, the chord length, the twist angle, and the velocity relative to the oncoming air. Reasonable maximum limits were selected for each of these variables to keep them in the domain of reasonable solutions. The rotational velocity cannot exceed 10,000 rpm, the chord cannot exceed 500 percent of the chord length, the twist angle cannot exceed 45 degrees, and the air's velocity cannot exceed 300 meters per second. \newline
 
-There are several variable factors that can be adjusted and several performance measure that can still be used to determine a better propellor design. These include:
-
-\begin{itemize}
-	\item The rotor blade length.
-	\item The rotor width.
-	\item The angle of rotation, $\phi$
-	\item The blade count.
-	\item The blade shape.
-	\item The twist distribution.
-	\item The rotational velocity.
-\end{itemize}
-
-To these variables, i will add more constraints. The rotational velocity cannot exceed 10,000 rpm, the camber cannot exceed 100 percent of the chord length, the twist angle cannot exceed 45 degrees, and the airfoil's forward velocity cannot exceed 300 meters per second. These requirements keep the rotor within a real range. Items from these lists can be combined to create a useful objective function. I have decided that in my rotor optimization I want to find the rotor that maximizes the total power produced and the efficiency while minimizing the rotational velocity. Optimizing this relation will allow for a rotor that is as powerful as possible while being the smallest possible.
-
-This relation can be modeled using the following equation. The best rotor is found by minimizing $f(x)$. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently while still producing enough power.
+These requirements keep the rotor within a real range. The limits, the free variables, and other supporting values to define the rotor were put into an optimizer, which then found the optimal rotational velocity, chord length, twist angle, and air velocity for rotors with several different blade counts. The optimal rotor is found by minimizing $f(x)$ in equation 1. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently while still producing enough power. \newline
 
 \begin{equation}
 \begin{aligned}
@@ -63,7 +41,7 @@ This relation can be modeled using the following equation. The best rotor is fou
 \end{aligned}
 \end{equation}
 
-The equations to find power and efficiency are already related. They both contain the power coefficient, $C_{P}$, which can be found by \hyperlink{BEM}{blade element momentum theory}. In addition, the equation for power contains the cube of the rotational velocity in revolutions per second, $n_{r}$, which is related to the rotational velocity $\omega$ in radians per second by a simple factor.
+The equations to find power and efficiency are already related. They both contain the power coefficient, $C_{P}$, which can be found by \hyperlink{BEM}{blade element momentum theory}. In addition, the equation for power contains the cube of the rotational velocity in revolutions per second, $n_{r}$, which is related to the rotational velocity $\omega$ in radians per second by a simple factor. \newline
 
 \begin{equation}
 \begin{aligned}
@@ -75,38 +53,42 @@ The equations to find power and efficiency are already related. They both contai
 
 \subsubsection*{Results and Discussion}
 
-This investigation found that given certain constraints, different types of rotors are better suited to different environments. The optimized results for each blade count are shown in table 1. 
+This investigation found that given certain constraints, different types of rotors are better suited to different environments. The results for each blade count are shown in table 1. This table shows that different blade counts have different optimal parameters. A visual representation of these results is found in figure 1. Several conclusions can be drawn from examining table 1 and figure 1. \newline
+
 \begin{table}[bp]
 	\centering
-	\title{Table 1: Airfoils Modeled by Program \newline}
-	\title{\emph{A link to the graph for each airfoil is in its bottom row.}} \label{table:1}
-	\begin{tabular}{ | c | c | c | c | c | c | c | c | c | c |}
-		\hline
-		 \textbf{Profile} & 1310 & 2310 & 3310 & 1412 & 2412 & 3412 & 2209 & 2209 & 2209 \\ \hline
-		 \textbf{\emph{Re}} & \multicolumn{3}{c|}{$1.0*10^5$}  & \multicolumn{3}{c|}{$1.0*10^5$} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ \\ \hline
-		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:1}} & \multicolumn{3}{c|}{\ref{fig:2}} & \multicolumn{3}{c|}{\ref{fig:3}, \ref{fig:8}}\\ \hline 
-		 $\mathbf{\alpha_{0}}$ & -0.28$^{\circ}$ & -1.00$^{\circ}$ & -1.92$^{\circ}$ & -0.64$^{\circ}$ & -1.37$^{\circ}$ & -2.10$^{\circ}$ & -0.84$^{\circ}$ & -1.62$^{\circ}$ & -1.96$^{\circ}$ \\ \hline
-		 $\mathbf{\alpha_{st}}$ & 10$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ & 13$^{\circ}$ & 11$^{\circ}$ & 11$^{\circ}$ & 12$^{\circ}$ \\ \hline \hline
-		 \newline
-		 \textbf{Profile} & 1115 & 1115 & 1115 & 2208 & 2213 & 2218 & 2114 & 2214 & 2314 \\ \hline
-		 \textbf{\emph{Re}} & $1.0*10^5$ & $2.0*10^5$ & $3.0*10^5$ & \multicolumn{3}{c|}{$1.0*10^5$} & \multicolumn{3}{c|}{$1.0*10^5$} \\ \hline
-		 \textbf{Link} & \multicolumn{3}{c|}{\ref{fig:4}}& \multicolumn{3}{c|}{\ref{fig:5}} & \multicolumn{2}{c|}{\ref{fig:6}} & \ref{fig:6}, \ref{fig:7} \\ \hline
-		 $\mathbf{\alpha_{0}}$ & -0.69$^{\circ}$ & -0.86$^{\circ}$ & -0.88$^{\circ}$ & -0.86$^{\circ}$ & -1.55$^{\circ}$ & -1.48$^{\circ}$ & -1.39$^{\circ}$ & -1.51$^{\circ}$ & -1.53$^{\circ}$ \\ \hline
-		 $\mathbf{\alpha_{st}}$ & 12$^{\circ}$ & 15$^{\circ}$ & 16$^{\circ}$ & 10$^{\circ}$ & 12$^{\circ}$ & 11$^{\circ}$ & 10$^{\circ}$ & 13$^{\circ}$ & 14$^{\circ}$ \\ \hline
+	\title{Outputs of Rotor Optimization Code for Different Blade Counts \newline}
+	\title{\emph{Graphs to accompany these rotors are shown in Figure 1.}} \label{table:1} \newline
+	\begin{tabular}{| c | c | c | c | c | c |}
+		 \hline
+		 \textbf{Rotor} & Original & 2 Blades & 3 Blades & 4 Blades & 8 Blades \\ \hline
+		 \textbf{Chord Magnification} & 1.1 & 6.98 & 6.58 & 4.18 & 1.86 \\ \newline
+		 \textbf{Twist Angle, degrees} & 1 & 0.64 & 0.55 & 0.69 & 0.55 \\ \newline
+		 \textbf{Free Stream Velocity, m/s} & 20 & 300 & 300 & 300 & 300 \\ \newline
+		 \textbf{Rotational Velocity, rpm} & 800 & 200.41 & 222.39 & 351.07 & 357.3 \\ \hline
 	\end{tabular}
 \end{table}
 
+First off, optimal chord magnitude seemed to be negatively correlated with the blade count. Rotors with fewer blades had an optimal chord thickness that was magnified several times.  Once optimized, even the rotor with 8 blades was nearly twice as thick as the original blade. It can be seen from this data that increasing the chord length of a blade will increase its power and efficiency at lower rotational velocities. \newline
 
 \begin{figure}
   \centering
-  \subfloat[Thrust Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_1.png}}
-  \subfloat[Torque Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_2.png}}
+  \subfloat[Chord Length]{\includegraphics[width = .30\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_2.png}}
 
-  \subfloat[Power Coefficient]{\includegraphics[width = .30\textwidth]{Plots/Figure_3.png}}\hspace{1em}
-  \subfloat[Efficiency]{\includegraphics[width = .30\textwidth]{Plots/Figure_4.png}}
-  \caption{Testing BEM Output Against Experimental Data. \newline Although there are some differences, Blade Element Momentum code provides a good estimate of the constants experienced by a rotor.}
+  \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_4.png}}
+  \caption{Optimal Blade Parameters Compared With Blade Counts}
+  \captionsetup{aboveskip=0pt,font=it}
+  \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
   \label{fig:2}
 \end{figure}
+
+ This research had varying results when it investigated the effect of twist angle on the objective function. The optimal twist angle for each blade was fount to be approximately 0.6 degrees. The optimal rotational velocity was also consistent between rotor blades: each rotor blade performed the objective function best at 300 m/s, which was the maximum air velocity used in this lab. \newline
+ 
+ As the blade count of rotors increased, higher rotational velocities performed better. While the optimal rotational velocity for a rotor with 2 blades was close to 200 rpm, when the rotor had 8 blades its optimal rotational velocity increased above 350 rpm. At any of these blade counts, an optimized rotor will have a thicker chord, a slight positive twist angle, operate at the highest free stream velocity, and rotate either at a lower velocity or a higher velocity, depending how many blades it has. \newline
+ 
+ This analysis optimized rotors using one equation, but other analyses could be performed for other equations using different variables, if desired. These different analyses will likely yield different results to design rotors that are better suited for unique applications. \newline
 
 \clearpage
 
@@ -116,7 +98,7 @@ This is a compilation of the previous two glossaries that I have included in my 
 
 \begin{itemize}
 	
-	\item \hypertarget{J}{Advance Ratio, $J$} - A rotor's Advance Ratio is a non-dimensional term. It describes the ratio how quickly a rotor is moving relative to the fluid flowing past it. A high advance ratio signifies that either the fluid is moving quickly or the rotor is moving slowly. It is described by the following equation, in which $V_{a}$ is the free stream fluid velocity, $n$ is the rotational velocity, and $D$ is the rotor diameter.
+	\item \hypertarget{J}{Advance Ratio, $J$} - A rotor's advance ratio is a non-dimensional term. It describes the ratio how quickly a rotor is moving relative to the fluid flowing past it. A high advance ratio signifies that either the fluid is moving quickly or the rotor is moving slowly. It is modeled by the following equation, in which $V_{a}$ is the free stream fluid velocity, $n$ is the rotational velocity, and $D$ is the rotor diameter.
 	\begin{equation}
 	\begin{aligned}
 		J = \frac{V_{a}}{n D}
@@ -125,13 +107,13 @@ This is a compilation of the previous two glossaries that I have included in my 
 		
 	\item \hypertarget{alpha}{Angle of Attack, $\alpha$} - The angle of attack, $\alpha$ is the angle between the motion of oncoming fluid and the chord line of the airfoil. a positive $\alpha$ corresponds to a airfoil tilted upwards.
 	
-	\item \hypertarget{phi}{Angle of Rotation, $\phi$} - The Angle of Rotation, sometimes denoted by the Greek letter $\phi$, is the angle between the freest stream velocity and the velocity of the airfoil as it rotates. It is used in \hyperlink{BEM}{Blade Element Momentum Theory} calculations.
+	\item \hypertarget{phi}{Angle of Rotation, $\phi$} - The angle of rotation, sometimes denoted by the Greek letter $\phi$, is the angle between the freest stream velocity and the velocity of the airfoil as it rotates. It is used in \hyperlink{BEM}{blade element momentum theory} calculations.
 
-	\item \hypertarget{a}{Axial Induction Factor, $a$} - The Axial Induction Factor is the ratio of the reduction in air velocity at an airfoil to its free stream velocity.
+	\item \hypertarget{a}{Axial Induction Factor, $a$} - The axial induction factor is the ratio of the reduction in air velocity at an airfoil to its free stream velocity.
 	
-	\item \hypertarget{M}{Bending Moment, $M$} - The bending moment a rotor experiences can be defined by the below equation, where $M$ is the moment, $S$ is the shear, and 
+	\item \hypertarget{M}{Bending Moment, $M$} - The bending moment a rotor experiences can be modeled by integrating the shear force it is exposed to with respect to its distance in the x-direction. 
 	
-	\item \hypertarget{BEM}{Blade Element Momentum Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{Blade Element Theory} and \hyperlink{MT}{Momentum Theory}. These equations are used to recursively find the \hyperlink{a}{Axial Induction Factor, $a$}, \hyperlink{a'}{Tangential Induction Factor}, and \hyperlink{phi}{Angle of Rotation, $\phi$}
+	\item \hypertarget{BEM}{Blade Element Momentum Theory} - The theory used to calculate local forces on a propellor or wind turbine blade. It employs both \hyperlink{BET}{blade element theory} and \hyperlink{MT}{momentum theory}. These equations are used to recursively find the \hyperlink{a}{axial induction factor, $a$}, \hyperlink{a'}{tangential induction factor}, and \hyperlink{phi}{angle of rotation, $\phi$}
 	\begin{equation}
 	\begin{aligned}
 		\frac{1}{2} W^{2} N c C_{y} = 4 \pi U_{\infty} (1 - a) \times \Omega a' r^{2} \\
@@ -147,7 +129,7 @@ In these equations, $a$, $a'$, and $\phi$ are the previously mentioned axial and
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{BET}{Blade Element Theory} - Blade Element Theory calculates the forces on a turbine blade by dividing it into finite pieces and summing the forces on all of these pieces. This theory determines the induced velocity and efficiency of a point along a blade using these equations:
+	\item \hypertarget{BET}{Blade Element Theory} - Blade element theory calculates the forces on a turbine blade by dividing it into finite pieces and summing the forces on all of these pieces. This theory determines the induced velocity and efficiency of a point along a blade using these equations:
 	\begin{equation}
 	\begin{aligned}
 		v_{i} = \sqrt{\frac{T}{A} \frac{1}{2 \rho}} \\
@@ -156,11 +138,11 @@ In these equations, $a$, $a'$, and $\phi$ are the previously mentioned axial and
 	\end{equation}
 In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$ the thrust it experiences, $A$ is its area, $\rho$ is the air density, $\phi$ is the angle to the airfoil's plane of rotation as it moves forward, and $\gamma$ is the difference between $\phi$ and $\beta$, what the airfoil's actual angle of rotation would be if it were stationary.
 	
-	\item \hypertarget{Camber}{Camber} - The Camber of an airfoil is represented by the Camber Line, which runs halfway between its top and bottom surfaces. This line represents the curvature of an airfoil. An airfoil with positive camber is slightly convex on top and slightly concave on its bottom.
+	\item \hypertarget{Camber}{Camber} - An airfoil's camber is represented by the camber line, which runs halfway between its top and bottom surfaces. This line represents the curvature of an airfoil. An airfoil with positive camber is slightly convex on top and slightly concave on its bottom.
 	
-	\item \hypertarget{c}{Chord, $c$} - An airfoil's Chord is the imaginary line running straight from the leading edge of an airfoil to its trailing edge. The chord line is used to find an airfoil's \hyperlink{alpha}{Angle of Attack}. The Chord Length Distribution shows the length of a rotor's chord at different angular positions around itself. An airfoil with a constant angle of attack $\alpha$ as it generates lift has an elliptic chord distribution.
+	\item \hypertarget{c}{Chord, $c$} - An airfoil's chord is the imaginary line running straight from the leading edge of an airfoil to its trailing edge. The chord line is used to find an airfoil's \hyperlink{alpha}{angle of attack}. The chord length distribution shows the length of a rotor's chord at different angular positions around itself. An airfoil with a constant angle of attack $\alpha$ as it generates lift has an elliptic chord distribution.
 
-	\item \hypertarget{CD}{Drag Coefficient (2D), $c_{D}$} - The drag coefficient determines how much drag force opposing motion will be experienced. It comes from a combination of \hyperlink{DP}{Pressure Drag}, also called Form Drag, and \hyperlink{VD}{Viscous Drag} or Skin Friction. The drag force equation describes it in this way: 
+	\item \hypertarget{CD}{Drag Coefficient (2D), $c_{D}$} - The drag coefficient determines how much drag force opposing motion will be experienced. It comes from a combination of \hyperlink{DP}{pressure drag}, also called form drag, and \hyperlink{VD}{viscous drag} or skin friction. The drag force equation describes it in this way: 
 		\begin{equation} \label{eq:13}
 		\begin{aligned}
         			D = \frac{1}{2} \rho u^{2} c_{D}
@@ -169,7 +151,7 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	
 	\item \hypertarget{Vinf}{Freestream Velocity, $V_{\infty}$} - The velocity of an oncoming air flow directly upstream from an airfoil, before it interacts with it.
 	
-	\item \hypertarget{D/D}{Hub-to-Tip Ratio} - A rotor's Hub-to-Tip Ratio divides the distance along the blade that is actually exposed wind by the entire length of the blade. This needs to be taken into account when calculating constants like the airfoil's \hyperlink{lambda}{tip speed ratio}.
+	\item \hypertarget{D/D}{Hub-to-Tip Ratio} - A rotor's hub-to-tip ratio divides the distance along the blade that is actually exposed wind by the entire length of the blade. This needs to be taken into account when calculating constants like the airfoil's \hyperlink{lambda}{tip speed ratio}.
 		
 	\item \hypertarget{CL}{Lift Coefficient (2D), $c_{L}$} - The lift coefficient is used in the equation below to define how much lift force acts perpendicular to the direction of the oncoming fluid flow.
 		\begin{equation} \label{eq:14}
@@ -178,23 +160,23 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	    	\end{aligned}
 		\end{equation}
 	
-	\item \hypertarget{LC}{Lift Curve Slope} - The lift curve plots the \hyperlink{CL}{Lift Coefficient} against the \hyperlink{alpha}{Angle of Attack} for a single airfoil. This shows the effect that changing the angle of attack will have on the airfoil's total lift force, which can be combined with other airfoils in the case of a wing to find the total lift force experienced by the wing.
+	\item \hypertarget{LC}{Lift Curve Slope} - The lift curve plots the \hyperlink{CL}{lift coefficient} against the \hyperlink{alpha}{angle of attack} for a single airfoil. This shows the effect that changing the angle of attack will have on the airfoil's total lift force, which can be combined with other airfoils in the case of a wing to find the total lift force experienced by the wing.
 		
-	\item \hypertarget{M}{Mach Number, $M$} - The Mach number is the velocity of an object in proportion to the speed of sound in its medium. When an airfoil is traveling near the speed of sound, its top portions can have fluid velocity above Mach 1. When an airfoil is traveling above Mach 1, the fluid on both sides of it also have velocities above mach 1 while there are points directly before and after it that are below Mach 1.
+	\item \hypertarget{M}{Mach Number, $M$} - The mach number is the velocity of an object in proportion to the speed of sound in its medium. When an airfoil is traveling near the speed of sound, its top portions can have fluid velocity above mach 1. When an airfoil is traveling above mach 1, the fluid on both sides of it also have velocities above mach 1 while there are points directly before and after it that are below mach 1.
 		\begin{equation} \label{eq:15}
 		\begin{aligned}
         			M = \frac{u}{c}
 	    	\end{aligned}
 		\end{equation}
 	
-	\item \hypertarget{MT}{Momentum Theory} - Momentum Theory defines the power required to produce sufficient thrust to maintain momentum in a blade by the following equation, where $T$ is thrust, $\rho$ is density, $A$ is disc area, and $P$ is power:
+	\item \hypertarget{MT}{Momentum Theory} - Momentum theory defines the power required to produce sufficient thrust to maintain momentum in a blade by the following equation, where $T$ is thrust, $\rho$ is density, $A$ is disc area, and $P$ is power:
 	\begin{equation}
 	\begin{aligned}
         		P = \sqrt{\frac{T^{3}}{2 \rho A}}
 	\end{aligned}
 	\end{equation}
 		
-	\item \hypertarget{NACA}{NACA Airfoil (4-Digit)} - A airfoil shape developed by the National Advisory Committee for Aeronautics (NACA). The first digit is the maximum \hyperlink{Camber}{Camber} in tenths of the \hyperlink{c}{Chord}. The second digit is the distance in tenths of the maximum Camber from the leading edge, out of ten. the final two digits are the maximum airfoil thickness as a percentage of the Chord. Descriptions of other NACA numbers can also be found on this \href{https://en.wikipedia.org/wiki/NACA_airfoil}{Wikipedia Article}. 
+	\item \hypertarget{NACA}{NACA Airfoil (4-Digit)} - A airfoil shape developed by the National Advisory Committee for Aeronautics (NACA). The first digit is the maximum \hyperlink{Camber}{camber} in tenths of the \hyperlink{c}{chord}. The second digit is the distance in tenths of the maximum camber from the leading edge, out of ten. the final two digits are the maximum airfoil thickness as a percentage of the chord. Descriptions of other NACA numbers can also be found on this \href{https://en.wikipedia.org/wiki/NACA_airfoil}{wikipedia article}. 
 		
 	\item \hypertarget{CM}{Pitching Moment Coefficient (2D), $c_{M}$} - The moment coefficient is used to calculate the pitching moment a airfoil will experience from its dynamic pressure $q$, area $S$, and chord length $c$.
 		\begin{equation} \label{eq:16}
@@ -203,7 +185,7 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	    	\end{aligned}
 		\end{equation}
 	
-	\item \hypertarget{CP}{Power Coefficient, $C_{P}$} - A propellor's Coefficient of Power signifies how efficient a wind turbine is. It is the ratio of the power generated by a wind turbine to the total power of the wind flowing through it. The power generated or absorbed by an airfoil can be described by the following equation, where $P$ is power, $C_{P}$ is the coefficient of power, $\rho$ is fluid density, $n$ is the velocity in revolutions per second, and $D$ is the propellor diameter. The Power Coefficient and the \hyperlink{CT}{Torque Coefficient} are proportional to each other by a factor of $2\pi$.
+	\item \hypertarget{CP}{Power Coefficient, $C_{P}$} - A propellor's coefficient of power signifies how efficient a wind turbine is. It is the ratio of the power generated by a wind turbine to the total power of the wind flowing through it. The power generated or absorbed by an airfoil can be described by the following equation, where $P$ is power, $C_{P}$ is the coefficient of power, $\rho$ is fluid density, $n$ is the velocity in revolutions per second, and $D$ is the propellor diameter. The power coefficient and the \hyperlink{CT}{torque coefficient} are proportional to each other by a factor of $2\pi$.
 	\begin{equation}
 	\begin{aligned}
 		P = \rho n^{3} D^{5} C_{P} \\
@@ -211,15 +193,15 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	\end{aligned}
 	\end{equation}
 
-	\item \hypertarget{AP}{Polar} - The Airfoil Polar is a plot displaying the  \hyperlink{CL}{Lift} and  \hyperlink{CD}{Drag} coefficients corresponding with each \hyperlink{alpha}{Angle of Attack} for an airfoil. Examining the ratios of lift to drag is instrumental in choosing the optimal Angle of Attack.
+	\item \hypertarget{AP}{Polar} - The airfoil polar is a plot displaying the  \hyperlink{CL}{lift} and  \hyperlink{CD}{drag} coefficients corresponding with each \hyperlink{alpha}{angle of attack} for an airfoil. Examining the ratios of lift to drag is instrumental in choosing the optimal angle of attack.
 	
 	\item \hypertarget{PFC}{Potential-Flow Code} - A potential-flow code calculates the \hyperlink{CL}{lift}, \hyperlink{CD}{drag}, and \hyperlink{CM}{moment} forces an airfoil experiences at many different points along it. Potential-flow theory assumes constant, incompressible, inviscid fluid flow. It calculates the coefficient for each of these small points and then combines them to find the coefficients along the entire airfoil.
 		
-	\item \hypertarget{DP}{Pressure Drag} - Pressure Drag, also called Form Drag, comes from the the formation of a vacuum behind an object. The object experiences higher pressure ahead of it than behind it, so the pressure difference pushes it backwards.
+	\item \hypertarget{DP}{Pressure Drag} - Pressure drag, also called form drag, comes from the the formation of a vacuum behind an object. The object experiences higher pressure ahead of it than behind it, so the pressure difference pushes it backwards.
 	
-	\item \hypertarget{APC}{Propellor Identification} - A Propellor is identified by 2 numbers, which represent its diameter and its pitch, both in inches. For example, an APC 10x7 propellor is made by Advanced Precision Composites. It has a 10-inch diameter and a 7-inch pitch per revolution.
+	\item \hypertarget{APC}{Propellor Identification} - A propellor is identified by 2 numbers, which represent its diameter and its pitch, both in inches. For example, an APC 10x7 propellor is made by Advanced Precision Composites. It has a 10-inch diameter and a 7-inch pitch per revolution.
 	
-	\item \hypertarget{Re}{Reynolds Number, $Re$} - The Reynolds Number is a unit-less number for fluid flow described by the equation below. It can be used to predict patterns in the fluid's flow, using its flow speed $u$, characteristic length $L$, and kinetic viscosity $\nu$, or else by its density $\rho$, flow speed $u$, characteristic length $L$, and fluid density $\mu$.
+	\item \hypertarget{Re}{Reynolds Number, $Re$} - The Reynolds number is a unit-less number for fluid flow described by the equation below. It can be used to predict patterns in the fluid's flow, using its flow speed $u$, characteristic length $L$, and kinetic viscosity $\nu$, or else by its density $\rho$, flow speed $u$, characteristic length $L$, and fluid density $\mu$.
 		\begin{equation} \label{eq:17}
 		\begin{aligned}
         			Re = \frac{uL}{\nu} \\
@@ -227,34 +209,34 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	    	\end{aligned}
 		\end{equation}
 	
-	\item \hypertarget{sigma}{Rotor Solidity, $\sigma$} - Rotor Solidity describes the ratio of a turbine's chord length, $c$, to its spacing, $s$. This is found by the following equation, in which $n_{b}$ is the number of blades, $r_{h}$ is the hub radius, and $r_{t}$ is the tip radius.
+	\item \hypertarget{sigma}{Rotor Solidity, $\sigma$} - Rotor solidity describes the ratio of a turbine's chord length, $c$, to its spacing, $s$. This is found by the following equation, in which $n_{b}$ is the number of blades, $r_{h}$ is the hub radius, and $r_{t}$ is the tip radius.
 	\begin{equation}
 	\begin{aligned}
 		\sigma = \frac{c}{s} = \frac{c n_{b}}{2 \pi \sqrt{\frac{r^{2}_{h} + r^{2}_{t}}{2}}}
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{ST}{Stall} - Stall occurs when an airfoil's \hyperlink{alpha}{Angle of Attack} is too great in magnitude, either positive or negative. When the angle of attack is too dramatic, flow separation occurs, reducing rather than augmenting the airfoil's \hyperlink{CL}{Lift Coefficient} as the Angle of Attack increases.
+	\item \hypertarget{ST}{Stall} - Stall occurs when an airfoil's \hyperlink{alpha}{angle of attack} is too great in magnitude, either positive or negative. When the angle of attack is too dramatic, flow separation occurs, reducing rather than augmenting the airfoil's \hyperlink{CL}{lift coefficient} as the angle of attack increases.
 	
-	\item \hypertarget{a'}{Tangential Induction Factor, $a'$} - The Tangential Induction Factor is the ratio of the increase in air velocity tangential to the airfoil to its free stream velocity.
+	\item \hypertarget{a'}{Tangential Induction Factor, $a'$} - The tangential induction factor is the ratio of the increase in air velocity tangential to the airfoil to its free stream velocity.
 	
-	\item \hypertarget{Th}{Thickness} - An airfoil's thickness can be measured in two different ways, either along its \hyperlink{c}{Chord Line} or along its \hyperlink{Camber}{Camber Line}. Thickness measured perpendicular to the Camber Line is also called the American Convention, and thickness measured perpendicular to the Chord Line is also called the British Convention.
+	\item \hypertarget{Th}{Thickness} - An airfoil's thickness can be measured in two different ways, either along its \hyperlink{c}{chord line} or along its \hyperlink{Camber}{camber line}. Thickness measured perpendicular to the camber line is also called the American convention, and thickness measured perpendicular to the chord line is also called the British convention.
 	
-	\item \hypertarget{CT}{Thrust Coefficient, $C_{T}$} - A rotor's Thrust Coefficient determines how much thrust in the forward direction an airfoil experiences. Thrust force is directly opposite drag. Please note the similarities and differences between the thrust equation and the \hyperlink{CP}{power equation}.
+	\item \hypertarget{CT}{Thrust Coefficient, $C_{T}$} - A rotor's thrust coefficient determines how much thrust in the forward direction an airfoil experiences. Thrust force is directly opposite drag. Please note the similarities and differences between the thrust equation and the \hyperlink{CP}{power equation}.
 	\begin{equation}
 	\begin{aligned}
 		T = \rho n^{2} D^{4} C_{T}
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{lambda}{Tip Speed Ratio, $\lambda$} - A wind turbine's Tip Speed Ratio is the inverse of its \hyperlink{J}{Advance Ratio, $J$}. It represents the ratio of the speed of the tip of a turbine blade, or $\omega R$, to the wind speed, $v$.
+	\item \hypertarget{lambda}{Tip Speed Ratio, $\lambda$} - A wind turbine's tip speed ratio is the inverse of its \hyperlink{J}{advance ratio, $J$}. It represents the ratio of the speed of the tip of a turbine blade, or $\omega R$, to the wind speed, $v$.
 	\begin{equation}
 	\begin{aligned}
 		\lambda = \frac{\omega R}{v} = \frac{\pi}{J}
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{CQ}{Torque Coefficient, $C_{Q}$} - A rotor's Torque Coefficient defines how much torque it will experience. A propellor's torque is given by the following equation, in which $Q$ represents torque, $\rho$ is the fluid density, $n$ is the velocity in revolutions per second, $D$ is the diameter, and $C_{Q}$ is the coefficient of torque. The Torque Coefficient and the \hyperlink{CP}{Power Coefficient} are proportional to each other by a factor of $2\pi$.
+	\item \hypertarget{CQ}{Torque Coefficient, $C_{Q}$} - A rotor's torque coefficient defines how much torque it will experience. A propellor's torque is given by the following equation, in which $Q$ represents torque, $\rho$ is the fluid density, $n$ is the velocity in revolutions per second, $D$ is the diameter, and $C_{Q}$ is the coefficient of torque. The torque coefficient and the \hyperlink{CP}{power coefficient} are proportional to each other by a factor of $2\pi$.
 	\begin{equation}
 	\begin{aligned}
 		Q = \rho n^{2} D^{5} C_{Q} \\
@@ -262,7 +244,7 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	\end{aligned}
 	\end{equation}
 	
-	\item \hypertarget{eta}{Efficiency, $\eta$} - The Efficiency of a rotor can be described by the following equation, in which $J$ is the rotor's \hyperlink{J}{Advance Ratio}, $C_{T}$ is its \hyperlink{CT}{thrust coefficient}, and $C_{P}$ its \hyperlink{CP}{power coefficient}:
+	\item \hypertarget{eta}{Efficiency, $\eta$} - The efficiency of a rotor can be described by the following equation, in which $J$ is the rotor's \hyperlink{J}{advance ratio}, $C_{T}$ is its \hyperlink{CT}{thrust coefficient}, and $C_{P}$ its \hyperlink{CP}{power coefficient}:
 	\begin{equation}
 	\begin{aligned}
 		\eta = J \frac{C_{T}}{C_{P}}
@@ -271,7 +253,7 @@ In these equations, $v_{i}$ is the uniform induced velocity across the disk, $T$
 	
 	\item \hypertarget{T}{Twist Distribution} - Twist distribution along a wing redirects where air flows past it. This causes changes in both the magnitude and location lift and drag forces it experienced as air flows past it.
 	
-	\item \hypertarget{VD}{Viscous Drag} - Viscous Drag, also called Skin Friction, is drag caused by friction with the fluid particles flowing past an airfoil. Along with \hyperlink{PD}{Pressure Drag}, it contributes to an airfoil's total \hyperlink{CD}{Drag Coefficient} airfoil.
+	\item \hypertarget{VD}{Viscous Drag} - Viscous drag, also called skin friction, is drag caused by friction with the fluid particles flowing past an airfoil. Along with \hyperlink{PD}{pressure drag}, it contributes to an airfoil's total \hyperlink{CD}{drag coefficient} airfoil.
 	
 \end{itemize}
 

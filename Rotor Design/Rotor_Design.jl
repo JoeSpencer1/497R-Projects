@@ -9,11 +9,11 @@ include("Rotor_Functions.jl")
 
 global rread = readdlm("Rotor Design/Rotors/APC_10x7.txt") # Read rotor file.
 global fread = "Rotor Design/Rotors/naca4412_1e6.dat" # Rename airfoil file.
-c0 = 10 # Initial estimate chord length
+c0 = 1.1 # Initial estimate chord length
 twist0 = 1 # Initial estimate twist
 v0 = 20.0 # Initial estimate for airflow velocity
 rpm0 = 800 # Initial estimate for rotational velocity
-uc = 100.0 # Chord length limit as percentage of camber
+uc = 5.0 # Chord length limit as percentage of camber
 utwist = 45 # Maximum twist in degrees
 uv = 300 # Velocity limit in m/s
 urpm = 1800 # Upper liimit of rpm
@@ -37,15 +37,15 @@ twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
 v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
 rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
 
-scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20)
+scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_1.png")
 
-scatter(n[:], twist[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Twist Angle", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20)
+scatter(n[:], twist[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Twist Angle", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_2.png")
 
-scatter(n[:], v[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Velocity", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20)
+scatter(n[:], v[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Velocity", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 ylims!((0, uv))
 savefig("Rotor Design/Plots/Figure_3.png")
 
-scatter(n[:], rpm[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal RPM", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20)
+scatter(n[:], rpm[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal RPM", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_4.png")
