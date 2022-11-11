@@ -24,19 +24,19 @@ global Mt = Mt # Set tangential moment global.
 
 # First set of tests
 
-Op2 = optimize(c0, twist0, v0, rpm0, nb = 2, type = 3) # Optimize for 2 blades
+Op1 = optimize(c0, twist0, v0, rpm0, nb = 2, type = 3) # Optimize for 2 blades
 
-Op3 = optimize(c0, twist0, v0, rpm0, nb = 3, type = 3) # Optimize for 3 blades
+Op2 = optimize(c0, twist0, v0, rpm0, nb = 3, type = 3) # Optimize for 3 blades
 
-Op4 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 3) # Optimize for 4 blades
+Op3 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 3) # Optimize for 4 blades
 
-Op8 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 3) # Optimize for 8 blades
+Op4 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 3) # Optimize for 8 blades
 
 n = [2, 3, 4, 8] # Blade counts
-c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
-twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
-v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
-rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
+c = [Op1[1], Op2[1], Op3[1], Op4[1]] # Optimal chord lengths
+twist = [Op1[2], Op2[2], Op3[2], Op4[2]] # Optimal twist angles
+v = [Op1[3], Op2[3], Op3[3], Op4[3]] # Optimal freestream velocity
+rpm = [Op1[4], Op2[4], Op3[4], Op4[4]] # Optimal rpm
 
 scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_1.png")
@@ -62,10 +62,10 @@ Op7 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 1) # Optimize for 4 blades
 Op8 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 1) # Optimize for 8 blades
 
 n = [2, 3, 4, 8] # Blade counts
-c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
-twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
-v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
-rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
+c = [Op5[1], Op6[1], Op7[1], Op8[1]] # Optimal chord lengths
+twist = [Op5[2], Op6[2], Op7[2], Op8[2]] # Optimal twist angles
+v = [Op5[3], Op6[3], Op7[3], Op8[3]] # Optimal freestream velocity
+rpm = [Op5[4], Op6[4], Op7[4], Op8[4]] # Optimal rpm
 
 scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_5.png")
@@ -91,10 +91,10 @@ Op11 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 2) # Optimize for 4 blades
 Op12 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 2) # Optimize for 8 blades
 
 n = [2, 3, 4, 8] # Blade counts
-c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
-twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
-v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
-rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
+c = [Op9[1], Op10[1], Op11[1], Op12[1]] # Optimal chord lengths
+twist = [Op9[2], Op10[2], Op11[2], Op12[2]] # Optimal twist angles
+v = [Op9[3], Op10[3], Op11[3], Op12[3]] # Optimal freestream velocity
+rpm = [Op9[4], Op10[4], Op11[4], Op12[4]] # Optimal rpm
 
 scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_9.png")
