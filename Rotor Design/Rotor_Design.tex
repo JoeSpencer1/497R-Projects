@@ -33,11 +33,11 @@ There are several variable factors that can be adjusted and several performance 
 
 The values that were selected as free variables are the rotational velocity, the chord length, the twist angle, and the velocity relative to the oncoming air. Reasonable maximum limits were selected for each of these variables to keep them in the domain of reasonable solutions. The rotational velocity cannot exceed 10,000 rpm, the chord cannot exceed 500 percent of the chord length, the twist angle cannot exceed 45 degrees, and the air's velocity cannot exceed 300 meters per second. \newline
 
-These requirements keep the rotor within a real range. The limits, the free variables, and other supporting values to define the rotor were put into an optimizer, which then found the optimal rotational velocity, chord length, twist angle, and air velocity for rotors with several different blade counts. The optimal rotor is found by minimizing $f(x)$ in equation 1. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in radians per second. Optimizing this function should produce a rotor that moves slowly and very efficiently while still producing enough power. \newline
+These requirements keep the rotor within a real range. The limits, the free variables, and other supporting values to define the rotor were put into an optimizer, which then found the optimal rotational velocity, chord length, twist angle, and air velocity for rotors with several different blade counts. The optimal rotor is found by minimizing $f(x)$ in equation 1. In this analysis, $f(x)$ represents the ratio of the rotor efficiency to its required power, $P$, times its rotational velocity, $\omega$, in revolutions per minute. Optimizing this function should produce a rotor that moves slowly and very efficiently while requiring as little power as possible. \newline
 
 \begin{equation}
 \begin{aligned}
-	f(x) = \frac{\eta P}{\omega} = f(x_{1}, x_{2}, x_{3}...)
+	f(x) = \frac{\eta}{n_{r} P} = f(x_{1}, x_{2}, x_{3}...)
 \end{aligned}
 \end{equation}
 
@@ -62,10 +62,10 @@ This investigation found that given certain constraints, different types of roto
 	\begin{tabular}{| c | c | c | c | c | c |}
 		 \hline
 		 \textbf{Rotor} & Original & 2 Blades & 3 Blades & 4 Blades & 8 Blades \\ \hline
-		 \textbf{Chord Magnification} & 1.1 & 6.98 & 6.58 & 4.18 & 1.86 \\ \newline
-		 \textbf{Twist Angle, degrees} & 1 & 0.64 & 0.55 & 0.69 & 0.55 \\ \newline
-		 \textbf{Free Stream Velocity, m/s} & 20 & 300 & 300 & 300 & 300 \\ \newline
-		 \textbf{Rotational Velocity, rpm} & 800 & 200.41 & 222.39 & 351.07 & 357.3 \\ \hline
+		 \textbf{Chord Magnification} & 1.1 & 0.58 & 0.61 & 1.03 & 0.27 \\ \newline
+		 \textbf{Twist Angle, degrees} & 1 & 1.13 & 1.04 & 1.00 & 1.04 \\ \newline
+		 \textbf{Free Stream Velocity, m/s} & 20 & 21.24 & 20.14 & 20.04 & 20.42 \\ \newline
+		 \textbf{Rotational Velocity, rpm} & 800 & 799.64 & 799.97 & 799.99 & 799.91 \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -89,6 +89,32 @@ First off, optimal chord magnitude seemed to be negatively correlated with the b
  As the blade count of rotors increased, higher rotational velocities performed better. While the optimal rotational velocity for a rotor with 2 blades was close to 200 rpm, when the rotor had 8 blades its optimal rotational velocity increased above 350 rpm. At any of these blade counts, an optimized rotor will have a thicker chord, a slight positive twist angle, operate at the highest free stream velocity, and rotate either at a lower velocity or a higher velocity, depending how many blades it has. \newline
  
  This analysis optimized rotors using one equation, but other analyses could be performed for other equations using different variables, if desired. These different analyses will likely yield different results to design rotors that are better suited for unique applications. \newline
+
+\begin{figure}
+  \centering
+  \subfloat[Chord Length]{\includegraphics[width = .30\textwidth]{Plots/Figure_5.png}}
+  \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_6.png}}
+
+  \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_7.png}}\hspace{1em}
+  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_8.png}}
+  \caption{Optimal Blade Parameters Compared With Blade Counts}
+  \captionsetup{aboveskip=0pt,font=it}
+  \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
+  \label{fig:2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \subfloat[Chord Length]{\includegraphics[width = .30\textwidth]{Plots/Figure_9.png}}
+  \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_10.png}}
+
+  \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_11.png}}\hspace{1em}
+  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_12.png}}
+  \caption{Optimal Blade Parameters Compared With Blade Counts}
+  \captionsetup{aboveskip=0pt,font=it}
+  \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
+  \label{fig:2}
+\end{figure}
 
 \clearpage
 

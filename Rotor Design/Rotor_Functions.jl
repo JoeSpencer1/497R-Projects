@@ -1,9 +1,8 @@
 #=---------------------------------------------------------------
-11/5/2022
-Rotor Functions v5 Rotor_Functions.jl
-This finished header file contains functions to analyze a rotor.
-I kept some variable declarations and the functions to graph the
-analysis in the main file titled Rotor_Design.jl.
+11/10/2022
+Rotor Functions v7 Rotor_Functions.jl
+I updated the functions to more reasonable objectives after my
+meeting with Adam.
 ---------------------------------------------------------------=#
 
 using Xfoil, CCBlade, SNOW, DelimitedFiles, FLOWMath, QuadGK, Plots
@@ -15,7 +14,7 @@ global Mn # Normal moment coefficien
 global Mt # Tangential moment coefficient
 
 """
-   analysis(c, twist, v, rpm; nb = 3, d = 20, rho = 1.225, rfile = "Rotor Design/Rotors/APC_10x7.txt", ffile = "Rotor Design/Rotors/naca4412_1e6.dat")
+   analysis(c, twist, v, rpm; nb = 3, d = 20, rho = 1.225)
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
@@ -26,10 +25,11 @@ Root function that calls other functions to analyze a rotor.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
+- type - The optimizer function that will be used. Default 1.
 # Outputs
 - obj - A variable for the output of the objective function. The program wants to minimize this.
 """
-function analysis(c, twist, v, rpm, nb, d, rhub, rho)
+function analysis(c, twist, v, rpm, nb, d, rhub, rho, type)
     rtest = Rotortest(c, twist, v, rpm) # Create a rotor.
 
     # Rotor geometry
@@ -60,14 +60,25 @@ function analysis(c, twist, v, rpm, nb, d, rhub, rho)
     T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
     eff, CT, CQ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
     P = rho * (rtest.rpm / (2 * pi)) ^ 3 * d ^ 5 * (CQ * 2 * pi) # Calculate P
-    obj = rtest.rpm / (eff * P) # Use P to find the objective function.
+    CP = 2 * pi * CQ # Power coefficient from torque coefficient
+
+    obj = 0 # Initialize obj
+    if type == 1 # Second analysis performed, which found η * CT * v
+        obj = 100 / (CT * v * eff) # Maximize thrust, velocity, and efficiency.
+    end
+    if type == 2 # Third analysis performed. Finds CT / CP
+        obj = CP / CT # Maximizes thrust while minimizing power
+    end
+    if type == 3 # First analysis performed, which found η / P rpm
+        obj = rtest.rpm * P / (100000 * eff) # Use P to find the objective function.
+    end
 
     # Output resulting objective function.
     return(obj)
 end
 
 """
-    initialize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, n = 1.1)
+    initialize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1)
 This function establishes the initial constant values for the rotor's moment and torque.
 # Arguments
 - c - Chord length.
@@ -152,6 +163,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - utwist - Upper twist angle limit. Default 45˚ 
 - uv - Upper velocity limit. Default 300 m/s 
 - urpm - Upper rpm limit. Default 1000
+- type - The analysis that will be performed. Default 1.
 # Outputs
 - xopt[1:4] - The optimal chord length, twist, velocity, and revolutions per minut for the rotor.
 - xopt[1] - The optimal chord length.
@@ -159,11 +171,11 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - xopt[1] - The optimal velocity.
 - xopt[1] - The optimal revolutions per minute.
 """
-function optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, uc = 100.0, utwist = 45, uv = 300, urpm = 1000)
-    x0 = [c; twist; v; rpm; nb; d; rhub; rho]  # starting point
+function optimize(c, twist, v, rpm; nb = 3, d = 20, rhub = 0.1, rho = 1.225, uc = 100.0, utwist = 45, uv = 300, urpm = 1000, type = 1)
+    x0 = [c; twist; v; rpm; nb; d; rhub; rho; type] # starting point
     ng = 3 # number of constraints
-    lx = [0.1, (0 - utwist), 0, 0.1, nb, d, rhub, rho]  # lower bounds on x
-    ux = [uc, utwist, uv, urpm, nb, d, rhub, rho]  # upper bounds on x
+    lx = [0.1, (0 - utwist), 0, 0.1, nb, d, rhub, rho, type]  # lower bounds on x
+    ux = [uc, utwist, uv, urpm, nb, d, rhub, rho, type] # upper bounds on x
     lg = zeros(ng)  # lower bounds on g
     ug = [Q0, Mn, Mt] # upper bounds on g
     options = Options(solver=IPOPT())  # choosing IPOPT solver
@@ -210,6 +222,7 @@ This function is called from the optimize() function. It performs the rotor anal
 - x[6] - The rotor's diameter. Default 20 feet.
 - x[7] - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - x[8] - The air density. Default 1.225.
+- x[9] - The type of analysis that will be performed. Default 1.
 # Outputs
 - g - Constraint functions used to restrain the moment coefficient and the torque coefficient.
 - g[1] - Constrains the bending moment coefficient below 110% original value. 
@@ -223,10 +236,11 @@ This function is called from the optimize() function. It performs the rotor anal
 - x[6] - The rotor's diameter. Default 20 feet.
 - x[7] - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - x[8] - The air density. Default 1.225.
+- x[9] - The type of analysis that will be performed. Default 0.
 """
 function simple!(g, x)
     # objective
-    f = analysis(x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8]) # Calculate objective function
+    f = analysis(x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9]) # Calculate objective function
 
     # constraints
     # Calculate these constants the wame 

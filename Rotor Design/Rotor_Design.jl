@@ -1,8 +1,7 @@
 #=---------------------------------------------------------------
-11/5/2022
-Rotor Design v6 Rotor_Design.jl
-This finished file compares several different rotors with
-different blade counts in the same conditions.
+11/10/2022
+Rotor Design v7 Rotor_Design.jl
+I have updated my ojective functions and added graphs.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
@@ -23,13 +22,15 @@ global Q0 = Q0 # Set torque value as global.
 global Mn = Mn # Set normal momenta global
 global Mt = Mt # Set tangential moment global.
 
-Op2 = optimize(c0, twist0, v0, rpm0, nb = 2) # Optimize for 2 blades
+# First set of tests
 
-Op3 = optimize(c0, twist0, v0, rpm0, nb = 3) # Optimize for 3 blades
+Op2 = optimize(c0, twist0, v0, rpm0, nb = 2, type = 3) # Optimize for 2 blades
 
-Op4 = optimize(c0, twist0, v0, rpm0, nb = 4) # Optimize for 4 blades
+Op3 = optimize(c0, twist0, v0, rpm0, nb = 3, type = 3) # Optimize for 3 blades
 
-Op8 = optimize(c0, twist0, v0, rpm0, nb = 8) # Optimize for 8 blades
+Op4 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 3) # Optimize for 4 blades
+
+Op8 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 3) # Optimize for 8 blades
 
 n = [2, 3, 4, 8] # Blade counts
 c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
@@ -49,3 +50,61 @@ savefig("Rotor Design/Plots/Figure_3.png")
 
 scatter(n[:], rpm[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal RPM", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
 savefig("Rotor Design/Plots/Figure_4.png")
+
+# Second set of tests
+
+Op5 = optimize(c0, twist0, v0, rpm0, nb = 2, type = 1) # Optimize for 2 blades
+
+Op6 = optimize(c0, twist0, v0, rpm0, nb = 3, type = 1) # Optimize for 3 blades
+
+Op7 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 1) # Optimize for 4 blades
+
+Op8 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 1) # Optimize for 8 blades
+
+n = [2, 3, 4, 8] # Blade counts
+c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
+twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
+v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
+rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
+
+scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_5.png")
+
+scatter(n[:], twist[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Twist Angle", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_6.png")
+
+scatter(n[:], v[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Velocity", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+ylims!((0, uv))
+savefig("Rotor Design/Plots/Figure_7.png")
+
+scatter(n[:], rpm[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal RPM", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_8.png")
+
+# Third set of tests
+
+Op9 = optimize(c0, twist0, v0, rpm0, nb = 2, type = 2) # Optimize for 2 blades
+
+Op10 = optimize(c0, twist0, v0, rpm0, nb = 3, type = 2) # Optimize for 3 blades
+
+Op11 = optimize(c0, twist0, v0, rpm0, nb = 4, type = 2) # Optimize for 4 blades
+
+Op12 = optimize(c0, twist0, v0, rpm0, nb = 8, type = 2) # Optimize for 8 blades
+
+n = [2, 3, 4, 8] # Blade counts
+c = [Op2[1], Op3[1], Op4[1], Op8[1]] # Optimal chord lengths
+twist = [Op2[2], Op3[2], Op4[2], Op8[2]] # Optimal twist angles
+v = [Op2[3], Op3[3], Op4[3], Op8[3]] # Optimal freestream velocity
+rpm = [Op2[4], Op3[4], Op4[4], Op8[4]] # Optimal rpm
+
+scatter(n[:], c[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Chord Length", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_9.png")
+
+scatter(n[:], twist[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Twist Angle", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_10.png")
+
+scatter(n[:], v[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal Velocity", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+ylims!((0, uv))
+savefig("Rotor Design/Plots/Figure_11.png")
+
+scatter(n[:], rpm[:], legend = false, xlabel = "Blade Count", ylabel = "Optimal RPM", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20, markersize = 10)
+savefig("Rotor Design/Plots/Figure_12.png")
