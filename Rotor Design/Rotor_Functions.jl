@@ -64,13 +64,13 @@ function analysis(c, twist, v, rpm, nb, d, rhub, rho, type)
 
     obj = 0 # Initialize obj
     if type == 1 # Second analysis performed, which found η * CT * v
-        obj = 100 / (CT * v * eff) # Maximize thrust, velocity, and efficiency.
+        obj = 200 * CP / (rtest.v * eff * CT) # Maximize thrust, velocity, and efficiency.
     end
     if type == 2 # Third analysis performed. Finds CT / CP
-        obj = v / (CP * CT) # Maximizes thrust while minimizing power
+        obj =  P / (rtest.rpm * T * eff) # Maximizes thrust while minimizing power
     end
     if type == 3 # First analysis performed, which found η / P rpm
-        obj = rtest.rpm * P / (100000 * eff) # Use P to find the objective function.
+        obj = rtest.rpm / (T * eff) # Use P to find the objective function.
     end
 
     # Output resulting objective function.
