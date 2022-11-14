@@ -210,7 +210,7 @@ function recordInfo(filename, x, y, a, l, max, re)
 end
 
 function plotliftdrag(c_l, c_d, figuretitle)
-    plot(c_l[:], c_d[:], legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20,)
+    plot(c_l[:], c_d[:], legend = false, xlabel = "Lift Coefficient", ylabel = "Drag Coefficient", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 20)
     savefig(figuretitle)
 end
 
