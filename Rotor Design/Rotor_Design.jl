@@ -17,7 +17,7 @@ utwist = 45 # Maximum twist in degrees
 uv = 300 # Velocity limit in m/s
 urpm = 1800 # Upper liimit of rpm
 
-Q0, Mn, Mt = initialize(c0, twist0, v0, rpm0) # Find torque and moment values for this rotor.
+Q0, Mn, Mt, = initialize(c0, twist0) # Find torque and moment values for this rotor.
 global Q0 = Q0 # Set torque value as global.
 global Mn = Mn # Set normal momenta global
 global Mt = Mt # Set tangential moment global.

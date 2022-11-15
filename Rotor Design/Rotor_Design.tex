@@ -25,19 +25,33 @@
 
 \subsubsection*{Methods}
 
-This project will use an optimizer to determine the optimal combination of design variables for a propellor. The optimizer will be confined within several limitations that will maintain it in the domain of rotors that could actually be created without breaking. While increasing the objective function, the rotor's bending moment in the normal and tangential directions may not exceed 110\% of the original provided bending moments, and its torque cannot exceed 110\% of the original torque. \newline
+This project will use an optimizer to determine which combination of design variables will be best for a propellor to meet certain requirements defined by the user. The optimizer will be confined within several limitations that will maintain it within 110\% of its original bending moment and 110\% of its original torque, to confine possible designs to the domain of real rotors that could actually be created to withstand the same loads as the original rotor.
 
 These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible. These can also be modified depending on what is most important to the user. In one situation, they may be important, while in others they may not. Some of these include the power coefficient, the total power produced, the operating velocity, and the efficiency. \newline
 
-There are several variable factors that can be adjusted and several performance measure that can still be used to determine a better propellor design. The rotor's blade length and width can be changed together or separately, depending on the situation. The blade count, shape, and twist distribution can be adjusted when the rotor is manufactured. Other variables including the rotational velocity and the angle of rotation can be modified during use. In this project, constraints were added to some of these values while other values were left flexible to be optimized. \newline
+There are several variable factors that can be adjusted and several performance measure that can still be used to determine a better propellor design. The rotor's blade length and width can be changed together or separately, depending on the situation. The blade count, shape, and twist distribution can be adjusted when the rotor is manufactured. Other variables including the rotational velocity and the angle of rotation, the angle between the tangential velocity of the rotor and the velocity of the incoming wind, can be modified during use. In this project, constraints were added to some of these values while other values were left flexible to be optimized. \newline
 
-The values that were selected as free variables are the rotational velocity, the chord length, the twist angle, and the velocity relative to the oncoming air. Reasonable maximum limits were selected for each of these variables to keep them in the domain of reasonable solutions. The rotational velocity cannot exceed 10,000 rpm, the chord cannot exceed 500 percent of the chord length, the twist angle cannot exceed 45 degrees, and the air's velocity cannot exceed 300 meters per second. \newline
+The values that were selected as design variables are the rotational velocity, the chord length, the twist angle, and the velocity relative to the oncoming air. Reasonable maximum limits were selected for each of these variables to keep them in the domain of reasonable solutions. Table 1 shows the maximum and minimum limits that were put in place for each of these variables to keep them in the domain of actual feasible solutions. \newline
 
-These requirements keep the rotor within a real range. The limits, the free variables, and other supporting values to define the rotor were put into an optimizer, which then found the optimal rotational velocity, chord length, twist angle, and air velocity for rotors with several different blade counts. The optimal rotor is found by minimizing $f(x)$ in equation 1. In this analysis, $f(x)$ represents the ratio of the rotor's thrust coefficient, $C_{T}$, its efficiency, $\eta$, and the free steam velocity, $v$, to its required power coefficient, $C_{P}$. Optimizing this function should produce a rotor that produces a lot of thrust for its required power while also being efficient and maintaining a high velocity. \newline
+\begin{table}[bp]
+	\centering
+	\title{Input Value Limits in Rotor Design \newline}
+	\title{\emph{These are the maximum and minimum values that were considered in rotor design.}} \label{table:1} \newline
+	\begin{tabular}{| c | c | c | c | c | c |}
+		 \hline
+		 \textbf{Parameter} & Minimum & Maximum \\ \hline
+		 \textbf{Chord Length Magnification} & 10\% & 500\% \\ \newline
+		 \textbf{Twist Angle, degrees} & $-45^{\circ}$ & $45^{\circ}$ \\ \newline
+		 \textbf{Free Stream Velocity, m/s} & 0 m/s & 300 m/s \\ \newline
+		 \textbf{Rotational Velocity, rpm} & 0.1 rpm & 10,000 rpm \\ \hline
+	\end{tabular}
+\end{table}
+
+These requirements keep the rotor within a real range. The limits, the design variables, and other supporting values to define the rotor were put into an optimizer, which then found the optimal rotational velocity, chord length, twist angle, and air velocity for rotors with several different blade counts. The optimal rotor is found by minimizing $f(x)$ in equation 1. In this analysis, $f(x)$ represents the ratio of the rotor's thrust coefficient, $C_{T}$, its efficiency, $\eta$, and the free steam velocity, $v$, to its required power coefficient, $C_{P}$. Optimizing this function should produce a rotor that produces a lot of thrust for its required power while also being efficient and maintaining a high velocity. \newline
 
 \begin{equation}
 \begin{aligned}
-	f(x) = \frac{C_{T} \eta v}{C_{P}} = f(x_{1}, x_{2}, x_{3}...)
+	f(x_{1}, x_{2}, x_{3}...) = \frac{C_{T} \eta v}{C_{P}}
 \end{aligned}
 \end{equation}
 
