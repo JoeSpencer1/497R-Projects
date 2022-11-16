@@ -14,7 +14,31 @@ global Mn # Normal moment coefficien
 global Mt # Tangential moment coefficient
 
 """
-   analysis(c, twist; rpm = 2000, nb = 3, d = 20, rho = 1.225, v = 20)
+    Rotortest
+this struct creates a new rotor with updated properties.
+# Members
+- c - Rotor's chord length, as a factor of the given lengths in the file.
+- twist - Rotor's twist. Twist is uniform across entire rotor.
+- rpm - The rotor's rotational velocity, in rpm.
+- nb - The rotor's blade count
+- d - The outer diameter
+- rhub - The hub radius as a fraction of the outer radius
+- rho - The fluid density
+- v - Freestream velocity.
+"""
+mutable struct Rotortest
+    c::Float64 # Chord length
+    twist::Float64 # Twist of entire rotor blade
+    rpm::Float64 # Rotational velocity
+    nb::Float64 # Rotor blade count. This should be an int32, but my code struggled with that.
+    d::Float64 # Rotor outer diameter
+    rhub::Float64 # Rotor hub length
+    rho::Float64 # Air density
+    v::Float64 # Freestream velocity
+end
+
+"""
+   analysis(c, twist; rpm = 2000, nb = 3, d = 20, rho = 1.225, v = 45)
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
@@ -63,8 +87,6 @@ function analysis(c, twist, rpm, nb, d, rhub, rho, v)
     outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
     T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
     eff, CT, _ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
-    # P = rho * (rtest.rpm / (2 * pi)) ^ 3 * d ^ 5 * (CQ * 2 * pi) # Calculate P
-    # CP = 2 * pi * CQ # Power coefficient from torque coefficient
 
     obj = 1 / (eff * CT) # Maximize thrust, velocity, and efficiency.
 
@@ -137,7 +159,7 @@ function coefficients(ropt; Jmax = 0.6, nJ = 20)
 end
 
 """
-    initialize(c, twist; rpm, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, Jmax = 0.6, nJ = 20, v = 20)
+    initialize(c, twist; rpm, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, Jmax = 0.6, nJ = 20, v = 45)
 This function establishes the initial constant values for the rotor's moment and torque. Calculate the coefficients of thrust and torque and the effectiveness.
 # Arguments
 - c - Chord length.
@@ -148,14 +170,13 @@ This function establishes the initial constant values for the rotor's moment and
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
 - fac - The factor used for defining limits. Default 1.1
-- nJ - The number of advance ratios. Default 20.
 - v - The rotor's initial velocity. Used to calculate the initial advance ratio. Default 20 m/s
 # Outputs
 - Q0 - The torque multiplied by n.
 - Mn - The moment in the normal direction
 - Mt - Moment in the tangential direction
 """
-function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, Jmax = 0.6, nJ = 20, v = 20)
+function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, v = 45)
 
     # This first section finds the torque, Q0.
 
@@ -209,7 +230,7 @@ function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.22
 end
 
 """
-    objective(c, twist, rpm, nb, d, rhub, rho)
+    objective(c, twist, rpm, nb, d, rhub, rho, v = 45)
 This function is similar to initialize(). It returns the the torque, normal moment, and tangential moment to ensure the rotor is within its limits.
 # Arguments
 - c - Chord length.
@@ -219,13 +240,13 @@ This function is similar to initialize(). It returns the the torque, normal mome
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
-- v - The freestream velocity. Default 20.
+- v - The freestream velocity. Default 45.
 # Outputs
 - Q0 - The torque multiplied by n.
 - Mn - The moment in the normal direction
 - Mt - Moment in the tangential direction
 """
-function objective(c, twist, rpm, nb, d, rhub, rho; v = 20)
+function objective(c, twist, rpm, nb, d, rhub, rho; v = 45)
 
     # This first section finds the torque, Q0.
 
@@ -295,7 +316,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 # Outputs
 - ropt - Rotor object with optimal properties.
 """
-function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 20, uc = 100.0, utwist = 45, uv = 300, urpm = 5000)
+function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 45, uc = 100.0, utwist = 45, uv = 300, urpm = 5000)
     # nb = trunc(Int32, nb)
     x0 = [c; twist; rpm; nb; d; rhub; rho; v] # starting point
     ng = 3 # number of constraints
@@ -314,30 +335,6 @@ function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225,
 
     ropt = Rotortest(xopt[1], xopt[2], xopt[3], xopt[4], xopt[5], xopt[6], xopt[7], xopt[8])
     return(ropt)
-end
-
-"""
-    Rotortest
-this struct creates a new rotor with updated properties.
-# Members
-- c - Rotor's chord length, as a factor of the given lengths in the file.
-- twist - Rotor's twist. Twist is uniform across entire rotor.
-- rpm - The rotor's rotational velocity, in rpm.
-- nb - The rotor's blade count
-- d - The outer diameter
-- rhub - The hub radius as a fraction of the outer radius
-- rho - The fluid density
-- v - Freestream velocity.
-"""
-mutable struct Rotortest
-    c::Float64 # Chord length
-    twist::Float64 # Twist of entire rotor blade
-    rpm::Float64 # Rotational velocity
-    nb::Float64 # Rotor blade count. This should be an int32, but my code struggled with that.
-    d::Float64 # Rotor outer diameter
-    rhub::Float64 # Rotor hub length
-    rho::Float64 # Air density
-    v::Float64 # Freestream velocity
 end
 
 """

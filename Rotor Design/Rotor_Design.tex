@@ -20,14 +20,77 @@
 
 \author{Joe Spencer}
 \title{Rotor Optimization}
-\date{November 12, 2022}
+\date{November 15, 2022}
 \maketitle
 
 \subsubsection*{Methods}
 
-This project will use an optimizer to determine which combination of design variables will be best for a propellor to meet certain requirements defined by the user. The optimizer will be confined within several limitations that will maintain it within 110\% of its original bending moment and 110\% of its original torque, to confine possible designs to the domain of real rotors that could actually be created to withstand the same loads as the original rotor.
+This project uses an optimizer to determine which combination of design variables will be best for a propellor to meet certain requirements defined by the user. The optimizer will be confined by several limitations and will stay within 110\% of its original bending moment and 110\% of its original torque, to confine possible designs to the domain of real rotors that could actually be created to withstand the same loads as the original rotor.
 
-These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible. These can also be modified depending on what is most important to the user. In one situation, they may be important, while in others they may not. Some of these include the power coefficient, the total power produced, the operating velocity, and the efficiency. \newline
+These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible and could be modified depending on an individual rotor's applications, based on what is most important to the user. Variables that were optimized in this project were the chord length and the rotation of the rotor. Other parameters used were the rotational velocity, the blade count, the rotor diameter, the hub-to-tip radius, and the free stream velocity. The values for each of these are shown in table 1. \newline
+
+\begin{table}[bp]
+	\centering
+	\title{Input Value Limits in Rotor Design \newline}
+	\title{\emph{These are the default values for each parameter, before the rotor is optimized.}} \label{table:1} \newline
+	\begin{tabular}{| c | c | c | c | c | c |}
+		 \hline
+  		 \textbf{Parameter} & \textbf{Default Value} \\ \hline
+		 Chord Length & 100\% magnification \\
+		 Twist & $0^{\circ}$ \\
+		 Rotational Velocity & 2500 RPM \\
+		 Blade Count & 2 blades \\
+		 Hub-to-tip ratio & 10\% \\
+		 Air Density & 1.225 kg/$m^{3}$ \\
+		 Velocity & 45 m/s \\ \hline
+	\end{tabular}
+\end{table}
+
+This report investigates how a rotor's twist and chord length can be adjusted to obtain a rotor that can better fulfill a selected objective function. It is especially desirable to adjust non-dimensional constants like the thrust and torque coefficients to obtain a rotor design that better meets the objective. In this report, The rotor's basic starting profile is kept constant to an APC 10x7 rotor with a NACA 4412 airfoil. Adjusting the chord length of these rotors will change their 4-digit NACA number, but the rotor profile will remain the same. The selected equation for this optimization is shown below in equation 1. \newline
+
+Chord length and rotation were investigated because these parameters can each be adjusted to affect the shape and performance of the rotor itself. Other parameters, like the rotor's diameter or the wind velocity, for example, will only scale or shift the torque and thrust coefficients. Different chord lengths and rotations, on the other hand, will actually change the shape and profile of the rotor as oncoming wind flows past it. So, adjusting these parameters will lead to a truly optimal solution as opposed to simply shifting or scaling another solution. \newline
+
+\begin{equation}
+\begin{aligned}
+	f(x_{1}, x_{2}, x_{3}...) = \eta \times C_{T} \\
+\end{aligned}
+\end{equation} 
+
+Equation 1 describes an optimal propellor that will produce the maximum torque while retaining a high efficiency. This will provide a powerful and efficient propellor. This equation is subjected to constraints to keep it within the domain of real solutions. These constraints are described in equation 2. They say that the total torque, normal moment, and tangential moment each cannot exceed 110\% of those found at the original twist and chord length. \newline
+
+\begin{table}[bp]
+	\centering
+	\title{Comparison of outputs to limits \newline}
+	\title{\emph{These values verify that the rotor met maximum moment and torque requirements.}} \label{table:1} \newline
+	\begin{tabular}{| c | c | c | c | c | c |}
+		 \hline
+  		 \textbf{Propellor} & \textbf{$Q$} & \textbf{$M_{N}$} & \textbf{$M_{T}$} \\ \hline
+		 \textbf{Maximum Limit} & 0.645 & $4.834 \times 10^{6}$ & $4.207 \times 10^{5}$ \\
+		 \textbf{2 Blades} & 0.499 & $4.768 \times 10^{6}$ & $4.195 \times 10^{5}$ \\
+		 \textbf{3 Blades} & 0.658 & $4.817 \times 10^{6}$ & $4.474 \times 10^{5}$ \\
+		 \textbf{4 Blades} & 0.635 & $3.880 \times 10^{6}$ & $3.239 \times 10^{5}$ \\ \hline
+	\end{tabular}
+\end{table}
+
+The constraints shown in equation 2 were built into the code as a function argument, so the maximum limit could be raised or lowered as needed. Table 2 shows that these constraints were met by each of the three rotors that were designed, which will be discussed later in this report. \newline
+
+\begin{equation}
+\begin{aligned}
+	Q_{opt} < 110\% \times Q_{0} \\
+	M_{N,opt} < 110\% \times M_{N,0} \\
+	M_{T,opt} < 110\% \times M_{T,0} \\
+\end{aligned}
+\end{equation} 
+
+Table 2 shows that in general, the optimizer kept the moments and torques experienced by the rotor below their maximum values. The only case where they exceeded them was in the case of the propellor with 3 blades. Its torque and tangential moment both slightly exceeded the limit values. Although these results were insignificant, they were still unexpected, and more investigation should be made to find their cause. In the other two cases, the optimal rotor fit all of the project requirements. \newline
+
+\subsubsection*{Results and Discussion}
+
+
+
+
+
+
 
 There are several variable factors that can be adjusted and several performance measure that can still be used to determine a better propellor design. The rotor's blade length and width can be changed together or separately, depending on the situation. The blade count, shape, and twist distribution can be adjusted when the rotor is manufactured. Other variables including the rotational velocity and the angle of rotation, the angle between the tangential velocity of the rotor and the velocity of the incoming wind, can be modified during use. In this project, constraints were added to some of these values while other values were left flexible to be optimized. \newline
 
@@ -51,9 +114,10 @@ These requirements keep the rotor within a real range. The limits, the design va
 
 \begin{equation}
 \begin{aligned}
-	f(x_{1}, x_{2}, x_{3}...) = \frac{C_{T} \eta v}{C_{P}}
+	f(x_{1}, x_{2}, x_{3}...) = \eta \times C_{T}
 \end{aligned}
-\end{equation}
+\end{equation} 
+\newline
 
 The equations to find power and efficiency are already related. They both contain the power coefficient, $C_{P}$, which can be found by \hyperlink{BEM}{blade element momentum theory}. In addition, the equation for power contains the cube of the rotational velocity in revolutions per second, $n_{r}$, which is related to the rotational velocity $\omega$ in radians per second by a simple factor. \newline
 
@@ -74,8 +138,6 @@ In addition to the first objective function, two other objective functions were 
 \end{aligned}
 \end{equation}
 
-\subsubsection*{Results and Discussion}
-
 \begin{table}[bp]
 	\centering
 	\title{Outputs of Rotor Optimization Code for Different Blade Counts \newline}
@@ -88,16 +150,6 @@ In addition to the first objective function, two other objective functions were 
 		 \textbf{Twist Angle, degrees} & 1 & -0.17 & -0.16 & -0.16 & -0.14 \\ \newline
 		 \textbf{Free Stream Velocity, m/s} & 20 & 300 & 300 & 300 & 300 \\ \newline
 		 \textbf{Rotational Velocity, rpm} & 800 & 494.48 & 424.24 & 385.58 & 298.08 \\ \hline
-		 \multicolumn{6}{c|}{Objective Function: $ f(x) = \frac{T \eta \omega}{P}  $} \\ \hline
-		 \textbf{Chord Magnification} & 1.1 & 0.10 & 0.10 & 0.10 & 0.10 \\ \newline
-		 \textbf{Twist Angle, degrees} & 1 & -0.16 & -0.16 & -0.16 & -0.14 \\ \newline
-		 \textbf{Free Stream Velocity, m/s} & 20 & 282.79 & 25.22 & 195.08 & 152.28 \\ \newline
-		 \textbf{Rotational Velocity, rpm} & 800 & 461.23 & 35.66 & 249.13 & 151.31 \\ \hline
-		 \multicolumn{6}{c|}{Objective Function: $ f(x) = \frac{T \eta}{\omega} $} \\ \hline
-		 \textbf{Chord Magnification} & 1.1 & 5.97 & 4.57 & 3.79 & 2.25 \\ \newline
-		 \textbf{Twist Angle, degrees} & 1 & 0.27 & 0.30 & 0.31 & 0.35 \\ \newline
-		 \textbf{Free Stream Velocity, m/s} & 20 & 300 & 300 & 300 & 300 \\ \newline
-		 \textbf{Rotational Velocity, rpm} & 800 & 261.32 & 282.56 & 299.48 & 348.05 \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -111,37 +163,10 @@ First off, optimal chord magnitude seemed to be constant in some cases and negat
   \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_2.png}}
 
   \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_3.png}}\hspace{1em}
-  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_4.png}}
   \caption{Optimal Blade Parameters Compared With Blade Counts}
   \captionsetup{aboveskip=0pt,font=it}
   \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
-  \label{fig:2}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \subfloat[Chord Length]{\includegraphics[width = .30\textwidth]{Plots/Figure_5.png}}
-  \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_6.png}}
-
-  \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_7.png}}\hspace{1em}
-  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_8.png}}
-  \caption{Optimal Blade Parameters Compared With Blade Counts}
-  \captionsetup{aboveskip=0pt,font=it}
-  \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
-  \label{fig:2}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \subfloat[Chord Length]{\includegraphics[width = .30\textwidth]{Plots/Figure_9.png}}
-  \subfloat[Twist Angle]{\includegraphics[width = .30\textwidth]{Plots/Figure_10.png}}
-
-  \subfloat[Wind Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_11.png}}\hspace{1em}
-  \subfloat[Rotational Velocity]{\includegraphics[width = .30\textwidth]{Plots/Figure_12.png}}
-  \caption{Optimal Blade Parameters Compared With Blade Counts}
-  \captionsetup{aboveskip=0pt,font=it}
-  \caption*{These plots show that the optimal parameters for a turbine vary based on how many blades it has.}
-  \label{fig:2}
+  \label{fig:1}
 \end{figure}
 
  This research had varying results when it investigated the effect of twist angle on the objective function. The optimal twist angle for each blade had a magnitude of less than one degree. In the first two functions, it was a slight negative twist, and in the third case a slight positive twist was better. The optimal rotational velocity was also consistent in the first and third cases: each rotor blade performed the objective function best at 300 m/s, which was the maximum air velocity used in this lab. In the second case, though, which found the maximum thrust compared to required power, the optimal velocity decreased as the blade count increased. \newline
