@@ -1,8 +1,8 @@
 #=---------------------------------------------------------------
-11/10/2022
-Rotor Functions v7 Rotor_Functions.jl
-I updated the functions to more reasonable objectives after my
-meeting with Adam.
+11/15/2022
+Rotor Functions v8 Rotor_Functions.jl
+This code uses the advance ratio and creates graphs of the thrust
+and torque coefficients and efficienty.
 ---------------------------------------------------------------=#
 
 using Xfoil, CCBlade, SNOW, DelimitedFiles, FLOWMath, QuadGK, Plots
@@ -14,22 +14,22 @@ global Mn # Normal moment coefficien
 global Mt # Tangential moment coefficient
 
 """
-   analysis(c, twist; v = 50, rpm = 2000, nb = 3, d = 20, rho = 1.225)
+   analysis(c, twist; rpm = 2000, nb = 3, d = 20, rho = 1.225, v = 20)
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
 - twist - Rotor's twist. Twist is uniform across entire rotor.
-- v - The rotor's velocity, in m/s. Default 50.
 - rpm - The rotor's rotational velocity, in rpm. Default 2000.
 - nb - The number of blades in the rotor. Default 3.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
+- v - Freestream velocity. Default 20 m/s.
 # Outputs
 - obj - A variable for the output of the objective function. The program wants to minimize this.
 """
-function analysis(c, twist, v, rpm, nb, d, rhub, rho)
-    rtest = Rotortest(c, twist, v, rpm, nb, d, rhub, rho) # Create a rotor.
+function analysis(c, twist, rpm, nb, d, rhub, rho, v)
+    rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho, v) # Create a rotor.
 
     # Rotor geometry
     rtest.d = rtest.d * 0.0254 # Diameter inches to meters
@@ -45,93 +45,51 @@ function analysis(c, twist, v, rpm, nb, d, rhub, rho)
     end
 
     # Create rotor.
-    #sections = Section.(r, chord, theta, Ref(af)) # Define properties for individual sections
     sections = Section.(r, chord, theta, Ref(af)) # Divides the rotor into segments to analyze separately.
     omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
     rhub = rtip * rhub # Calculate hub length from tip length.
     rotor = Rotor(rhub, rtip, nb) # Create rotor.
-    J, eff, CT, CQ = CDCPeff(rtest, rotor, sections, r, D) # This is an internal function in this file.
+    J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    n = omega / (2 * pi) # Velocity in revolutions per second
+    Vinf = J * d * n # Calculates freestream velocity
+    op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
+    outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
+    T, _ = thrusttorque(rotor, sections, outputs)
 
     # Find efficiency and power of the rotor at this rpm.
-    J = rtest.v / (d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
     n = omega / (2 * pi) # Velocity in revolutions per second
     Vinf = J * d * n # Calculates freestream velocity
     op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
     outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
     T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
-    eff, CT, CQ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
-    P = rho * (rtest.rpm / (2 * pi)) ^ 3 * d ^ 5 * (CQ * 2 * pi) # Calculate P
-    CP = 2 * pi * CQ # Power coefficient from torque coefficient
+    eff, CT, _ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
+    # P = rho * (rtest.rpm / (2 * pi)) ^ 3 * d ^ 5 * (CQ * 2 * pi) # Calculate P
+    # CP = 2 * pi * CQ # Power coefficient from torque coefficient
 
-    obj = 200 * CP / (rtest.v * eff * CT) # Maximize thrust, velocity, and efficiency.
+    obj = 1 / (eff * CT) # Maximize thrust, velocity, and efficiency.
 
     # Output resulting objective function.
     return(obj)
 end
 
 """
-    CDCPeff(rpm, rotor, sections, r, D, nJ, rho)
-Find the coefficients of Thrust, Power, and Efficiency at different angles.
+    coefficients(ropt; Jmax = 0.6, nJ = 10)
+This function outputs data for graphing of coefficients against advance ratios.
 # Arguments
-- omaga - Radians per second of rotor.
-- rotor - Rotor geometry created previouly in the Rotor function in the Compute section.
-- sections - section properties along rotor defined in Compute function.
-- nJ - Number of advance ratios. Default 20.
-- rtest - A rotor object containing several atributes.
+- ropt - Rotor object created previously
+- Jmax - Maximum advance ratio. Default 0.6.
+- nJ - Quantity of advance ratios tested. Default 10.
 # Outputs
-- J - Non-dimensional angle of attack.
-- eff - Rotor effectiveness vector
-- CT - Rotor thrust coefficients vector
-- CQ - Rotor torque coefficients vector
-"""
-function CDCPeff(omega, rotor, sections, nJ, rtest)
-    if nJ > 1
-        J = range(0.01, 0.6, length = nJ)  # advance ratio
-    end
-    if nJ == 1
-        J = 0.6
-    end
-    eff = zeros(nJ) # Zeros vector for efficiency
-    CT = zeros(nJ) # Zeros vector for CT
-    CQ = zeros(nJ) # Zeros vector for CQ
-    for i = 1:nJ
-        local Vinf = J[i] * rtest.d * omega / (2 * pi) # Calculates freestream velocity
-        local op = simple_op.(Vinf, omega, rtest.d / 2, rtest.rho) # Create operating point object to solve
-        outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
-        T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
-        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, omega, rtest.rho, rotor, "propeller") # Nondimensionalize output to make useable data
-    end
-    return J, eff, CT, CQ
-end
-
-"""
-    initialize(c, twist; rpm, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1)
-This function establishes the initial constant values for the rotor's moment and torque. Calculate the coefficients of thrust and torque and the effectiveness.
-# Arguments
-- c - Chord length.
-- twist - Twist, in degrees.
-- rpm - Rotational velocity, in rpm. Default 2000.
-- nb - The number of blades in the rotor. Default 3.
-- d - The rotor's diameter. Default 20 feet.
-- rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
-- rho - The air density. Default 1.225.
-- fac - The factor used for defining limits. Default 1.1
-- nJ - The number of advance ratios. Default 20.
-- v - The rotor's initial velocity. Used to calculate the initial advance ratio. Default 20 m/s
-# Outputs
-- Q0 - The torque multiplied by n.
-- Mn - The moment in the normal direction
-- Mt - Moment in the tangential direction
-- J - A vector of advance ratios
-- eff - The effectiveness at each advance ratio
+- J - Vector of advance ratios simulated.
+- eff - Vector of effectivenesses
 - CT - The thrust coefficient at each J
 - CQ - The torque coefficient at each J
 """
-function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, nJ = 20, v = 20)
+function coefficients(ropt; Jmax = 0.6, nJ = 20)
 
     # This first section finds the torque, Q0.
 
-    rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho) # Create a rotor.
+    rtest = Rotortest(ropt.c, ropt.twist, ropt.rpm, ropt.nb, ropt.d, ropt.rhub, ropt.rho, ropt.v) # Create a rotor.
 
     # Rotor geometry
     rtest.d = rtest.d * 0.0254 # Diameter inches to meters
@@ -153,7 +111,83 @@ function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.22
     rotor = Rotor(rtest.rhub, rtip, rtest.nb) # Create rotor.
 
     # Find efficiency and power of the rotor at this rpm.
-    J, eff, CT, CQ = CDCPeff(omega, rotor, sections, 1, rtest)
+
+    J = rtest.v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    n = omega / (2 * pi) # Velocity in revolutions per second
+    Vinf = J * rtest.d * n # Calculates freestream velocity
+    op = simple_op.(Vinf, omega, r, rtest.rho) # Create operating point object to solve
+    outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
+    T, Q0 = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
+
+    eff = zeros(nJ) # Zeros vector for efficiency
+    CT = zeros(nJ) # Zeros vector for CT
+    CQ = zeros(nJ) # Zeros vector for CQ
+    Omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
+    J = range(0, Jmax, length = nJ)  # advance ratio
+    n = Omega / (2 * pi) # Convert rad/s to rev/s
+    for i = 1:nJ
+        local Vinf = J[i] * rtest.d * n # Calculates freestream velocity
+        local op = simple_op.(Vinf, Omega, r, rtest.rho) # Create operating point object to solve
+        outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
+        T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
+        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, Omega, rtest.rho, rotor, "propeller") # Nondimensionalize output to make useable data
+    end
+
+    return J, eff, CT, CQ # Return variables that will become global.
+end
+
+"""
+    initialize(c, twist; rpm, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, Jmax = 0.6, nJ = 20, v = 20)
+This function establishes the initial constant values for the rotor's moment and torque. Calculate the coefficients of thrust and torque and the effectiveness.
+# Arguments
+- c - Chord length.
+- twist - Twist, in degrees.
+- rpm - Rotational velocity, in rpm. Default 2000.
+- nb - The number of blades in the rotor. Default 3.
+- d - The rotor's diameter. Default 20 feet.
+- rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
+- rho - The air density. Default 1.225.
+- fac - The factor used for defining limits. Default 1.1
+- nJ - The number of advance ratios. Default 20.
+- v - The rotor's initial velocity. Used to calculate the initial advance ratio. Default 20 m/s
+# Outputs
+- Q0 - The torque multiplied by n.
+- Mn - The moment in the normal direction
+- Mt - Moment in the tangential direction
+"""
+function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, Jmax = 0.6, nJ = 20, v = 20)
+
+    # This first section finds the torque, Q0.
+
+    rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho, v) # Create a rotor.
+
+    # Rotor geometry
+    rtest.d = rtest.d * 0.0254 # Diameter inches to meters
+    rtip = rtest.d / 2 # Find tip radius from diameter.
+    r = rread[:, 1] * rtip # Translate geometry from propellor percentatge to actual distance
+    chord = rread[:, 2] * rtip * rtest.c # Translate chord to actual distance and multiply by chord factor.
+    theta = rread[:, 3] * pi / 180 # Convert degrees to radians
+    af = AlphaAF(fread) # Input airfoil information. 
+
+    # This section adds twist to a propellor's twist distribution if applicable.
+    for i in eachindex(theta)
+        theta[i] += rtest.twist # Add twist to each segment.
+    end
+
+    # Create rotor.
+    sections = Section.(r, chord, theta, Ref(af)) # Divides the rotor into segments to analyze separately.
+    omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
+    rtest.rhub = rtip * rtest.rhub # Calculate hub length from tip length.
+    rotor = Rotor(rtest.rhub, rtip, rtest.nb) # Create rotor.
+
+    # Find efficiency and power of the rotor at this rpm.
+
+    J = rtest.v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    n = omega / (2 * pi) # Velocity in revolutions per second
+    Vinf = J * rtest.d * n # Calculates freestream velocity
+    op = simple_op.(Vinf, omega, r, rtest.rho) # Create operating point object to solve
+    outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
+    T, Q0 = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
 
     # Next, find the normal moment Mn
     N = outputs.Np # Normal stresses on wing
@@ -171,32 +205,31 @@ function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.22
     Mn = Mn * fac # multiply by factor
     Mt = Mt * fac # multiply by factor
 
-    J, eff, CT, CQ = CDCPeff(omega, rotor, sections, nJ, rtest) # Find initial vectors for rotor.
-
-    return Q0, Mn, Mt, J, eff, CT, CQ # Return variables that will become global.
+    return Q0, Mn, Mt # Return variables that will become global.
 end
 
 """
     objective(c, twist, rpm, nb, d, rhub, rho)
 This function is similar to initialize(). It returns the the torque, normal moment, and tangential moment to ensure the rotor is within its limits.
-    # Arguments
-    - c - Chord length.
-    - twist - Twist, in degrees.
-    - rpm - Rotational velocity, in rpm. Default 2000.
-    - nb - The number of blades in the rotor. Default 3.
-    - d - The rotor's diameter. Default 20 feet.
-    - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
-    - rho - The air density. Default 1.225.
-    # Outputs
-    - Q0 - The torque multiplied by n.
-    - Mn - The moment in the normal direction
-    - Mt - Moment in the tangential direction
+# Arguments
+- c - Chord length.
+- twist - Twist, in degrees.
+- rpm - Rotational velocity, in rpm. Default 2000.
+- nb - The number of blades in the rotor. Default 3.
+- d - The rotor's diameter. Default 20 feet.
+- rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
+- rho - The air density. Default 1.225.
+- v - The freestream velocity. Default 20.
+# Outputs
+- Q0 - The torque multiplied by n.
+- Mn - The moment in the normal direction
+- Mt - Moment in the tangential direction
 """
-function objective(c, twist, rpm, nb, d, rhub, rho)
+function objective(c, twist, rpm, nb, d, rhub, rho; v = 20)
 
     # This first section finds the torque, Q0.
 
-    rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho) # Create a rotor.
+    rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho, v) # Create a rotor.
 
     # Rotor geometry
     rtest.d = rtest.d * 0.0254 # Diameter inches to meters
@@ -216,11 +249,13 @@ function objective(c, twist, rpm, nb, d, rhub, rho)
     omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
     rtest.rhub = rtip * rtest.rhub # Calculate hub length from tip length.
     rotor = Rotor(rtest.rhub, rtip, rtest.nb) # Create rotor.
-
+    
     # Find efficiency and power of the rotor at this rpm.
-    Jt = rtest.v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
-    Vinf = Jt * rtest.d * omega / (2 * pi) # Calculates freestream velocity
-    op = simple_op.(Vinf, omega, rtest.r, rtest.rho) # Create operating point object to solve
+
+    J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    n = omega / (2 * pi) # Velocity in revolutions per second
+    Vinf = J * d * n # Calculates freestream velocity
+    op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
     outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
     T, Q0 = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
 
@@ -251,27 +286,21 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
+- v - Freestream velocity. Default 20 m/s.
 - uc - Upper camber limit. Default 100.0
 - utwist - Upper twist angle limit. Default 45˚ 
 - uv - Upper velocity limit. Default 300 m/s 
 - urpm - Upper rpm limit. Default 5000
 - type - The analysis that will be performed. Default 1.
 # Outputs
-- xopt[1:4] - The optimal chord length, twist, velocity, and revolutions per minut for the rotor.
-- xopt[1] - The optimal chord length.
-- xopt[1] - The optimal twist.
-- xopt[1] - The optimal velocity.
-- xopt[1] - The optimal revolutions per minute.
-- J - Non-dimensional angle of attack.
-- eff - Rotor effectiveness vector
-- CT - Rotor thrust coefficients vector
-- CQ - Rotor torque coefficients vector
+- ropt - Rotor object with optimal properties.
 """
-function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, uc = 100.0, utwist = 45, uv = 300, urpm = 5000)
-    x0 = [c; twist; rpm; nb; d; rhub; rho] # starting point
+function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 20, uc = 100.0, utwist = 45, uv = 300, urpm = 5000)
+    # nb = trunc(Int32, nb)
+    x0 = [c; twist; rpm; nb; d; rhub; rho; v] # starting point
     ng = 3 # number of constraints
-    lx = [0.1, (0 - utwist), 0.1, nb, d, rhub, rho, type]  # lower bounds on x
-    ux = [uc, utwist, urpm, nb, d, rhub, rho, type] # upper bounds on x
+    lx = [0.1, (0 - utwist), rpm, nb, d, rhub, rho, v]  # lower bounds on x
+    ux = [uc, utwist, rpm, nb, d, rhub, rho, v] # upper bounds on x
     lg = zeros(ng)  # lower bounds on g
     ug = [Q0, Mn, Mt] # upper bounds on g
     options = Options(solver=IPOPT())  # choosing IPOPT solver
@@ -283,7 +312,8 @@ function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225,
     println("fstar = ", fopt)
     println("info = ", info)
 
-    return(xopt[1:4])
+    ropt = Rotortest(xopt[1], xopt[2], xopt[3], xopt[4], xopt[5], xopt[6], xopt[7], xopt[8])
+    return(ropt)
 end
 
 """
@@ -296,16 +326,18 @@ this struct creates a new rotor with updated properties.
 - nb - The rotor's blade count
 - d - The outer diameter
 - rhub - The hub radius as a fraction of the outer radius
-- rho - the fluid density
+- rho - The fluid density
+- v - Freestream velocity.
 """
 mutable struct Rotortest
     c::Float64 # Chord length
     twist::Float64 # Twist of entire rotor blade
     rpm::Float64 # Rotational velocity
-    nb::Int32 # Rotor blade count
+    nb::Float64 # Rotor blade count. This should be an int32, but my code struggled with that.
     d::Float64 # Rotor outer diameter
     rhub::Float64 # Rotor hub length
     rho::Float64 # Air density
+    v::Float64 # Freestream velocity
 end
 
 """
@@ -323,7 +355,7 @@ This function is called from the optimize() function. It performs the rotor anal
 - x[5] - The rotor's diameter. Default 20 feet.
 - x[6] - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - x[7] - The air density. Default 1.225.
-- x[8] - The type of analysis that will be performed. Default 1.
+- x[8] - The freestream velocity. Default 20 m/s
 # Outputs
 - g - Constraint functions used to restrain the moment coefficient and the torque coefficient.
 - g[1] - Constrains the bending moment coefficient below 110% original value. 
@@ -336,7 +368,7 @@ This function is called from the optimize() function. It performs the rotor anal
 - x[5] - The rotor's diameter. Default 20 feet.
 - x[6] - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - x[7] - The air density. Default 1.225.
-- x[8] - The type of analysis that will be performed. Default 0.
+- x[8] - The freestream velocity. Default 20 m/s
 """
 function simple!(g, x)
     # objective
@@ -344,7 +376,7 @@ function simple!(g, x)
 
     # constraints
     # Calculate these constants the wame 
-    g[1], g[2], g[3] = objective(x[1], x[2], x[3], x[4], x[5], x[6], x[7])
+    g[1], g[2], g[3] = objective(x[1], x[2], x[3], x[4], x[5], x[6], x[7], v = x[8])
 
     return f
 end
