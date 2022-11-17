@@ -12,7 +12,7 @@ global rread = readdlm("Rotor Design/Rotors/APC_10x7.txt") # Read rotor file.
 global fread = "Rotor Design/Rotors/naca4412_1e6.dat" # Rename airfoil file.
 c0 = 1.0 # Initial chord length ratio.
 twist0 = 0.0 # Initial twist
-rpm0 = 2000 # Initial rpm
+rpm0 = 500 # Initial rpm
 nb0 = 2 # Initial blade count
 d0 = 20 # Initial diameter
 rhub0 = 0.1 # Initial hub radius
@@ -104,22 +104,30 @@ open("Rotor Design/Outputs3.txt", "w") do file
     write(file, ans)
 end
 
+h1 = [0.27, 0.27]
+vert1 = [0, 0.8]
+vert2 = [-0.05, 0.2]
+vert3 = [-0.005, 0.015]
+
 plot(J0[:], eff0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomright)
 plot!(J1[:], eff1[:], label = "1 Blade")
 plot!(J2[:], eff2[:], label = "2 Blades")
 plot!(J3[:], eff3[:], label = "3 Blades")
+plot!(h1[:], vert1[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_1.png")
 
 plot(J1[:], CT0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomleft)
 plot!(J1[:], CT1[:], label = "1 Blade")
 plot!(J2[:], CT2[:], label = "2 Blades")
 plot!(J3[:], CT3[:], label = "3 Blades")
+plot!(h1[:], vert2[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_2.png")
 
 plot(J0[:], CQ0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomleft)
 plot!(J1[:], CQ1[:], label = "1 Blade")
 plot!(J2[:], CQ2[:], label = "2 Blades")
 plot!(J3[:], CQ3[:], label = "3 Blades")
+plot!(h1[:], vert3[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_3.png")
 
 print(analysis(Op0.c, Op0.twist, Op0.rpm, Op0.nb, Op0.d, Op0.rhub, Op0.rho, Op0.v), "\n")

@@ -38,12 +38,12 @@ mutable struct Rotortest
 end
 
 """
-   analysis(c, twist; rpm = 2000, nb = 3, d = 20, rho = 1.225, v = 45)
+   analysis(c, twist; rpm = 500, nb = 3, d = 20, rho = 1.225, v = 45)
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
 - twist - Rotor's twist. Twist is uniform across entire rotor.
-- rpm - The rotor's rotational velocity, in rpm. Default 2000.
+- rpm - The rotor's rotational velocity, in rpm. Default 500.
 - nb - The number of blades in the rotor. Default 3.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
@@ -159,7 +159,7 @@ This function establishes the initial constant values for the rotor's moment and
 # Arguments
 - c - Chord length.
 - twist - Twist, in degrees.
-- rpm - Rotational velocity, in rpm. Default 2000.
+- rpm - Rotational velocity, in rpm. Default 500.
 - nb - The number of blades in the rotor. Default 3.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
@@ -171,7 +171,7 @@ This function establishes the initial constant values for the rotor's moment and
 - Mn - The moment in the normal direction
 - Mt - Moment in the tangential direction
 """
-function initialize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, v = 45)
+function initialize(c, twist; rpm = 500, nb = 3, d = 20, rhub = 0.1, rho = 1.225, fac = 1.1, v = 45)
 
     # This first section finds the torque, Q0.
 
@@ -230,7 +230,7 @@ This function is similar to initialize(). It returns the the torque, normal mome
 # Arguments
 - c - Chord length.
 - twist - Twist, in degrees.
-- rpm - Rotational velocity, in rpm. Default 2000.
+- rpm - Rotational velocity, in rpm. Default 500.
 - nb - The number of blades in the rotor. Default 3.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
@@ -297,7 +297,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 # Arguments
 - c - Chord length.
 - twist - Twist, in degrees.
-- rpm - Rotational velocity, in rpm. Default 2000
+- rpm - Rotational velocity, in rpm. Default 500
 - nb - The number of blades in the rotor. Default 3.
 - d - The rotor's diameter. Default 20 feet.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
@@ -309,7 +309,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 # Outputs
 - ropt - Rotor object with optimal properties.
 """
-function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 45 * pi / 180, uc = 2.0, utwist = 90)
+function optimize(c, twist; rpm = 500, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 45 * pi / 180, uc = 2.0, utwist = 90)
     # nb = trunc(Int32, nb)
     x0 = [c; twist; rpm; nb; d; rhub; rho; v] # starting point
     ng = 3 # number of constraints
@@ -340,7 +340,7 @@ This function is called from the optimize() function. It performs the rotor anal
 - x - This array contains the data contained in the Rotortest struct, in order.
 - x[1] - Chord length.
 - x[2] - Twist, in degrees.
-- x[3] - Rotational velocity, in rpm. Default 2000.
+- x[3] - Rotational velocity, in rpm. Default 500.
 - x[4] - The number of blades in the rotor. Default 3.
 - x[5] - The rotor's diameter. Default 20 feet.
 - x[6] - Ratio of the hub length to tip lentgh. Defulat 0.1.
