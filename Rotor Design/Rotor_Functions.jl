@@ -1,6 +1,6 @@
 #=---------------------------------------------------------------
-11/15/2022
-Rotor Functions v8 Rotor_Functions.jl
+11/16/2022
+Rotor Functions v9 Rotor_Functions.jl
 This code uses the advance ratio and creates graphs of the thrust
 and torque coefficients and efficienty.
 ---------------------------------------------------------------=#
@@ -74,11 +74,6 @@ function analysis(c, twist, rpm, nb, d, rhub, rho, v)
     rhub = rtip * rhub # Calculate hub length from tip length.
     rotor = Rotor(rhub, rtip, nb) # Create rotor.
     J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
-    n = omega / (2 * pi) # Velocity in revolutions per second
-    Vinf = J * d * n # Calculates freestream velocity
-    op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
-    outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
-    T, _ = thrusttorque(rotor, sections, outputs)
 
     # Find efficiency and power of the rotor at this rpm.
     n = omega / (2 * pi) # Velocity in revolutions per second
@@ -309,18 +304,16 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - rho - The air density. Default 1.225.
 - v - Freestream velocity. Default 20 m/s.
 - uc - Upper camber limit. Default 100.0
-- utwist - Upper twist angle limit. Default 45˚ 
-- uv - Upper velocity limit. Default 300 m/s 
-- urpm - Upper rpm limit. Default 5000
+- utwist - Upper twist angle limit. Default 90˚ 
 - type - The analysis that will be performed. Default 1.
 # Outputs
 - ropt - Rotor object with optimal properties.
 """
-function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 45, uc = 100.0, utwist = 45, uv = 300, urpm = 5000)
+function optimize(c, twist; rpm = 2000, nb = 3, d = 20, rhub = 0.1, rho = 1.225, v = 45 * pi / 180, uc = 2.0, utwist = 90)
     # nb = trunc(Int32, nb)
     x0 = [c; twist; rpm; nb; d; rhub; rho; v] # starting point
     ng = 3 # number of constraints
-    lx = [0.1, (0 - utwist), rpm, nb, d, rhub, rho, v]  # lower bounds on x
+    lx = [(1 / uc), (0 - utwist), rpm, nb, d, rhub, rho, v]  # lower bounds on x
     ux = [uc, utwist, rpm, nb, d, rhub, rho, v] # upper bounds on x
     lg = zeros(ng)  # lower bounds on g
     ug = [Q0, Mn, Mt] # upper bounds on g

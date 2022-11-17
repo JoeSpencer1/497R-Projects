@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
-11/15/2022
-Rotor Design v7 Rotor_Design.jl
+11/16/2022
+Rotor Design v9 Rotor_Design.jl
 This code uses the advance ratio and creates graphs of the thrust
-and torque coefficients and efficienty.
+and torque coefficients and efficienty. I have added a function
+to return only the objective function.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
@@ -16,7 +17,7 @@ nb0 = 2 # Initial blade count
 d0 = 20 # Initial diameter
 rhub0 = 0.1 # Initial hub radius
 rho0 = 1.225 # Default air density
-v0 = 20 # Default rotor velocity
+v0 = 45 # Default rotor velocity
 
 Q0, Mn, Mt = initialize(c0, twist0) # Find torque and moment values for this rotor.
 global Q0 = Q0 # Set torque value as global.
@@ -58,7 +59,7 @@ open("Rotor Design/Outputs1.txt", "w") do file
     ans = string(Op1.c)
     write(file, ans)
     write(file, "\n")
-    ans = string(Op1.twist)
+    ans = string(Op1.twist * 180 / pi)
     write(file, ans)
     write(file, "\n")
     ans = string(Q1)
@@ -74,7 +75,7 @@ open("Rotor Design/Outputs2.txt", "w") do file
     ans = string(Op2.c)
     write(file, ans)
     write(file, "\n")
-    ans = string(Op2.twist)
+    ans = string(Op2.twist * 180 / pi)
     write(file, ans)
     write(file, "\n")
     ans = string(Q2)
@@ -90,7 +91,7 @@ open("Rotor Design/Outputs3.txt", "w") do file
     ans = string(Op3.c)
     write(file, ans)
     write(file, "\n")
-    ans = string(Op3.twist)
+    ans = string(Op3.twist * 180 / pi)
     write(file, ans)
     write(file, "\n")
     ans = string(Q3)
@@ -120,3 +121,8 @@ plot!(J1[:], CQ1[:], label = "1 Blade")
 plot!(J2[:], CQ2[:], label = "2 Blades")
 plot!(J3[:], CQ3[:], label = "3 Blades")
 savefig("Rotor Design/Plots/Figure_3.png")
+
+print(analysis(Op0.c, Op0.twist, Op0.rpm, Op0.nb, Op0.d, Op0.rhub, Op0.rho, Op0.v), "\n")
+print(analysis(Op1.c, Op1.twist, Op1.rpm, Op1.nb, Op1.d, Op1.rhub, Op1.rho, Op1.v), "\n")
+print(analysis(Op2.c, Op2.twist, Op2.rpm, Op2.nb, Op2.d, Op2.rhub, Op2.rho, Op2.v), "\n")
+print(analysis(Op3.c, Op3.twist, Op3.rpm, Op3.nb, Op3.d, Op3.rhub, Op3.rho, Op3.v), "\n")
