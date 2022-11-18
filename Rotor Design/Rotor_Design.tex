@@ -29,7 +29,7 @@ This report investigates how a rotor's twist and chord length can be adjusted to
 
 \begin{equation}
 \begin{aligned}
-	f(x_{1}, x_{2}, x_{3}...) = \eta \times C_{T} \\
+	f(x_{1}, x_{2}, x_{3}...) = \eta \\
 \end{aligned}
 \end{equation} \newline
 
@@ -37,9 +37,9 @@ This report investigates how a rotor's twist and chord length can be adjusted to
 
 \noindent This project uses an optimizer to determine which combination of design variables will be best for a propellor to meet certain requirements defined by the user. The optimizer will be confined by several limitations and will stay within 110\% of its original bending moment and 110\% of its original torque, to confine possible designs to the domain of real rotors that could withstand the same loads as the original rotor. \newline
 
-\noindent Chord length and rotation were investigated because these parameters can each be adjusted to affect the shape and performance of the rotor itself. Other parameters, like the rotor's diameter or the wind velocity, for example, will only scale or shift the torque and thrust coefficients. Different chord lengths and rotations, on the other hand, will actually change the shape and profile of the rotor as oncoming wind flows past it. So, adjusting these parameters will lead to a truly optimal solution as opposed to simply shifting or scaling another solution. \newline
+\noindent Chord length and pitching twist distribution were investigated because these parameters can each be adjusted to affect the shape and performance of the rotor itself. Other parameters, like the rotor's diameter or the wind velocity, for example, will only scale or shift the torque and thrust coefficients. Different chord lengths and rotations, on the other hand, will actually change the shape and profile of the rotor as oncoming wind flows past it. So, adjusting these parameters will lead to a truly optimal solution as opposed to simply shifting or scaling another solution. \newline
 
-\noindent These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible and could be modified for future projects depending on an individual rotor's applications. This project's objective function only optimized the chord length and the rotation of the rotor. Other parameters used were the rotational velocity, the blade count, the rotor diameter, the hub-to-tip radius, and the free stream velocity. The values for each of these are shown in table 1. \newline
+\noindent These requirements will demonstrate that the rotor can safely fulfill its design purpose. Other requirements besides these are more flexible and could be modified for future projects depending on an individual rotor's applications. This project's objective function only optimized the chord length and the pitching twist distribution of the rotor. Other parameters used were the rotational velocity, the blade count, the rotor diameter, the hub-to-tip radius, and the free stream velocity. The values for each of these are shown in table 1. \newline
 
 \centering
 \title{Table 1: Input Value Limits in Rotor Design \newline}
@@ -47,7 +47,7 @@ This report investigates how a rotor's twist and chord length can be adjusted to
 \begin{tabular}{| c | c | c | c |}
 	 \hline
   	 \textbf{Parameter} & \textbf{Default Value} & \textbf{Minimum Value} & \textbf{Maximum Value} \\ \hline
-	 Chord Length & 100\% magnification & 50\% & 200\% \\ \hline
+	 Chord Length & 100\% length & 50\% & 200\% \\ \hline
 	 Twist & $0^{\circ}$ & $-90^{\circ}$ & $90^{\circ}$ \\ \hline
 	 Rotational Velocity & \multicolumn{3}{c|}{500 RPM (kept constant)} \\ \hline
 	 Blade Count & 2 blades & \multicolumn{2}{c|}{1 to 3 (kept constant)}\\ \hline
@@ -80,9 +80,9 @@ Table 2 shows that for all cases, the optimizer kept the moments and torques exp
 	 \hline
   	 \textbf{Propellor} & \textbf{$Q, N \times m$} & \textbf{$M_{N}, N \times m$} & \textbf{$M_{T}, N \times m$} \\ \hline
 	 \textbf{Maximum Limit} & 0.040 & $2.971 \times 10^{5}$ & $2.650 \times 10^{4}$ \\
-	 \textbf{2 Blades} & 0.032 & $2.874 \times 10^{5}$ & $2.651 \times 10^{4}$ \\
-	 \textbf{3 Blades} & 0.040 & $2.704 \times 10^{5}$ & $2.551 \times 10^{4}$ \\
-	 \textbf{4 Blades} & 0.040 & $2.307 \times 10^{5}$ & $1.971 \times 10^{5}$ \\ \hline
+	 \textbf{2 Blades} & 0.003 & $67.864$ & $1171.333$ \\
+	 \textbf{3 Blades} & 0.005 & $-670.828$ & $1208.595$ \\
+	 \textbf{4 Blades} & 0.006 & $438.019$ & $1314.127$ \\ \hline
 \end{tabular} \break \newline
 
 \raggedright
@@ -102,9 +102,9 @@ I am searching for the maximum to my objective function, but the optimizer finds
 
 \subsubsection*{Results and Discussion}
 
-This research optimized the twist and chord scaling of rotors with 2, 3, and 4 blades, at the conditions described in table 1. The results are displayed in table 4. The optimal values differ from the original values for every rotor tested, by different amounts. Increasing the blade count changed both the optimal chord scaling and twist angle. \newline
+This research optimized the twist and chord scaling of rotors with 2, 3, and 4 blades, at the conditions described in table 1. The results are displayed in table 4. The optimal values differ from the original values for every rotor tested, by slightly different amounts. Increasing the blade count changed both the optimal chord scaling and twist angle. \newline
 
-The optimal chord scaling decreased as the blade count increased. Table 4 shows that blades in the optimized 2-rotor propellor were slightly more than twice as thick as in the 4-blade rotor. In the \href{https://github.com/JoeSpencer1/497R-Projects/blob/main/Airfoil Analysis/Airfoil_Analysis.pdf}{Airfoil Analysis}, I found that increasing the chord magnitude increased both the lift and drag coefficients of the airfoil. A propellor with more blades will require less chord thickness to obtain the same power and torque. \newline
+The optimal chord length for each rotor appears to be the chord length that is decreased by half, which is the minimum chord length allowed for the analysis. In the \href{https://github.com/JoeSpencer1/497R-Projects/blob/main/Airfoil Analysis/Airfoil_Analysis.pdf}{Airfoil Analysis}, I had found that increasing the chord magnitude increased both the lift and drag coefficients of the airfoil. A propellor with more blades will require less chord thickness to obtain the same power and torque, but the chord thickness for maximum efficiency appears to be constant. \newline
 
 \centering
 \title{Table 4: Comparison of outputs to limits \newline}
@@ -113,29 +113,27 @@ The optimal chord scaling decreased as the blade count increased. Table 4 shows 
 	 \hline
 	 \textbf{Blade Count} & \textbf{Chord Scaling} & \textbf{Twist Angle} \\ \hline
 	 3, unoptimized & 1.00 & $0^{\circ}$ \\
-	 2 & 1.983 & $-3.440^{\circ}$ \\
-	 3 & 1.415 & $-2.096^{\circ}$ \\
-	 4 & 0.873 & $-0.487^{\circ}$ \\ \hline
+	 2 & 0.500 & $-11.561^{\circ}$ \\
+	 3 & 0.500 & $-11.669^{\circ}$ \\
+	 4 & 0.500 & $-11.624^{\circ}$ \\ \hline
 \end{tabular} \break \newline
 
 \raggedright
-Propellors with 2, 3, and 4 blades each had slight negative optimal twist angles. The rotor with two blades had the twist angle highest in magnitude. Airfoil analysis performed previously has discovered that the lift coefficient is close to zero angles of attack with low magnitude, and that the drag coefficient increases dramatically at negative angles of attack with higher magnitudes for thicker airfoils. Therefore, a rotor with a slight negative twist angle will create the greatest thrust while keeping a low drag and high efficiency. As the blade count increases, though, the drag experienced becomes more detrimental to its performance and the optimal twist angle must be reduced to maintain a high efficiency. \newline
+Propellors with 2, 3, and 4 blades each had negative optimal twist angles, close to 11.6 degrees. The rotor with two blades had the optimal twist angle highest in magnitude. Airfoil analysis performed previously has discovered that the lift coefficient is close to zero angles of attack with low magnitude, and that the drag coefficient increases dramatically at negative angles of attack with higher magnitudes for thicker airfoils. Therefore, a rotor with a slight negative twist angle will have low drag and high efficiency. \newline
 
 \begin{figure}
   \centering
-  \subfloat[Effectiveness]{\includegraphics[width = .40\textwidth]{Plots/Figure_1.png}}
+  \subfloat[Efficiency]{\includegraphics[width = .40\textwidth]{Plots/Figure_1.png}}
   \subfloat[Thrust Coefficient]{\includegraphics[width = .40\textwidth]{Plots/Figure_2.png}}
 
-  \subfloat[Torque Coefficient]{\includegraphics[width = .40\textwidth]{Plots/Figure_3.png}}\hspace{1em}
-  \caption{Effectiveness, Thrust Coefficients, and Torque Coefficients Compared at Different Advance Ratios}
+  \subfloat[Torque Coefficient]{\includegraphics[width = .80\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+  \caption{Efficiency, Thrust Coefficients, and Torque Coefficients Compared at Different Advance Ratios}
   \captionsetup{aboveskip=0pt,font=it}
   \caption*{These plots visually represent how optimized rotors are different from the original rotor.}
   \label{fig:1}
 \end{figure}
 
-Optimized rotors fulfilled the objective function better than the original rotor did. They increased the product of the effectiveness, $\eta$, and the thrust coefficient, $C_{T}$, at the advance ratio selected for the optimization, which was found at the 45 m/s free stream velocity, 20 m outer diameter, and 500 RPM rotational velocity summarized in table 1. After the propellor was optimized at the advance ratio shown below, it was measured at a variety of different advance ratios. \newline \break
-
-Figure 1 shows how 
+Optimized rotors fulfilled the objective function better than the original rotor did. Figure 1 shows shows that the rotor efficiencies were only optimized at the advance ratio shown with the vertical line. They increased the product of the efficiency, $\eta$, and the thrust coefficient, $C_{T}$, at the advance ratio selected for the optimization, which was found at the 45 m/s free stream velocity, 20 m outer diameter, and 500 RPM rotational velocity summarized in table 1. After the propellor was optimized at the advance ratio shown below, it was measured at a variety of different advance ratios. \newline \break
 
 \begin{equation}
 \begin{aligned}
@@ -144,9 +142,9 @@ Figure 1 shows how
 \end{aligned}
 \end{equation} 
 
-One notable feature in figure 1 is that the unoptimized rotor appears to have higher effectiveness at most advance ratios. Although unexpected at first, this makes more sense when considered in the context of the objective function, which has terms for both the effectiveness and the power coefficient. The power coefficient increases by more than the effectiveness decreases, so the objective function still increases. \newline
+Figure 1 shows that the optimized rotors are only optimized for the highest efficiency at an advance ratio $J = 0.27$. At other advance ratios, they are less efficient, and their thrust and torque coefficients are lower across the entire domain of advance ratios. The optimization only found the optimal rotor for the highest efficiency rotor at a specific advance ratio. This rotor would not necessarily fulfill other roles well. \newline
 
-In conclusion, the optimal angle of rotation for a rotor to maximize both its thrust coefficient and efficiency is slightly negative for these parameters. The optimal thickness is larger than the rotor thickness for propellors with only one or two blades, but it decreases until an optimal propellor is thinner than the default blade for higher blade counts.
+In conclusion, the optimal pitching twist for a rotor to maximize its efficiency is negative for these parameters. The optimal thickness is the minimum possible for propellors of any blade count. \newline
 
 \clearpage
 

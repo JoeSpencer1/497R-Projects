@@ -1,9 +1,10 @@
 #=---------------------------------------------------------------
 11/16/2022
-Rotor Design v9 Rotor_Design.jl
+Rotor Design v10 Rotor_Design.jl
 This code uses the advance ratio and creates graphs of the thrust
 and torque coefficients and efficienty. I have added a function
-to return only the objective function.
+to return only the objective function. I updated the objective
+function to only maximize efficientcy.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
@@ -106,24 +107,25 @@ end
 
 h1 = [0.27, 0.27]
 vert1 = [0, 0.8]
-vert2 = [-0.05, 0.2]
-vert3 = [-0.005, 0.015]
+vert2 = [-0.1, 0.2]
+vert3 = [-0.05, 0.05]
 
-plot(J0[:], eff0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomright)
+plot(J0[:], eff0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
 plot!(J1[:], eff1[:], label = "1 Blade")
 plot!(J2[:], eff2[:], label = "2 Blades")
 plot!(J3[:], eff3[:], label = "3 Blades")
 plot!(h1[:], vert1[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_1.png")
 
-plot(J1[:], CT0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomleft)
+plot(J1[:], CT0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false)
 plot!(J1[:], CT1[:], label = "1 Blade")
 plot!(J2[:], CT2[:], label = "2 Blades")
 plot!(J3[:], CT3[:], label = "3 Blades")
 plot!(h1[:], vert2[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_2.png")
 
-plot(J0[:], CQ0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = :bottomleft)
+plot(J0[:], CQ0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+ylims!((-0.01, 0.01))
 plot!(J1[:], CQ1[:], label = "1 Blade")
 plot!(J2[:], CQ2[:], label = "2 Blades")
 plot!(J3[:], CQ3[:], label = "3 Blades")

@@ -1,8 +1,9 @@
 #=---------------------------------------------------------------
 11/16/2022
-Rotor Functions v9 Rotor_Functions.jl
+Rotor Functions v10 Rotor_Functions.jl
 This code uses the advance ratio and creates graphs of the thrust
-and torque coefficients and efficienty.
+and torque coefficients and efficienty. The objective function
+has been modified to maximize efficienty.
 ---------------------------------------------------------------=#
 
 using Xfoil, CCBlade, SNOW, DelimitedFiles, FLOWMath, QuadGK, Plots
@@ -83,7 +84,7 @@ function analysis(c, twist, rpm, nb, d, rhub, rho, v)
     T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
     eff, CT, _ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
 
-    obj = 1 / (eff * CT) # Maximize thrust, velocity, and efficiency.
+    obj = 1 / (eff) # Maximize thrust, velocity, and efficiency.
 
     # Output resulting objective function.
     return(obj)
