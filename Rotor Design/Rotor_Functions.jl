@@ -1,9 +1,9 @@
 #=---------------------------------------------------------------
-11/16/2022
-Rotor Functions v10 Rotor_Functions.jl
-This code uses the advance ratio and creates graphs of the thrust
-and torque coefficients and efficienty. The objective function
-has been modified to maximize efficienty.
+11/19/2022
+Rotor Functions v11 Rotor_Functions.jl
+This version of the code has an updated program that can usually
+optimize a rotor at several advance ratios, as long as it 
+doesn't get stuck at a plateau.
 ---------------------------------------------------------------=#
 
 using Xfoil, CCBlade, SNOW, DelimitedFiles, FLOWMath, QuadGK, Plots
@@ -74,15 +74,12 @@ function analysis(c, twist, rpm, nb, d, rhub, rho, v)
     omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
     rhub = rtip * rhub # Calculate hub length from tip length.
     rotor = Rotor(rhub, rtip, nb) # Create rotor.
-    J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
 
     # Find efficiency and power of the rotor at this rpm.
-    n = omega / (2 * pi) # Velocity in revolutions per second
-    Vinf = J * d * n # Calculates freestream velocity
-    op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve
+    op = simple_op.(v, omega, r, rho) # Create operating point object to solve
     outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
     T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
-    eff, CT, _ = nondim(T, Q, Vinf, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
+    eff, CT, _ = nondim(T, Q, v, omega, rho, rotor, "propeller") # Nondimensionalize output to make useable data
 
     obj = 1 / (eff) # Maximize thrust, velocity, and efficiency.
 
@@ -226,7 +223,7 @@ function initialize(c, twist; rpm = 500, nb = 3, d = 20, rhub = 0.1, rho = 1.225
 end
 
 """
-   multi(c, twist; rpm = 500, nb = 3, d = 20, rho = 1.225, v = 45)
+   multi(c, twist; rpm = 500, nb = 3, d = 20, rho = 1.225, v = 45, np = 5, rp = 0.8, lp = 0.1)
 Root function that calls other functions to analyze a rotor.
 # Arguments
 - c - Rotor's chord length, as a factor of the given lengths in the file.
@@ -247,7 +244,7 @@ function multi(c, twist, rpm, nb, d, rhub, rho, v, np, rp, lp)
     obj = 0 # Set objective to zero
 
     for i = 1:np
-        J = lp + (i - 1) * (rp / np) # Find the advance ratio
+        J = lp + (i - 1.0) * rp / (np - 1.0) # Find the advance ratio
         rpm = v / (J * d / 60) # Find new rpm for this advance ratio
 
         rtest = Rotortest(c, twist, rpm, nb, d, rhub, rho, v) # Create a rotor.
@@ -270,8 +267,7 @@ function multi(c, twist, rpm, nb, d, rhub, rho, v, np, rp, lp)
         omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
         rhub = rtip * rhub # Calculate hub length from tip length.
         rotor = Rotor(rhub, rtip, nb) # Create rotor.
-        J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
-
+        J = v / (rtest.d * rtest.rpm * 60) # Create an advance ratio from the given information.
         # Find efficiency and power of the rotor at this rpm.
         n = omega / (2 * pi) # Velocity in revolutions per second
         Vinf = J * d * n # Calculates freestream velocity
@@ -284,7 +280,7 @@ function multi(c, twist, rpm, nb, d, rhub, rho, v, np, rp, lp)
     end
 
     # Output resulting objective function.
-    return(1 / obj)
+    return(100 / obj)
 end
 
 """
@@ -373,7 +369,7 @@ function objective(c, twist, rpm, nb, d, rhub, rho; v = 45)
     
     # Find efficiency and power of the rotor at this rpm.
 
-    J = v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
+    J = v / (rtest.d * rtest.rpm * 60) # Create an advance ratio from the given information.
     n = omega / (2 * pi) # Velocity in revolutions per second
     Vinf = J * d * n # Calculates freestream velocity
     op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve

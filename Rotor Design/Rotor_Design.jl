@@ -1,10 +1,9 @@
 #=---------------------------------------------------------------
-11/16/2022
-Rotor Design v10 Rotor_Design.jl
-This code uses the advance ratio and creates graphs of the thrust
-and torque coefficients and efficienty. I have added a function
-to return only the objective function. I updated the objective
-function to only maximize efficientcy.
+11/19/2022
+Rotor Design v11 Rotor_Design.jl
+This version of the code has an updated program that can usually
+optimize a rotor at several advance ratios, as long as it 
+doesn't get stuck at a plateau.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
@@ -14,7 +13,7 @@ global fread = "Rotor Design/Rotors/naca4412_1e6.dat" # Rename airfoil file.
 c0 = 1.0 # Initial chord length ratio.
 twist0 = 0.0 # Initial twist
 rpm0 = 500 # Initial rpm
-nb0 = 2 # Initial blade count
+nb0 = 3 # Initial blade count
 d0 = 20 # Initial diameter
 rhub0 = 0.1 # Initial hub radius
 rho0 = 1.225 # Default air density
@@ -125,7 +124,7 @@ plot!(h1[:], vert2[:], color = :gray, linestyle = :dash, label = "Optimized adva
 savefig("Rotor Design/Plots/Figure_2.png")
 
 plot(J0[:], CQ0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
-ylims!((-0.01, 0.01))
+ylims!((-0.01, 0.015))
 plot!(J1[:], CQ1[:], label = "1 Blade")
 plot!(J2[:], CQ2[:], label = "2 Blades")
 plot!(J3[:], CQ3[:], label = "3 Blades")
@@ -137,23 +136,41 @@ print(analysis(Op1.c, Op1.twist, Op1.rpm, Op1.nb, Op1.d, Op1.rhub, Op1.rho, Op1.
 print(analysis(Op2.c, Op2.twist, Op2.rpm, Op2.nb, Op2.d, Op2.rhub, Op2.rho, Op2.v), "\n")
 print(analysis(Op3.c, Op3.twist, Op3.rpm, Op3.nb, Op3.d, Op3.rhub, Op3.rho, Op3.v), "\n")
 
-Op4 = multiopt(c0, twist0) # Perform multiple optimization for 2-blade rotor
+Op4 = multiopt(c0, twist0, rp = 0.1) # Perform multiple optimization for 2-blade rotor
 Q4, Mn4, Mt4 = initialize(Op4.c, Op4.twist, fac = 1.0, nb = 3) # Find torque and moment values for this rotor.
 J4, eff4, CT4, CQ4 = coefficients(Op4) # Create vectors of advance ratios.
 
 h2 = [0.2, 0.2]
-h3 = [0.3, 0.3]
-h4 = [0.4, 0.4]
-h5 = [0.5, 0.5]
-h6 = [0.6, 0.6]
+h3 = [0.225, 0.225]
+h4 = [0.25, 0.25]
+h5 = [0.275, 0.274]
+h6 = [0.3, 0.3]
 vert4 = [0.0, 0.8]
+
+
+Op5 = multiopt(c0, twist0, rp = 0.1, lp = 0.5) # Perform multiple optimization for 2-blade rotor
+Q5, Mn5, Mt5 = initialize(Op5.c, Op5.twist, fac = 1.0, nb = 3) # Find torque and moment values for this rotor.
+J5, eff5, CT5, CQ5 = coefficients(Op5) # Create vectors of advance ratios.
+
+h7 = [0.5, 0.5]
+h8 = [0.525, 0.525]
+h9 = [0.55, 0.55]
+h10 = [0.575, 0.574]
+h11 = [0.6, 0.6]
+
 plot(J1[:], eff0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
 plot!(J1[:], eff4[:], label = "3 Blades, Optimized")
-plot!(h2[:], vert4[:], color = :gray, linestyle = :dash, label = "Advance Ratios Checked")
+plot!(h2[:], vert4[:], color = :gray, linestyle = :dash, label = false)
 plot!(h3[:], vert4[:], color = :gray, linestyle = :dash, label = false)
 plot!(h4[:], vert4[:], color = :gray, linestyle = :dash, label = false)
 plot!(h5[:], vert4[:], color = :gray, linestyle = :dash, label = false)
 plot!(h6[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(J1[:], eff5[:], label = "3 Blades, Optimized")
+plot!(h7[:], vert4[:], color = :gray, linestyle = :dash, label = "Advance Ratios Checked")
+plot!(h8[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h9[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h10[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h11[:], vert4[:], color = :gray, linestyle = :dash, label = false)
 savefig("Rotor Design/Plots/Figure_4.png")
 
 open("Rotor Design/Outputs4.txt", "w") do file
