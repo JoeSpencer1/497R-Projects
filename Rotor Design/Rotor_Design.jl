@@ -110,21 +110,21 @@ vert1 = [0, 0.8]
 vert2 = [-0.1, 0.2]
 vert3 = [-0.05, 0.05]
 
-plot(J0[:], eff0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
+plot(J0[:], eff0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
 plot!(J1[:], eff1[:], label = "1 Blade")
 plot!(J2[:], eff2[:], label = "2 Blades")
 plot!(J3[:], eff3[:], label = "3 Blades")
 plot!(h1[:], vert1[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_1.png")
 
-plot(J1[:], CT0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false)
+plot(J1[:], CT0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false)
 plot!(J1[:], CT1[:], label = "1 Blade")
 plot!(J2[:], CT2[:], label = "2 Blades")
 plot!(J3[:], CT3[:], label = "3 Blades")
 plot!(h1[:], vert2[:], color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.27")
 savefig("Rotor Design/Plots/Figure_2.png")
 
-plot(J0[:], CQ0[:], label = "2 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+plot(J0[:], CQ0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
 ylims!((-0.01, 0.01))
 plot!(J1[:], CQ1[:], label = "1 Blade")
 plot!(J2[:], CQ2[:], label = "2 Blades")
@@ -136,3 +136,39 @@ print(analysis(Op0.c, Op0.twist, Op0.rpm, Op0.nb, Op0.d, Op0.rhub, Op0.rho, Op0.
 print(analysis(Op1.c, Op1.twist, Op1.rpm, Op1.nb, Op1.d, Op1.rhub, Op1.rho, Op1.v), "\n")
 print(analysis(Op2.c, Op2.twist, Op2.rpm, Op2.nb, Op2.d, Op2.rhub, Op2.rho, Op2.v), "\n")
 print(analysis(Op3.c, Op3.twist, Op3.rpm, Op3.nb, Op3.d, Op3.rhub, Op3.rho, Op3.v), "\n")
+
+Op4 = multiopt(c0, twist0) # Perform multiple optimization for 2-blade rotor
+Q4, Mn4, Mt4 = initialize(Op4.c, Op4.twist, fac = 1.0, nb = 3) # Find torque and moment values for this rotor.
+J4, eff4, CT4, CQ4 = coefficients(Op4) # Create vectors of advance ratios.
+
+h2 = [0.2, 0.2]
+h3 = [0.3, 0.3]
+h4 = [0.4, 0.4]
+h5 = [0.5, 0.5]
+h6 = [0.6, 0.6]
+vert4 = [0.0, 0.8]
+plot(J1[:], eff0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+plot!(J1[:], eff4[:], label = "3 Blades, Optimized")
+plot!(h2[:], vert4[:], color = :gray, linestyle = :dash, label = "Advance Ratios Checked")
+plot!(h3[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h4[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h5[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+plot!(h6[:], vert4[:], color = :gray, linestyle = :dash, label = false)
+savefig("Rotor Design/Plots/Figure_4.png")
+
+open("Rotor Design/Outputs4.txt", "w") do file
+    ans = string(Op4.c)
+    write(file, ans)
+    write(file, "\n")
+    ans = string(Op4.twist * 180 / pi)
+    write(file, ans)
+    write(file, "\n")
+    ans = string(Q4)
+    write(file, ans)
+    write(file, "\n")
+    ans = string(Mn4)
+    write(file, ans)
+    write(file, "\n")
+    ans = string(Mt4)
+    write(file, ans)
+end
