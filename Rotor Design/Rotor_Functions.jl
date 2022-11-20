@@ -127,25 +127,18 @@ function coefficients(ropt; Jmax = 0.6, nJ = 20)
 
     # Find efficiency and power of the rotor at this rpm.
 
-    J = rtest.v / (rtest.d * rtest.rpm * 60 / (2 * pi)) # Create an advance ratio from the given information.
-    n = omega / (2 * pi) # Velocity in revolutions per second
-    Vinf = J * rtest.d * n # Calculates freestream velocity
-    op = simple_op.(Vinf, omega, r, rtest.rho) # Create operating point object to solve
-    outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
-    T, Q0 = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
-
     eff = zeros(nJ) # Zeros vector for efficiency
     CT = zeros(nJ) # Zeros vector for CT
     CQ = zeros(nJ) # Zeros vector for CQ
-    Omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
+    omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
     J = range(0, Jmax, length = nJ)  # advance ratio
-    n = Omega / (2 * pi) # Convert rad/s to rev/s
+    n = omega / (2 * pi) # Convert rad/s to rev/s
     for i = 1:nJ
         local Vinf = J[i] * rtest.d * n # Calculates freestream velocity
-        local op = simple_op.(Vinf, Omega, r, rtest.rho) # Create operating point object to solve
+        local op = simple_op.(Vinf, omega, r, rtest.rho) # Create operating point object to solve
         outputs = solve.(Ref(rotor), sections, op) # Solves op from previous line
         T, Q = thrusttorque(rotor, sections, outputs) # Integrate the area of the calucalted curve
-        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, Omega, rtest.rho, rotor, "propeller") # Nondimensionalize output to make useable data
+        eff[i], CT[i], CQ[i] = nondim(T, Q, Vinf, omega, rtest.rho, rotor, "propeller") # Nondimensionalize output to make useable data
     end
 
     return J, eff, CT, CQ # Return variables that will become global.
@@ -267,7 +260,7 @@ function multi(c, twist, rpm, nb, d, rhub, rho, v, np, rp, lp)
         omega = rtest.rpm * 2 * pi / 60 # Rotational Velocity in rad/s
         rhub = rtip * rhub # Calculate hub length from tip length.
         rotor = Rotor(rhub, rtip, nb) # Create rotor.
-        J = v / (rtest.d * rtest.rpm * 60) # Create an advance ratio from the given information.
+        J = v / (rtest.d * rtest.rpm * 60.0) # Create an advance ratio from the given information.
         # Find efficiency and power of the rotor at this rpm.
         n = omega / (2 * pi) # Velocity in revolutions per second
         Vinf = J * d * n # Calculates freestream velocity
@@ -369,7 +362,7 @@ function objective(c, twist, rpm, nb, d, rhub, rho; v = 45)
     
     # Find efficiency and power of the rotor at this rpm.
 
-    J = v / (rtest.d * rtest.rpm * 60) # Create an advance ratio from the given information.
+    J = rtest.v / (rtest.d * rtest.rpm * 60.0) # Create an advance ratio from the given information.
     n = omega / (2 * pi) # Velocity in revolutions per second
     Vinf = J * d * n # Calculates freestream velocity
     op = simple_op.(Vinf, omega, r, rho) # Create operating point object to solve

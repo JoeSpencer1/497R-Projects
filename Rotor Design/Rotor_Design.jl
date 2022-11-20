@@ -147,7 +147,6 @@ h5 = [0.275, 0.274]
 h6 = [0.3, 0.3]
 vert4 = [0.0, 0.8]
 
-
 Op5 = multiopt(c0, twist0, rp = 0.1, lp = 0.5) # Perform multiple optimization for 2-blade rotor
 Q5, Mn5, Mt5 = initialize(Op5.c, Op5.twist, fac = 1.0, nb = 3) # Find torque and moment values for this rotor.
 J5, eff5, CT5, CQ5 = coefficients(Op5) # Create vectors of advance ratios.
