@@ -11,7 +11,7 @@
 
 \title{Optimization of Multiple Rotors}
 
-\author{First J. Spencerr \footnote{Undergraduate Researcher, Brigham Young University FLOW Lab.}}
+\author{J. Spencerr \footnote{Undergraduate Researcher, Brigham Young University FLOW Lab.}}
 \affil{Brigham Young University, Provo, Utah, 84601} % Other authors are listed in the same way
 
 \begin{document}
@@ -22,6 +22,7 @@
 This report describes a project completed as part of my research with the Brigham Young University FLOW Lab. this project drew on skills gained throughout the semester to design and execute a code in the Julia programming language to find the optimal blade count, blade thickness magnification, and angle of rotation for a propellor to achieve its maximum efficiency, $\eta$, at a known advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.
 
 \end{abstract}
+
 
 \section*{Nomenclature}
 
@@ -53,13 +54,14 @@ $M$ & Mach Number, \emph{dimensionless} \\
 $M_{p}$ & Pitching Moment, $N \times m$ \\
 $c_{m}$ & Pitching Moment Coefficient, \emph{dimensionless} \\
 $P$ & Power, $W$ \\
-$C_{P}$ & Power Coefficient \emph{dimensionless} \\
+$C_{P}$ & Power Coefficient, \emph{dimensionless} \\
 $N$ & Propellor Count, \emph{integer} \\
 $\omega$ & Radial Velocity, $\frac{rad.}{s}$ \\
 $RPM$ & Revolutions Per Minute, $\frac{\emph{rev.}}{\emph{min.}}$ \\
 $Re$ & Reynolds Number, \emph{dimensionless} \\
 $n$ & Rotational Frequency, $\frac{rev.}{s}$ \\
 $\sigma$ & Rotor Solidity \emph{dimensionless} \\
+$n$ & Safety Factor, \emph{dimensionless} \\
 $s$ & Spacing, $m$ \\
 $A$ & Surface Area, $m${2} \\
 $\beta$ & Stationary Angle of Rotation, $rad.$ \\
@@ -75,35 +77,57 @@ $u$ & Velocity, $m/s$ \\
 \end{longtable*}}
 
 
-
-
 \section{Introduction}
-\lettrine{T}{his} document is a \LaTeX{} template for preparation of papers for AIAA Technical Journals. If you are reading a hard-copy or .pdf version of this document, download the electronic file, new-aiaa.cls, and use it to prepare your manuscript.
 
-Authors using \url{https://www.overleaf.com} may simply open the AIAA template from the Overleaf gallery to work online; no local installation of any files is required. Authors using a local \LaTeX{} installation will need to open the template in Overleaf and use the ``Download as zip'' option from the project menu to download a local copy of the template files. To create your formatted manuscript, type your own text over sections of the template, or cut and paste from another document and then use the available markup styles. Note that special formatting such as subscripts, superscripts, and italics may be lost when you copy your text into the template from a Word Processing program such as Microsoft Word. See Sec. IV for more detailed formatting guidelines.
+\lettrine{P}{ropellors} come in a variety of different shapes and sizes. This paper describes how one propellor, which started as an APC 10x7 rotor and a NACA 4412 airfoil, was optimized to perform better at a certain advance ratio. The code used for this report could also be applied to different rotors in the future.
+
+This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them. It finds that changing the angle of rotation and the thickness of a propellor shifts the curves for its efficiency, thrust coefficient, and torque coefficient, and that propellors with different blade counts also have different curves for these three non-dimensional numbers. All code used for each section of this report can also be accessed through a GitHub repository \footnote{This repository can be accessed at \url{https://github.com/JoeSpencer1/497R-Projects}}.
 
 
-\section{Procedure for Paper Submission}
+\section{Procedure}
 
-All manuscripts are to be submitted to ScholarOne online at \url{https://mc.manuscriptcentral.com/aiaa}. Select either “Log In” if you have an existing account or “Create an Account” if this is your first time submitting to one of AIAA’s journals. If it’s the latter, please follow the instructions ScholarOne provides. Once you have logged into ScholarOne, select “Author Center” then scroll down. Under “Author Resources”, select the star beside “Click here to submit a new manuscript”. The site will take you step-by-step through the submission process. Once you submit your manuscript, you will receive an email containing your manuscript ID number as well as a link to view the status of your manuscript. 
+This project was performed using julia programming language. \footnote{julia can be found at \url{https://julialang.org}.} jula is available for free and is useful for a variety of reasons. It can store data as vectors and matrices, and perform rapid calculations with these objects. It compiles functions in advance, so they can be run more quickly than other languages like python. Header files needed for this project, including Xfoil \footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}}, CCBlade \footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}}, SNOW \footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}}, and FLOWMath \footnote{FLOWMath.jl is available at \url{https://github.com/byuflowlab/FLOWMath.jl}}, are all designed for julia. These files provided useful functionality that simplified the design process.
 
-After entering all required submission data, you must use the “Upload Manuscript” feature of the Author Center to upload your submission. Remember that your document must be in single-column, double-spaced format (as this template) before you upload it. Please be sure that the name of the file you upload for processing is short and simple (i.e., “SmithJPP.pdf”) with no spaces, tildes, symbols, or other special characters. Authors are encouraged to upload .pdf files, which are less likely to have conversion errors on upload. Failure to meet these requirements could result in a processing error that would require you to re-upload your manuscript. Once you have uploaded your manuscript, please inspect the file for accuracy. This step is required to complete your submission. If you experience difficulties with the upload and/or conversion of your manuscript, please contact ScholarOne Manuscripts Support (\url{https://mchelp.manuscriptcentral.com/gethelpnow/} or +1-888-503-1050) for additional assistance. 
+In the rotor design process, an airfoil was first created using Xfoil.jl. This rotor was then attached to a rotor and evaluated using CCBlade.jl. Data about the rotor, including its moments in the normal and tangential directions and its torque, is recorded. This data is then multiplied by a factor, in this case $n=1.1$, to determine the maximum allowable loads before the rotor would break or a different material would be required. After constraints were determined, rotor variable types called \emph{rotortest} are created with variable thickness magnification and rotation angle and the program uses Optim.jl to find the rotor with the optimal rotation angle and thickness magnification for the objective function.
 
-\emph{Attention Asian Authors: If you are uploading a .pdf file, please remove Asian fonts from your file, under File>Properties.}
+The objective function used in this case is shown in equation 1. 
 
-\section{General Guidelines}
+\begin{equation}
+\begin{aligned}
+\label{equation:1}
+f(x_{1}, x_{2}, x_{3}...) = \eta \\
+\end{aligned}
+\end{equation}
 
-The following section outlines general (nonformatting) guidelines to follow. These guidelines are applicable to all authors and include information on the policies and practices relevant to the publication of your manuscript.
+Constraints were placed on the solution to ensure that the optimizer found a reasonable solution. In addition to restrictions on the moment and torque, the cord thickness was kept within a factor of two of the original and the twist angle magnitde was kept below $90^{\circ}$.
 
-\subsection{Publication by AIAA}
-Your manuscript cannot be published by AIAA if:
-\begin{enumerate}
-\item The work is classified or has not been cleared for public release.
-\item The work contains copyright-infringing material.
-\item The work has been published or is currently under consideration for publication or presentation elsewhere. (Exception: Papers presented at AIAA conferences may be submitted to AIAA journals for possible publication.)
-\end{enumerate}
+\begin{tabular}{l  r}
+	 \multicolumn{2}{c}{Table 1: Optimization objective, parameters, and constraints}  \\
+  	Maximize: & $\eta$ \\ \hline
+  	By varying: & scale of the chord, $c$ \\ 
+  	 & twist angle, \\  \hline
+  	Subject to & total torque less than 110\% of original \\ 
+	 & normal moment less than 110\% of original \\ 
+	 & tangential moment less than 110\% of original \\ 
+	 & $-90^{\circ} <$ twist angle $< 90^{\circ}$ \\
+	 & $50\% <$ chord magnification $< 200\% $
+\end{tabular} \newline
 
-You will be asked to provide the publication or presentation history of your paper (or any similar paper) if it has \emph{ever} been submitted for publication or presentation previously to an AIAA journal or conference. Please include the following, if applicable: the full name of the publication or conference, the entire paper number, dates the conference took place, review history, final disposition of manuscript, etc.
+
+
+\section{Results}
+
+As stated previously, an APC 10x7 rotor with what started as a NACA 4412 airfoil was optimized. While the APC rotor number stayed the same, the NACA airfoil number was changed. The maximum chord found in first digit and the maximum thickness from two digits at the end are multiplied by whatever the magnification of the chord is. So, a NACA 4412 airfoil becomes a NACA 2206 airfoil at 50\% magnification and a NACA 8424 at 200\%.
+
+The propellor was checked at blade counts of 2, 3, and 4. These results are described and compared in plot 1. This report found that for all three blade counts, the optimal propellor was as thin as possible, with negative angles of attack. The finding about thinner rotor blades being more efficient was in line with \textbf{THE PAPER} \footnote{Experimental study of blade thickness effects on the overall and local performances of a Controlled Vortex Designed axial-flow fan, \url{https://doi.org/10.1016/j.expthermflusci.2011.01.002}}, but such a high negative rotation angle was surprising.
+
+\subsection{Results Table}
+
+Table 1 shows the optimal twist angles and chord magnifications for each different rotor blade count compared against 
+
+
+
+
 
 
 \subsection{Copyright}
