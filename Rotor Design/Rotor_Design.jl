@@ -109,7 +109,7 @@ vert1 = [0, 0.8]
 vert2 = [-0.1, 0.2]
 vert3 = [-0.05, 0.05]
 
-plot(J0[:], eff0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Effectiveness, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
+plot(J0[:], eff0[:], label = "3 Blades, Not Optimized", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
 plot!(J1[:], eff1[:], label = "1 Blade")
 plot!(J2[:], eff2[:], label = "2 Blades")
 plot!(J3[:], eff3[:], label = "3 Blades")
