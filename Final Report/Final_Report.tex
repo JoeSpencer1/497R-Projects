@@ -1,6 +1,8 @@
 \documentclass[journal ]{new-aiaa}
 \usepackage[utf8]{inputenc}
 \usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{float}
 
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -19,7 +21,7 @@
 \maketitle
 
 \begin{abstract}
-This report describes a project completed as part of my research with the Brigham Young University FLOW Lab. this project drew on skills gained throughout the semester to design and execute a code in the Julia programming language to find the optimal blade count, blade thickness magnification, and angle of rotation for a propellor to achieve its maximum efficiency, $\eta$, at a known advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.
+This report describes a project completed as part of my research with the Brigham Young University FLOW Lab. this project drew on skills gained throughout the semester to design and execute a code in the Julia programming language to find the optimal blade count, blade thickness magnification, and twist angle for a propellor to achieve its maximum efficiency, $\eta$, at a known advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.
 
 \end{abstract}
 
@@ -81,37 +83,39 @@ $u$ & Velocity, $m/s$ \\
 
 \lettrine{P}{ropellors} come in a variety of different shapes and sizes. This paper describes how one propellor, which started as an APC 10x7 rotor and a NACA 4412 airfoil, was optimized to perform better at a certain advance ratio. The code used for this report could also be applied to different rotors in the future.
 
-This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them. It finds that changing the angle of rotation and the thickness of a propellor shifts the curves for its efficiency, thrust coefficient, and torque coefficient, and that propellors with different blade counts also have different curves for these three non-dimensional numbers. All code used for each section of this report can also be accessed through a GitHub repository \footnote{This repository can be accessed at \url{https://github.com/JoeSpencer1/497R-Projects}}.
+This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them. It finds that changing the twist angle and the thickness of a propellor shifts the curves for its efficiency, thrust coefficient, and torque coefficient, and that propellors with different blade counts also have different curves for these three non-dimensional numbers. All code used for each section of this report can also be accessed through a GitHub repository \footnote{This repository can be accessed at \url{https://github.com/JoeSpencer1/497R-Projects}}.
 
 
 \section{Procedure}
 
 This project was performed using julia programming language. \footnote{julia can be found at \url{https://julialang.org}.} jula is available for free and is useful for a variety of reasons. It can store data as vectors and matrices, and perform rapid calculations with these objects. It compiles functions in advance, so they can be run more quickly than other languages like python. Header files needed for this project, including Xfoil \footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}}, CCBlade \footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}}, SNOW \footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}}, and FLOWMath \footnote{FLOWMath.jl is available at \url{https://github.com/byuflowlab/FLOWMath.jl}}, are all designed for julia. These files provided useful functionality that simplified the design process.
 
-In the rotor design process, an airfoil was first created using Xfoil.jl. This rotor was then attached to a rotor and evaluated using CCBlade.jl. Data about the rotor, including its moments in the normal and tangential directions and its torque, is recorded. This data is then multiplied by a factor, in this case $n=1.1$, to determine the maximum allowable loads before the rotor would break or a different material would be required. After constraints were determined, rotor variable types called \emph{rotortest} are created with variable thickness magnification and rotation angle and the program uses Optim.jl to find the rotor with the optimal rotation angle and thickness magnification for the objective function.
+In the rotor design process, an airfoil was first created using Xfoil.jl. This rotor was then attached to a rotor and evaluated using CCBlade.jl. Data about the rotor, including its moments in the normal and tangential directions and its torque, is recorded. This data is then multiplied by a factor, in this case $n=1.1$, to determine the maximum allowable loads before the rotor would break or a different material would be required. After constraints are determined, rotor variable types called \emph{rotortest} are created with variable thickness magnification and rotation angle and the program uses Optim.jl to find the rotor with the optimal twist angle and thickness magnification for the objective function.
 
-The objective function used in this case is shown in equation 1. 
+The objective function used in this optimization is listed in equation 1. 
 
 \begin{equation}
-\begin{aligned}
-\label{equation:1}
-f(x_{1}, x_{2}, x_{3}...) = \eta \\
-\end{aligned}
-\end{equation}
+	\begin{aligned}
+	\label{equation:1}
+	f(x_{1}, x_{2}, x_{3}...) = \eta \\
+	\end{aligned}
+\end{equation}.
 
-Constraints were placed on the solution to ensure that the optimizer found a reasonable solution. In addition to restrictions on the moment and torque, the cord thickness was kept within a factor of two of the original and the twist angle magnitde was kept below $90^{\circ}$.
+Constraints were placed on the solution to ensure that the optimizer found a reasonable solution. In addition to restrictions on the moment and torque, the cord thickness was kept within a factor of two of the original and the twist angle magnitde was kept below $90^{\circ}$
 
+\begin{center}
 \begin{tabular}{l  r}
 	 \multicolumn{2}{c}{Table 1: Optimization objective, parameters, and constraints}  \\
   	Maximize: & $\eta$ \\ \hline
   	By varying: & scale of the chord, $c$ \\ 
-  	 & twist angle, \\  \hline
+  	 & twist angle, $\phi$ \\  \hline
   	Subject to & total torque less than 110\% of original \\ 
 	 & normal moment less than 110\% of original \\ 
 	 & tangential moment less than 110\% of original \\ 
 	 & $-90^{\circ} <$ twist angle $< 90^{\circ}$ \\
 	 & $50\% <$ chord magnification $< 200\% $
 \end{tabular} \newline
+\end{center}
 
 
 
@@ -123,16 +127,36 @@ The propellor was checked at blade counts of 2, 3, and 4. These results are desc
 
 \subsection{Results Table}
 
-Table 1 shows the optimal twist angles and chord magnifications for each different rotor blade count compared against 
+Table 2 shows the optimal twist angles and chord magnifications for each different rotor blade count. The reader can observe that the optimal thickness for each propellor blade was the very thinnest possible. The thickness had to between 50\% and 200\% of the original. The optimal angle of rotation was slightly less than $-10^(\circ)$ for each rotor, gradually decreasing in magnitude as the blade count increased.
+
+\begin{center}
+\begin{tabular}{| c | c | c |}
+	 \multicolumn{3}{c}{Table 2: Optimized Chord Magnification and Rotation Angles for Different Blade Counts}  \\ \hline
+  	 \textbf{Blade Count} & \textbf{Chord Thickness Multiplication} & \textbf{Twist Angle} \\ \hline
+  	 3 (Default) & 1.0 & $0^{\circ}$ \\ \hline
+  	 2 & 0.50 & $-9.54^{\circ}$ \\ \hline
+  	 3 & 0.50 & $-9.47^{\circ}$ \\ \hline
+  	 4 & 0.50 & $-9.39^{\circ}$ \\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Results Plot}
+
+Four plots, displayed below, were output by the rotor analysis. Figure 1 shows that while the optimized design increased the efficiency of even the rotor with a higher blade count above the rotor pre-optimization, it 
+
+\begin{figure}[H]
+\centering
+ 	\subfloat[Efficiency]{\includegraphics[width = .40\textwidth]{Plots/Figure_1.png}}
+	\subfloat[Thrust Coefficient]{\includegraphics[width = .40\textwidth]{Plots/Figure_2.png}}
+
+	\subfloat[Torque Coefficient]{\includegraphics[width = .80\textwidth]{Plots/Figure_3.png}}\hspace{1em}
+	\caption{Efficiency, Thrust Coefficients, and Torque Coefficients Compared at Different Advance Ratios}
+	\captionsetup{aboveskip=0pt,font=it}
+	\caption*{These plots visually represent how optimized rotors are different from the original rotor.}
+	\label{fig:1}
+\end{figure}
 
 
-
-
-
-
-\subsection{Copyright}
-
-Before AIAA can publish any paper, the copyright information must be completed in ScholarOne. Failure to complete the form correctly could result in your paper not being published. You must select one copyright assignment statement (select A, B, C, or D) and once a statement is picked, changes cannot be made during the proofs stage. Read the copyright statements carefully. AIAA requires a copyright transfer from the author(s) to AIAA or a license to print your material; government authors can assert that the work is in the public domain. Because you will be completing this form online, you do not need to fill out a hard-copy form. Do not include a copyright statement anywhere on your paper. The correct statement will be included automatically at the time of processing. (If your paper was presented at an AIAA conference, then the copyright statement chosen for the journal article should be the same as for your conference paper.)
 
 \subsection{Publication Charges for Open Access}
 
