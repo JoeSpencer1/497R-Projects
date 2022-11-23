@@ -92,7 +92,7 @@ This project was performed using julia programming language. \footnote{julia can
 
 In the rotor design process, an airfoil was first created using Xfoil.jl. This rotor was then attached to a rotor and evaluated using CCBlade.jl. Data about the rotor, including its moments in the normal and tangential directions and its torque, is recorded. This data is then multiplied by a factor, in this case $n=1.1$, to determine the maximum allowable loads before the rotor would break or a different material would be required. After constraints are determined, rotor variable types called \emph{rotortest} are created with variable thickness magnification and rotation angle and the program uses Optim.jl to find the rotor with the optimal twist angle and thickness magnification for the objective function.
 
-The objective function used in this optimization is listed in equation 1. 
+The objective function used in this optimization is listed in equation ~\eqref{equation:1}. 
 
 \begin{equation}
 	\begin{aligned}
@@ -216,6 +216,9 @@ The optimal angle of attack was a surprising result. I had found, in my airfoil 
 \end{figure}
 
 The angle of rotation is different from the angle of attack, though. While the angle of attack is simply the angle the chord line forms with the normal, a propellor's rotation angle is the angle between its tangential velocity and the free stream velocity. (CITE) \emph{Computational Aerodynamics, page 205} shows that the 
+
+https://www.sciencedirect.com/science/article/abs/pii/S0894177711000033?via\%3Dihub
+https://www.sciencedirect.com/science/article/abs/pii/S1270963818317498
 
 
 
