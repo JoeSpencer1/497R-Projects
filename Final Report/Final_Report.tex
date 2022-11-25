@@ -21,7 +21,7 @@
 \maketitle
 
 \begin{abstract}
-This report describes a project completed as part of my research with the Brigham Young University FLOW Lab. this project drew on skills gained throughout the semester to design and execute a code in the Julia programming language to find the optimal blade count, blade thickness magnification, and twist angle for a propellor to achieve its maximum efficiency, $\eta$, at a known advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.
+This report describes a project completed as part of my research for the Brigham Young University FLOW Lab. this project drew on skills gained throughout the semester to design and execute a code in the julia programming language to find the optimal blade count, blade thickness magnification, and twist angle for a propellor to achieve its maximum efficiency, $\eta$, at a given advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.
 
 \end{abstract}
 
@@ -83,12 +83,12 @@ $u$ & Velocity, $m/s$ \\
 
 \lettrine{P}{ropellors} come in a variety of different shapes and sizes. This paper describes how one propellor, which started as an APC 10x7 rotor and a NACA 4412 airfoil, was optimized to perform better at a certain advance ratio. The code used for this report could also be applied to different rotors in the future.
 
-This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them. It finds that changing the twist angle and the thickness of a propellor shifts the curves for its efficiency, thrust coefficient, and torque coefficient, and that propellors with different blade counts also have different curves for these three non-dimensional numbers. All code used for each section of this report can also be accessed through a GitHub repository \footnote{This repository can be accessed at \url{https://github.com/JoeSpencer1/497R-Projects}}.
+This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them. It finds that changing the twist angle and the thickness of a propellor doesn't just shift the curves for its efficiency, thrust coefficient, and torque coefficient; it entirely changes their shape. Propellors with different blade counts also have different curves for these three non-dimensional numbers. All code used for each section of this report can also be accessed through a GitHub repository \footnote{This repository can be accessed at \url{https://github.com/JoeSpencer1/497R-Projects}}.
 
 
 \section{Procedure}
 
-This project was performed using julia programming language. \footnote{julia can be found at \url{https://julialang.org}.} jula is available for free and is useful for a variety of reasons. It can store data as vectors and matrices, and perform rapid calculations with these objects. It compiles functions in advance, so they can be run more quickly than other languages like python. Header files needed for this project, including Xfoil \footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}}, CCBlade \footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}}, SNOW \footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}}, and FLOWMath \footnote{FLOWMath.jl is available at \url{https://github.com/byuflowlab/FLOWMath.jl}}, are all designed for julia. These files provided useful functionality that simplified the design process.
+This project was performed using julia programming language. \footnote{julia can be found at \url{https://julialang.org}.} jula is available for free and is useful for a variety of reasons, including that It can store data as vectors and matrices and perform rapid calculations with these objects. It compiles functions in advance, so they can be run more quickly than in some other languages. Function files used for this project, including Xfoil \footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}}, CCBlade \footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}}, SNOW \footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}}, and FLOWMath \footnote{FLOWMath.jl is available at \url{https://github.com/byuflowlab/FLOWMath.jl}}, are all designed for julia. These files provided useful functionality that simplified the design process.
 
 In the rotor design process, an airfoil was first created using Xfoil.jl. This rotor was then attached to a rotor and evaluated using CCBlade.jl. Data about the rotor, including its moments in the normal and tangential directions and its torque, is recorded. This data is then multiplied by a factor, in this case $n=1.1$, to determine the maximum allowable loads before the rotor would break or a different material would be required. After constraints are determined, rotor variable types called \emph{rotortest} are created with variable thickness magnification and rotation angle and the program uses Optim.jl to find the rotor with the optimal twist angle and thickness magnification for the objective function.
 
@@ -101,7 +101,7 @@ The objective function used in this optimization is listed in equation ~\eqref{e
 	\end{aligned}
 \end{equation}.
 
-Constraints were placed on the solution to ensure that the optimizer found a reasonable solution. In addition to restrictions on the moment and torque, the cord thickness was kept within a factor of two of the original and the twist angle magnitde was kept below $90^{\circ}$
+Constraints were placed on the solution to ensure that the optimizer found a reasonable solution. In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the twist angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are described by the following constraints table.
 
 \begin{center}
 \begin{tabular}{l  r}
@@ -117,7 +117,7 @@ Constraints were placed on the solution to ensure that the optimizer found a rea
 \end{tabular}
 \end{center}
 
-The rotors optimized each had some properties similar and some different between them. For reference, these properties are shown in table 2. Parameters kept constant in this table have the same maximum and minimum value. The advance ratio in table 2 can be found from other variables already listed in the table by equation 2, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter.
+The optimized rotors each had some properties in common and some different between them. For reference, these properties are shown in table 2. Parameters kept constant in this table have the same maximum and minimum value. The advance ratio in table 2 can be found from other variables already listed in the table by equation 2, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter.
 
 \begin{equation}
 	\begin{aligned}
