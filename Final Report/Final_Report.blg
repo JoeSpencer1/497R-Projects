@@ -4,47 +4,44 @@ The top-level auxiliary file: Final_Report.aux
 The style file: new-aiaa.bst
 Database file #1: Final_Report.bib
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-Warning--empty pages in peyret2012computational
-Warning--empty chapter and pages in oates1997aerothermodynamics
-You've used 9 entries,
+You've used 3 entries,
             3319 wiz_defined-function locations,
-            742 strings with 6713 characters,
-and the built_in function-call counts, 5121 in all, are:
-= -- 382
-> -- 106
-< -- 22
-+ -- 48
-- -- 31
-* -- 384
-:= -- 683
-add.period$ -- 17
-call.type$ -- 9
-change.case$ -- 38
-chr.to.int$ -- 13
-cite$ -- 11
-duplicate$ -- 463
-empty$ -- 476
-format.name$ -- 48
-if$ -- 1077
+            698 strings with 5878 characters,
+and the built_in function-call counts, 1309 in all, are:
+= -- 89
+> -- 21
+< -- 6
++ -- 12
+- -- 7
+* -- 85
+:= -- 194
+add.period$ -- 5
+call.type$ -- 3
+change.case$ -- 12
+chr.to.int$ -- 4
+cite$ -- 3
+duplicate$ -- 116
+empty$ -- 130
+format.name$ -- 9
+if$ -- 266
 int.to.chr$ -- 1
-int.to.str$ -- 10
-missing$ -- 77
-newline$ -- 39
-num.names$ -- 30
-pop$ -- 173
+int.to.str$ -- 4
+missing$ -- 20
+newline$ -- 20
+num.names$ -- 9
+pop$ -- 44
 preamble$ -- 1
-purify$ -- 36
+purify$ -- 12
 quote$ -- 0
-skip$ -- 180
+skip$ -- 52
 stack$ -- 0
-substring$ -- 287
-swap$ -- 265
-text.length$ -- 14
+substring$ -- 62
+swap$ -- 57
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 50
-warning$ -- 2
-while$ -- 37
+type$ -- 14
+warning$ -- 0
+while$ -- 8
 width$ -- 0
-write$ -- 111
-(There were 2 warnings)
+write$ -- 40

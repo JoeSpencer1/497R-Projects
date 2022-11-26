@@ -177,3 +177,15 @@ plotliftdrag(l9, d10, "Documents/GitHub/497R-Projects/Figure23.png")
 plotliftdrag(l10, d11, "Documents/GitHub/497R-Projects/Figure24.png")
 
 plotliftdrag(l11, d12, "Documents/GitHub/497R-Projects/Figure25.png")
+
+const x15, y15 = create(4412, res)
+
+const a15, l15, d15, dp15, m15, c15 = limscoef(x15, y15, len, numitr, 1e5, -8, 8)
+
+plot(a15[:], l15[:], linewidth = 3, color = :green, xlabel = "Angle of Attack, degrees", ylabel = "Lift Coefficient", legend = false, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, background_color_legend = nothing, linestyle = :solid)
+
+savefig("Desktop/Figure13.png")
+
+plot(a15[:], d15[:], linewidth = 3, color = :orange, xlabel = "Angle of Attack, degrees", ylabel = "Drag Coefficient", legend = false, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, background_color_legend = nothing, linestyle = :solid)
+
+savefig("Desktop/Figure14.png")
