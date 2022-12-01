@@ -11,9 +11,9 @@
 \usepackage{longtable,tabularx}
 \setlength\LTleft{0pt} 
 
-\title{Optimization of Multiple Rotors}
+\title{Propellor Optimization at Different Blade Counts}
 
-\author{J. Spencer \footnote{Undergraduate Researcher, Brigham Young University FLOW Lab.}}
+\author{Joseph Spencer \footnote{Undergraduate Researcher, Brigham Young University FLOW Lab.}}
 \affil{Brigham Young University, Provo, Utah, 84601} 
 
 \begin{document}
@@ -22,7 +22,7 @@
 
 \begin{abstract}
 
-This report describes a project completed as part of my research for the Brigham Young University FLOW Lab to discover ideal conditions for airfoil performance. Computational stimulations of propellors allow researchers to perform low-risk studies and develop designs more quickly. This investigation found the optimal chord length magnification and the optimal rotation angle for a rotor's efficiency. This was done with a computational simulation in the Julia programming language. This paper defines the operating conditions used in this optimization, presents rotors that were optimized at several blade counts, and discusses areas of possible future development in this research. This paper found that for the operating conditions used, rotors with the cord reduced to the optimization's lower limit, 50 percent, with slight negative twist angles were the most efficient. These results could be applied to rotors designed to produce the maximum output power for a given input power requirement, without regard to other conditions like the thrust or torque coefficients. Future work could combine these findings with other conditions to find the most efficient rotor that can also provide a required amount of thrust or operate at a variety of different rotational velocities.
+Propellors can be modified to perform better under a variety of conditions. One project completed as part of my research for the Brigham Young University FLOW Lab explores ideal design variables for propellor performance. This investigation used computer simulations to find the optimal chord length magnification and the optimal rotation angle for a rotor's efficiency. This report defines the operating conditions used in this optimization, presents rotors that were optimized at several blade counts, and discusses areas of possible future development in this research. It found that for the operating conditions used, rotors with the chord reduced to the optimization's lower limit, 50 percent, with slight negative pitching angles were the most efficient. These results could be applied to rotors designed to produce the maximum output power for a given input power requirement, without regard to other desired outputs. Future work could combine these findings with other conditions to find the most efficient rotor that can also provide a required amount of thrust or operate at a variety of different rotational velocities.
 
 \end{abstract}
 
@@ -32,50 +32,53 @@ This report describes a project completed as part of my research for the Brigham
 {\renewcommand\arraystretch{1.0}
 \noindent\begin{longtable*}{@{}l @{\quad \quad} l@{}}
 
-$J$ & Advance Ratio \\
-$\alpha$ & Angle of Attack (radians) \\
-$\phi$ & Angle of Rotation (radians) \\
-$M_{b}$ & Bending Moment (N$\cdot$m) \\
-$c$ & Chord length (m) \\
-$D$ & Diameter (m) \\
-$c_{d}$ & Drag Coefficient \\
-$\eta$ & Efficiency \\
-$\rho$ & Fluid Density (kg/m$^{3}$) \\
-$v_{\infty}$ & Freestream Velocity (m/s) \\
-$c_{l}$ & Lift Coefficient \\
-$C_{P}$ & Power Coefficient \\
-$RPM$ & Revolutions Per Minute \\
-$\sigma$ & Rotor Solidity \\
-$C_{T}$ & Thrust Coefficient \\
-$C_{Q}$ & Torque Coefficient \\
+$J$ & advance ratio \\
+$\alpha$ & angle of attack (radians) \\
+$\phi$ & angle of rotation (radians) \\
+$M_{b}$ & bending moment (N$\cdot$m) \\
+$c$ & chord length (m) \\
+$D$ & diameter (m) \\
+$C_{d}$ & drag coefficient \\
+$\eta$ & efficiency \\
+$\rho$ & fluid density (kg/m$^{3}$) \\
+$v_{\infty}$ & freestream velocity (m/s) \\
+$C_{l}$ & lift coefficient \\
+$C_{P}$ & power coefficient \\
+$RPM$ & revolutions per minute \\
+$\sigma$ & rotor solidity \\
+$C_{T}$ & thrust coefficient \\
+$C_{Q}$ & torque coefficient \\
 
 \end{longtable*}}
 
 
 \section{Introduction}
 
-\lettrine{P}{ropellors} come in a variety of different shapes and sizes. This paper describes how one propellor, a NACA 4412 airfoil attached to an APC 10x7 rotor, was optimized to perform more efficiently at a specific advance ratio. Because different blade counts could be more appropriate for different applications, blade counts of one, two, and three were each optimized and are compared in this report. This report produced useful code that could be applied to different rotors in the future.
+\lettrine{P}{ropellors} come in a variety of different shapes and sizes. This paper describes how one propellor, an APC 10x7 rotor\footnote{Rotor geometry obtained from the UIUC database at \url{https://m-selig.ae.illinois.edu/props/volume-1/propDB-volume-1.html}} with a NACA 4412 airfoil\footnote{Propellor geometry obtained from supporting information for CCBlade.jl at \url{https://github.com/byuflowlab/CCBlade.jl/tree/master/data}}, was used as a baseline to optimize a propellor's efficiency at a specific advance ratio. Because different blade counts could be more appropriate for different applications, blade counts of one, two, and three were each optimized and are compared in this report. This report also compares the optimized rotors of each different blade count.
 
-\subsection{Context}
+Computer simulations are very useful for modeling propellors. It would require significant investment of time, space, and money to perform an optimization like this by physically propellors. In the simulation used in this report, the properties of hundreds of slightly different propellors are instead compared computationally to obtain a final result. The first potential-flow codes, programs for modeling the pressure distribution of rotors, were developed in the 1960s and 1970s. Xfoil, a program used in this project, was first developed by MIT in the 1980s, with its current version dating to 2013. Xfoil.jl was developed by Taylor McDonnell.\footnote{More information about both Xfoil and Xfoil.jl is available at \url{https://flow.byu.edu/Xfoil.jl/stable/} and \url{https://en.wikipedia.org/wiki/XFOIL}}
 
-Computer simulations are very useful for modeling propellors. It would require significant investment of time, space, and money to perform an optimization like this, in which hundreds of slightly different propellors are compared. The first potential-flow codes, programs for modeling the pressure distribution of rotors, were developed in the 1960s and 1970s. Xfoil, the program used in this project, was first developed by MIT in the 1980s, with its current version dating to 2013. Xfoil.jl is the Julia wrapper used in this project, developed by Taylor McDonnell.\footnote{More information about both Xfoil and Xfoil.jl can be found at \url{https://flow.byu.edu/Xfoil.jl/stable/} and \url{https://en.wikipedia.org/wiki/XFOIL}}
-
-\subsection{Paper Outline} 
-
-This paper first reviews the procedure used in the rotor optimization, including the equation used in the optimization and the initial conditions and constraints applied. Next, it reviews the results and compares them with each other. Finally, it draws conclusions based on the results of this experiment and discusses their meaning. All code used for each section of this report can also be accessed through a GitHub repository.\footnote{This repository can be accessed in the Rotor-Design branch of \url{https://github.com/JoeSpencer1/497R-Projects/tree/Final-Report}}
+This paper first reviews the procedure used in the rotor optimization, including the objective function used in the optimization and the initial conditions and constraints applied. Next, it reviews the results and compares them with each other. Finally, it draws conclusions based on the results of this optimization and discusses their meaning. All code used for each section of this report can also be accessed through a GitHub repository.\footnote{This repository can be accessed in the Rotor-Design branch of \url{https://github.com/JoeSpencer1/497R-Projects/tree/Final-Report}}
 
 
 \section{Procedure}
 
-This project was performed using Julia programming language.\footnote{Julia can be found at \url{https://julialang.org}.} Jula is available for free and is useful for a variety of reasons. Like other languages, it can easily store data in vectors and perform rapid calculations with these objects. It is compiled just-in-time at runtime, which makes it run faster than interpreted languages like python without needing to be totally compiled before running like C. Being compiled just-in-time makes Julia faster than interpreted languages like python. Julia  packages, including those used during this semester, are also easily available from a package manager.\footnote{This article describes some of the benefits of Julia. \url{https://towardsdatascience.com/5-ways-julia-is-better-than-python-334cc66d64ae}}
+Computational stimulations of propellors allow researchers to perform low-risk studies and develop designs more quickly. This project was performed using Julia programming language.\footnote{Julia is available at \url{https://julialang.org}.} Jula is available for free and is useful for a variety of reasons. Like other languages, it can easily store data in vectors and perform rapid calculations with these objects. It is compiled just-in-time with precompiled functions, which makes it run faster than interpreted languages like python without needing to be totally compiled before running like C\footnote{This article describes some of the benefits of Julia. \url{https://towardsdatascience.com/5-ways-julia-is-better-than-python-334cc66d64ae}}. Julia  packages, including those used during this semester, are also easily available from a package manager.
 
-\subsection{Computer Code}
+\subsection{Models}
 
-Some Julia packages used for this project include Xfoil.jl,\footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}} CCBlade,jl,\footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}} and SNOW.jl.\footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}} Xfoil.jl analyzes the lift, drag, and moment coefficients of an airfoil from its geometry and angle of attack, and CCBlade.jl calculates a rotor's thrust, power, and efficiency\cite{CCBlade}. This investigation used SNOW.jl to repeat itself until it converged on an optimal solution.
+Some Julia packages used for this project include Xfoil.jl,\footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}} CCBlade,jl,\footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}} and SNOW.jl.\footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}} Xfoil.jl analyzes the lift, drag, and moment coefficients of an airfoil from its geometry and angle of attack using a potential-flow code with a panel method. This divides the airfoil into many small surfaces and finds the lift, drag, and moment forces at each of the smaller surfaces. 
 
-\subsection{Design Constraints}
+CCBlade.jl uses blade element momentum (BEM) theory.\footnote{More information about BEM theory can be found at \url{https://en.wikipedia.org/wiki/Blade_element_momentum_theory}} BEM theory, which combines blade element theory and momentum theory, calculates the axial and tangential induction factors and the angle of rotation, the angle between the free stream velocity and the tangential velocity of the rotor. After these three quantities are found, they are combined to find forces acting in all directions on the rotor\cite{CCBlade}.
 
-In the rotor design, the rotor is created and evaluated using Xfoil.jl and CCBlade.jl, as described previously. Data about the rotor, including its loads in the normal and tangential directions and its torque, were recorded. This data was then multiplied by a safety factor of $n=1.1$ to determine the maximum allowable loads before the rotor would break or a different material would be required. $n=1.1$ was the safety factor defined in the project prompt, but it was included in the code as an optional argument that could be adjusted for other circumstances. After constraints were determined, rotor variable types called \emph{rotortest} were created with variable chord thickness magnification and rotation angle and the program used SNOW.jl to find the rotor with the optimal twist angle and chord thickness magnification for the objective function.
+The rotor in this design was created beforehand and included in the documentation for CCBlade.\footnote{Same address listed in introduction note, \url{https://github.com/byuflowlab/CCBlade.jl/tree/master/data}} Rotor data could be evaluated using XFoil.jl, but this data was selected because it had already been extrapolated using Viterna extrapolation to include a complete range of angles of attack\footnote{Further explanation of this method is available at \url{https://flow.byu.edu/CCBlade.jl/stable/howto/}}. The airfoil polars used to analyze this are presented below. 
+
+
+
+
+
+
+In the rotor design, the rotor is created and evaluated using Xfoil.jl and CCBlade.jl, as described previously. Data about the rotor, including its loads in the normal and tangential directions and its torque, were recorded. This data was then multiplied by a safety factor of $n=1.1$ to determine the maximum allowable loads before the rotor would break or a different material would be required. $n=1.1$ was the safety factor defined in the project prompt, but it was included in the code as an optional argument that could be adjusted for other circumstances. After constraints were determined, rotor variable types called \emph{rotortest} were created with variable chord length magnification and rotation angle and the program used SNOW.jl to find the rotor with the optimal pitching angle and chord length magnification for the objective function.
 
 The objective function used in this optimization is very simple, as shown in equation~\eqref{equation:1}. 
 
@@ -86,7 +89,7 @@ The objective function used in this optimization is very simple, as shown in equ
 	\end{aligned}
 \end{equation}.
 
-In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the twist angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are listed in table~\eqref{tab:2}. They ensured that the optimization found a reasonable solution confined to real limits, shown in table~\eqref{tab:2}.
+In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the pitching angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are listed in table~\eqref{tab:2}. They ensured that the optimization found a reasonable solution confined to real limits, shown in table~\eqref{tab:2}.
 
 \begin{center}
 \label{tab:2}
@@ -94,16 +97,16 @@ In addition to restrictions on the moment and torque mentioned previously, the c
 	 \multicolumn{2}{c}{Table I: Optimization objective, parameters, and constraints}  \\ \hline
   	Maximize: & $\eta$ \\ \hline
   	By varying: & scale of the chord, $c$ \\ 
-  	 & twist angle, $\phi$ \\  \hline
+  	 & pitching angle, $\phi$ \\  \hline
   	Subject to & total torque $\leq$ 110\% original \\ 
 	 & normal moment $\leq$ 110\% original \\ 
 	 & tangential moment $\leq$ 110\% original \\ 
-	 & $-90^{\circ} <$ twist angle $< 90^{\circ}$ \\
+	 & $-90^{\circ} <$ pitching angle $< 90^{\circ}$ \\
 	 & $50\% <$ chord magnification $< 200\% $ \\ \hline
 \end{tabular}
 \end{center}
 
-The optimized rotors each had other features in common between them, shown in the last entry of table~\eqref{tab:4}. Ning (page 200) stated that the advance ratio can be found from other variables already listed in the table by equation~\eqref{equation:3}, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter \cite{ComAer}.
+The optimized rotors each had other features in common between them, shown in the last entry of table~\eqref{tab:4}. Ning (page 200) stated that the advance ratio is available from other variables already listed in the table by equation~\eqref{equation:3}, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter \cite{ComAer}.
 
 \begin{equation}
 	\begin{aligned}
@@ -115,16 +118,16 @@ The optimized rotors each had other features in common between them, shown in th
 \begin{center}
 \begin{tabular}{| c | c | c | c |}
 	\multicolumn{4}{c}{Table II: Input value limits in rotor design} \\ \hline
-  	 \textbf{Parameter} & \textbf{Default Value} & \textbf{Minimum Value} & \textbf{Maximum Value} \\ \hline
-	 Chord Length, & 100\% length & 50\% & 200\% \\ \hline
-	 Twist Angle, & $0^{\circ}$ & $-90^{\circ}$ & $90^{\circ}$ \\ \hline \hline
-	 Rotational Velocity, $RPM$ & \multicolumn{3}{c|}{6000 RPM} \\ \hline
-	 Blade Count & 2 blades & \multicolumn{2}{c|}{1 to 3)}\\ \hline
-	 Hub-to-tip ratio & \multicolumn{3}{c|}{10\%} \\ \hline
-	 Air Density & \multicolumn{3}{c|}{1.225 kg/$m^{3}$} \\ \hline
-	 Diameter & \multicolumn{3}{c|}{0.254 m (10 in.)} \\ \hline
-	 Velocity & \multicolumn{3}{c|}{12 m/s (26.84 mph)} \\ \hline
-	 Advance Ratio & \multicolumn{3}{c|}{0.472} \\ \hline
+  	 \textbf{parameter} & \textbf{default value} & \textbf{minimum value} & \textbf{maximum value} \\ \hline
+	 chord length, & 100\% length & 50\% & 200\% \\ \hline
+	 pitching angle, & $0^{\circ}$ & $-90^{\circ}$ & $90^{\circ}$ \\ \hline \hline
+	 rotational velocity, $RPM$ & \multicolumn{3}{c|}{6000 RPM} \\ \hline
+	 blade count & 2 blades & \multicolumn{2}{c|}{1 to 3)}\\ \hline
+	 hub-to-tip ratio & \multicolumn{3}{c|}{10\%} \\ \hline
+	 air density & \multicolumn{3}{c|}{1.225 kg/$m^{3}$} \\ \hline
+	 diameter & \multicolumn{3}{c|}{0.254 m (10 in.)} \\ \hline
+	 velocity & \multicolumn{3}{c|}{12 m/s (26.84 mph)} \\ \hline
+	 advance ratio & \multicolumn{3}{c|}{0.472} \\ \hline
 \end{tabular}
 \label{tab:4}
 \end{center}
@@ -136,7 +139,7 @@ The objective function, equation~\eqref{equation:1}, was optimized using SNOW.jl
 
 \section{Results}
 
-Although the chord thickness changed during the optimization for all blade counts, both the rotor identification and the NACA number stayed the same throughout the optimization. Changing the pitching angle only rotated the rotor blade, and changing the chord length magnified the size of its entire profile uniformly.
+Although the chord length changed during the optimization for all blade counts, both the rotor identification and the NACA number stayed the same throughout the optimization. Changing the pitching angle only rotated the rotor blade, and changing the chord length magnified the size of its entire profile uniformly.
 
 \subsection{Results Plot}
 
@@ -153,16 +156,16 @@ Figure~\eqref{fig:5} shows that while the optimized design increased the efficie
 	\label{fig:5}
 \end{figure}
 
-If necessary, minimum thrust and torque coefficients could be provided as parameters along with the maximums shown below the objective function in table~\eqref{tab:2}. These could find the angle of rotation and chord thickness that would provide the maximum efficiency while still maintaining some required thrust. The optimizer might not reduce the rotor to its minimum possible chord thickness in every case as it did in this optimization.
+If necessary, minimum thrust and torque coefficients could be provided as parameters along with the maximums shown below the objective function in table~\eqref{tab:2}. These could find the angle of rotation and chord length that would provide the maximum efficiency while still maintaining some required thrust. The optimizer might not reduce the rotor to its minimum possible chord length in every case as it did in this optimization.
 
 \subsection{Results Table}
 
-Table~\eqref{tab:6} shows the optimal twist angles and chord magnifications for each different rotor blade count. At the conditions listed in table~\eqref{tab:4}, the optimal chord length magnification was constant, and the optimal angle of rotation was less than $-3^{\circ}$ for each rotor. It gradually became more negative as the blade count increased.
+Table~\eqref{tab:6} shows the optimal pitching angles and chord magnifications for each different rotor blade count. At the conditions listed in table~\eqref{tab:4}, the optimal chord length magnification was constant, and the optimal angle of rotation was less than $-3^{\circ}$ for each rotor. It gradually became more negative as the blade count increased.
 
 \begin{center}
 \begin{tabular}{| c | c | c |}
 	 \multicolumn{3}{c}{Table III (Table IV.B): Optimized chord magnification and rotation angles for different blade counts}  \\ \hline
-  	 \textbf{Blade Count} & \textbf{Chord Thickness Multiplication} & \textbf{Twist Angle} \\ \hline
+  	 \textbf{Blade count} & \textbf{chord length Multiplication} & \textbf{Pitching angle} \\ \hline
   	 3 (Default) & 1.0 & $0^{\circ}$ \\ \hline
   	 2 & 0.50 & $-2.70^{\circ}$ \\ \hline
   	 3 & 0.50 & $-2.88^{\circ}$ \\ \hline
@@ -180,7 +183,7 @@ One lesson learned from this optimization is that the user should be careful wha
 
 \subsection{Efficiency Equation}
 
-One problem with this optimization is that a rotor's efficiency can be found as a function of the advance ratio, the thrust coefficient, and the power coefficient. The equation for efficiency is described by Andrew Ning in \emph{Computational Aerodynamics}, page 200 \cite{ComAer} using the relation below, equation~\eqref{equation:7}.
+One problem with this optimization is that a rotor's efficiency is available as a function of the advance ratio, the thrust coefficient, and the power coefficient. The equation for efficiency is described by Andrew Ning in \emph{Computational Aerodynamics}, page 200 \cite{ComAer} using the relation below, equation~\eqref{equation:7}.
 
 \begin{equation}
 	\begin{aligned}
@@ -197,9 +200,9 @@ The optimal angles of rotation were between $-2.70^{\circ}$ and $-2.94^{\circ}$,
 
 \begin{figure}[H]
 \centering
- 	\subfloat[Lift Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure13.png}}
-	\subfloat[Drag Coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure14.png}}
-	\caption{Lift and Drag Experienced by NACA 4412 Airfoils}
+ 	\subfloat[lift coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure13.png}}
+	\subfloat[drag coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure14.png}}
+	\caption{Lift and drag experienced by NACA 4412 airfoils}
 	\captionsetup{aboveskip=0pt,font=it}
 	\caption*{These plots show how lift and drag change for an airfoil at different angles of attack.}
 	\label{fig:8}
