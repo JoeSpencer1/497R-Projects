@@ -188,7 +188,7 @@ open("Rotor Design/Outputs4.txt", "w") do file
     ans = string(Mt4)
     write(file, ans)
 end
-
+#=
 c = 1.0 # Initial chord length ratio.
 rpm = 500 # Initial rpm
 nb = 3 # Initial blade count
@@ -318,4 +318,4 @@ cd_0 = data[:, 3]
 cr75 = 0.128
 alpha_ext, cl_ext, cd_ext = viterna(alpha_0, cl_0, cd_0, cr75)
 
-plot(alpha_ext, cl_ext)
+plot(alpha_ext, cl_ext) =#

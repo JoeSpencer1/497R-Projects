@@ -43,6 +43,7 @@ $\eta$ & efficiency \\
 $\rho$ & fluid density (kg/m$^{3}$) \\
 $v_{\infty}$ & freestream velocity (m/s) \\
 $C_{l}$ & lift coefficient \\
+$\theta$ & pitc angle \\
 $C_{P}$ & power coefficient \\
 $RPM$ & revolutions per minute \\
 $\sigma$ & rotor solidity \\
@@ -61,7 +62,7 @@ Computer simulations are very useful for modeling propellors. It would require s
 This paper first reviews the procedure used in the rotor optimization, including the objective function used in the optimization and the initial conditions and constraints applied. Next, it reviews the results and compares them with each other. Finally, it draws conclusions based on the results of this optimization and discusses their meaning. All code used for each section of this report can also be accessed through a GitHub repository.\footnote{This repository can be accessed in the Rotor-Design branch of \url{https://github.com/JoeSpencer1/497R-Projects/tree/Final-Report}}
 
 
-\section{Procedure}
+\section{Methods}
 
 Computational stimulations of propellors allow researchers to perform low-risk studies and develop designs more quickly. This project was performed using Julia programming language.\footnote{Julia is available at \url{https://julialang.org}.} Jula is available for free and is useful for a variety of reasons. Like other languages, it can easily store data in vectors and perform rapid calculations with these objects. It is compiled just-in-time with precompiled functions, which makes it run faster than interpreted languages like python without needing to be totally compiled before running like C\footnote{This article describes some of the benefits of Julia. \url{https://towardsdatascience.com/5-ways-julia-is-better-than-python-334cc66d64ae}}. Julia  packages, including those used during this semester, are also easily available from a package manager.
 
@@ -71,47 +72,42 @@ Some Julia packages used for this project include Xfoil.jl,\footnote{Xfoil.jl is
 
 CCBlade.jl uses blade element momentum (BEM) theory.\footnote{More information about BEM theory can be found at \url{https://en.wikipedia.org/wiki/Blade_element_momentum_theory}} BEM theory, which combines blade element theory and momentum theory, calculates the axial and tangential induction factors and the angle of rotation, the angle between the free stream velocity and the tangential velocity of the rotor. After these three quantities are found, they are combined to find forces acting in all directions on the rotor\cite{CCBlade}.
 
-The rotor in this design was created beforehand and included in the documentation for CCBlade.\footnote{Same address listed in introduction note, \url{https://github.com/byuflowlab/CCBlade.jl/tree/master/data}} Rotor data could be evaluated using XFoil.jl, but this data was selected because it had already been extrapolated using Viterna extrapolation to include a complete range of angles of attack\footnote{Further explanation of this method is available at \url{https://flow.byu.edu/CCBlade.jl/stable/howto/}}. The airfoil polars used to analyze this are presented below. 
+The rotor in this design was created beforehand and included in the documentation for CCBlade.\footnote{Same address listed in introduction note, \url{https://github.com/byuflowlab/CCBlade.jl/tree/master/data}} Rotor data could be evaluated using XFoil.jl, but this data was selected because it had already been widened using Viterna extrapolation to include a complete range of angles of attack\footnote{Further explanation of this method is available at \url{https://flow.byu.edu/CCBlade.jl/stable/howto/}}. The airfoil polars used to analyze this are presented in the following figure. 
 
+\begin{figure}[H]
+\centering
+ 	\subfloat[lift coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure13.png}}
+	\subfloat[drag coefficient]{\includegraphics[width = .35\textwidth]{Plots/Figure14.png}}
+	\caption{Lift and drag experienced by NACA 4412 airfoils}
+	\captionsetup{aboveskip=0pt,font=it}
+	\caption*{These plots show how lift and drag change for an airfoil at different angles of attack.}
+	\label{fig:8}
+\end{figure}
 
+This airfoil was then placed on the APC 10x7 rotor used in the project, and its torque and power coefficients were evaluated across a range of advance ratios with CCBlade.jl. Rotors in the optimization were compared at a specific advance ratio, $J=0.472$, which is listed and explained later in this report in the bottom entry of table \ref{tab:4}. The rotor's total torque and total moment were found from the torque output of the rotor's CCBlade.jl evaluation and from integrating the normal and tangential stresses.
 
+Once the rotor's initial torque and moment were found at this advance ratio, they were multiplied by a safety factor of $n=1.1$. This safety factor provided maximum limits for the propellor torque and moment to ensure that the SNOW.jl optimization would find the most efficient rotor that would still have reasonable input torque and power requirements to be run by the same motor and made of the same materials as the initial rotor.
 
+In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the pitching angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are listed in table~\eqref{equation:1} after the torque and moment constraints. They ensured that the optimization found a reasonable solution confined to realistic limits.
 
-
-In the rotor design, the rotor is created and evaluated using Xfoil.jl and CCBlade.jl, as described previously. Data about the rotor, including its loads in the normal and tangential directions and its torque, were recorded. This data was then multiplied by a safety factor of $n=1.1$ to determine the maximum allowable loads before the rotor would break or a different material would be required. $n=1.1$ was the safety factor defined in the project prompt, but it was included in the code as an optional argument that could be adjusted for other circumstances. After constraints were determined, rotor variable types called \emph{rotortest} were created with variable chord length magnification and rotation angle and the program used SNOW.jl to find the rotor with the optimal pitching angle and chord length magnification for the objective function.
-
-The objective function used in this optimization is very simple, as shown in equation~\eqref{equation:1}. 
+In this optimization, the rotor's chord length and pitching angle were modified to find the most efficient rotor. It is shown in equation~\eqref{equation:1}. 
 
 \begin{equation}
-	\begin{aligned}
 	\label{equation:1}
-	f(x_{1}, x_{2}, x_{3}...) = \eta \\
+	\begin{aligned}
+		\mathrm{maximize:}& ~~ \eta \\
+		\mathrm{with~respect~to:}& ~~ c, \theta \\
+		\mathrm{subject~to:}& ~~ T \leq 1.1 T_{0};\; M_{n} \leq 1.1 M_{n0};\; M_{t} \leq 1.1 M_{t0};\; -90^{\circ} \leq \theta \leq 90^{\circ};\; 50\% \leq c \leq 200\%
 	\end{aligned}
-\end{equation}.
+\end{equation}
 
-In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the pitching angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are listed in table~\eqref{tab:2}. They ensured that the optimization found a reasonable solution confined to real limits, shown in table~\eqref{tab:2}.
-
-\begin{center}
-\label{tab:2}
-\begin{tabular}{l  r}
-	 \multicolumn{2}{c}{Table I: Optimization objective, parameters, and constraints}  \\ \hline
-  	Maximize: & $\eta$ \\ \hline
-  	By varying: & scale of the chord, $c$ \\ 
-  	 & pitching angle, $\phi$ \\  \hline
-  	Subject to & total torque $\leq$ 110\% original \\ 
-	 & normal moment $\leq$ 110\% original \\ 
-	 & tangential moment $\leq$ 110\% original \\ 
-	 & $-90^{\circ} <$ pitching angle $< 90^{\circ}$ \\
-	 & $50\% <$ chord magnification $< 200\% $ \\ \hline
-\end{tabular}
-\end{center}
-
-The optimized rotors each had other features in common between them, shown in the last entry of table~\eqref{tab:4}. Ning (page 200) stated that the advance ratio is available from other variables already listed in the table by equation~\eqref{equation:3}, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter \cite{ComAer}.
+Table~\eqref{tab:4} shows shared features of each of the rotors optimized. The advance ratio, $J$, is available from other variables already listed in the table by equation~\eqref{equation:3}, in which $v_{\infty}$ is the free stream velocity, $n$ is the rotational velocity in revolutions per second, and $D$ is the outer diameter.
 
 \begin{equation}
 	\begin{aligned}
 	\label{equation:3}
-	J = \frac{v_{\infty}}{n D}
+	J = \frac{v_{\infty}}{n D} \\
+	J = \frac{12}{(\frac{6000}{60}) 0.254}
 	\end{aligned}
 \end{equation}
 
@@ -132,18 +128,31 @@ The optimized rotors each had other features in common between them, shown in th
 \label{tab:4}
 \end{center}
 
-\section{Optimization}
-
-The objective function, equation~\eqref{equation:1}, was optimized using SNOW.jl. The code was designed so that SNOW.jl found the maximum by finding the minimum of its negative. This is similar to the technique and sign convention described by Martins and Ning in page 10 of Engineering Design Optimization \cite{EngDesOpt}.
+The objective function, shown in equation~\eqref{equation:1}, was optimized using SNOW.jl. SNOW.jl, developed by the FLOW Lab, finds either the maximum or minimum of a function and can intake constraint values. The code used to design the rotor was set up so that SNOW.jl found the maximum by finding the minimum of its negative. This is similar to the technique and sign convention described by Martins and Ning in \emph{Engineering Design Optimization}\cite{EngDesOpt}. SNOW.jl can also work with constraints to limit the domain of possible solutions that can be optimized, using fixed environmental variables and limits for design variables. This program used both of these types of inputs to obtain the desired solutions.
 
 
 \section{Results}
 
-Although the chord length changed during the optimization for all blade counts, both the rotor identification and the NACA number stayed the same throughout the optimization. Changing the pitching angle only rotated the rotor blade, and changing the chord length magnified the size of its entire profile uniformly.
+Although the chord length changed during the optimization for all blade counts, the rotor's profile stayed the same throughout the optimization. It Changing the pitching angle only rotated the rotor blade, and changing the chord magnified the size of its entire profile uniformly along its entire length. The rotor and airfoil themselves retained the same shape and identification numbers throughout the optimization.
 
-\subsection{Results Plot}
+Figure~\eqref{fig:5} shows that while the optimized design increased the efficiency of even the rotor with a higher blade count above the rotor pre-optimization, it dramatically decreases the thrust and torque coefficients. The efficiency at higher advance ratios also decreased. The range of advance ratios over which the rotor maintained high efficiency was also different. This means that maximizing the rotor efficiency at a single advance ratio by only changing the chord length and twist angle may require other rotor performance properties to be sacrificed.
 
-Figure~\eqref{fig:5} shows that while the optimized design increased the efficiency of even the rotor with a higher blade count above the rotor pre-optimization, it dramatically decreases the thrust and torque coefficients. The efficiency at higher advance ratios also decreased. These decreases in other rotor properties may not be desired. This illustrates one problem with optimizers: if created correctly, they will do exactly what they are programmed to do and may sacrifice some desirable properties to further optimize the objective function.
+The plots in figure \eqref{fig:5} show that the optimized efficiency was higher than the original efficiency at every blade count. This was the desired result, as stated by the optimization function in equation~\eqref{equation:1}. Figure \eqref{fig:5} shows, though, that this increased efficiency was not obtained in exactly the way expected. While the efficiency is higher, the thrust coefficient and torque coefficient are both much lower, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{figure}[H]
 \centering
