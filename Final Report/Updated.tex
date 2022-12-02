@@ -11,7 +11,7 @@
 \usepackage{longtable,tabularx}
 \setlength\LTleft{0pt} 
 
-\title{propeller Optimization at Different Blade Counts}
+\title{Propeller Optimization at Different Blade Counts}
 
 \author{Joseph Spencer \footnote{Undergraduate Researcher, Brigham Young University FLOW Lab.}}
 \affil{Brigham Young University, Provo, Utah, 84601} 
@@ -44,7 +44,7 @@ Computational stimulations of propellers allow researchers to perform low-risk s
 
 Some Julia packages used for this project include Xfoil.jl,\footnote{Xfoil.jl is available at \url{https://github.com/byuflowlab/Xfoil.jl}} CCBlade,jl,\footnote{CCBlade.jl is available at \url{https://github.com/byuflowlab/CCBlade.jl}} and SNOW.jl.\footnote{SNOW.jl is available at \url{https://github.com/byuflowlab/SNOWl.jl}} Xfoil.jl analyzes the lift, drag, and moment coefficients of an airfoil from its geometry and angle of attack using a potential-flow code with a panel method. This divides the airfoil into many small surfaces and finds the lift, drag, and moment forces at each of the smaller surfaces. 
 
-CCBlade.jl uses blade element momentum (BEM) theory.\footnote{More information about BEM theory can be found at \url{https://en.wikipedia.org/wiki/Blade_element_momentum_theory}} BEM theory, which combines blade element theory and momentum theory, calculates the axial and tangential induction factors and the angle of rotation, the angle between the free stream velocity and the tangential velocity of the propeller. After these three quantities are found, they are combined to find forces acting in all directions on the propeller\cite{CCBlade}.
+CCBlade.jl uses blade element momentum (BEM) theory.\footnote{More information about BEM theory can be found at \url{https://en.wikipedia.org/wiki/Blade_element_momentum_theory}} BEM theory, which combines blade element theory and momentum theory, calculates the axial and tangential induction factors and the twist angle, the angle between the free stream velocity and the tangential velocity of the propeller. After these three quantities are found, they are combined to find forces acting in all directions on the propeller\cite{CCBlade}.
 
 The propeller in this design was created beforehand and included in the documentation for CCBlade.\footnote{Same address listed in introduction note, \url{https://github.com/byuflowlab/CCBlade.jl/tree/master/data}} Airfoil data could be evaluated using XFoil.jl, but this data was selected because it had already been widened using Viterna extrapolation to include a complete range of angles of attack\footnote{Further explanation of this method is available at \url{https://flow.byu.edu/CCBlade.jl/stable/howto/}}. The airfoil polars used to analyze this are presented in the following figure. 
 
@@ -60,6 +60,8 @@ The propeller in this design was created beforehand and included in the document
 
 This airfoil was then placed on the APC 10x7 rotor used in the project, and its torque and power coefficients were evaluated across a range of advance ratios with CCBlade.jl. propellers in the optimization were compared at a specific advance ratio, $J=0.472$, which is listed and explained later in this report in the bottom entry of table \ref{constraintstab}. The propeller's total torque and total moment were found from the torque output of the propeller's CCBlade.jl evaluation and from integrating the normal and tangential stresses.
 
+\subsection{Optimization}
+
 Once the propeller's initial torque and moment were found at this advance ratio, they were multiplied by a safety factor of $n=1.1$. This safety factor provided maximum limits for the propeller torque and moment to ensure that the SNOW.jl optimization would find the most efficient propeller that would still have reasonable input torque and power requirements to be run by the same motor and made of the same materials as the initial propeller.
 
 In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the pitching angle was kept between $-90^{\circ}$ and $90^{\circ}$. These constraints are listed in table \ref{optimization} after the torque and moment constraints. They ensured that the optimization found a reasonable solution confined to realistic limits.
@@ -70,13 +72,10 @@ In this optimization, the chord length and pitching angle were modified to find 
 	\label{optimization}
 	\begin{aligned}
 		\mathrm{maximize:}& ~~ \eta \\
-		\mathrm{with~respect~to:}& ~~ c \\
-		& ~~ \theta \\
-		\mathrm{subject~to:}& ~~ T \leq 1.1 \times T_{0} \\
-		& M_{n} \leq 1.1 \times M_{n0} \\
-		& M_{t} \leq 1.1 \times M_{t0} \\
-		& -90^{\circ} \leq \theta \leq 90^{\circ} \\
-		& 50\% \leq c \leq 200\%
+		\mathrm{with~respect~to:}& ~~ c & \multicolumn{1}{l}{$\theta$} \\
+		\mathrm{subject~to:}& ~~ 50\% \leq c \leq 200\% & -90^{\circ} \leq \theta \leq 90^{\circ} \\
+		& M_{n} \leq 1.1 \times M_{n0} & M_{t} \leq 1.1 \times M_{t0} \\
+		& T \leq 1.1 \times T_{0} \\
 	\end{aligned}
 \end{equation}
 
@@ -132,28 +131,10 @@ The plots in figure \eqref{efftqtab} show that the optimized efficiency was high
 
 If necessary, minimum thrust and torque coefficients could be provided as parameters along with the maximums shown below the objective function in table \ref{optimization}. These could find the pitching angle and chord magnification that would provide the maximum efficiency while still maintaining some required thrust. The optimizer might not reduce the propeller to its minimum possible chord length in every case as it did in this optimization.
 
-The optimal 
-
-Table \ref{resultstab} shows the optimal pitching angles and chord magnifications for each different propeller blade count. At the conditions listed in table \ref{constraintstab}, the optimal chord length magnification was constant, and the optimal angle of rotation was less than $-3^{\circ}$ for each propeller. It gradually became more negative as the blade count increased.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Table \ref{resultstab} shows the optimal pitching angles and chord magnifications found by SNOW.jl for each different propeller blade count. At the conditions listed in table \ref{constraintstab}, the optimal chord length magnification was constant, and the optimal twist angle was less than $-3^{\circ}$ for each propeller. These results prove a few things about the propeller designed.
 
 \begin{center}
+\label{resultstab}
 \begin{tabular}{| c | c | c |}
 	 \multicolumn{3}{c}{Table III (Table IV.B): Optimized chord magnification and rotation angles for different blade counts}  \\ \hline
   	 \textbf{Blade count} & \textbf{chord length Multiplication} & \textbf{Pitching angle} \\ \hline
@@ -162,30 +143,56 @@ Table \ref{resultstab} shows the optimal pitching angles and chord magnification
   	 3 & 0.50 & $-2.88^{\circ}$ \\ \hline
   	 4 & 0.50 & $-2.94^{\circ}$ \\ \hline
 \end{tabular}
-\label{resultstab}
 \end{center}
 
+First off, rotors with lower solidity appear to be more efficient. All of the rotors optimized had the lowest possible chord length allowed by the program used. Rotor solidity can be calculated with equation \ref{solid}. This shows that reducing the chord length, $c$, or the blade count, $n_{b}$, reduces the solidity, $\sigma$. The finding that lower solidity leads to greater efficiency seems reasonable, because wind turbine propellers, designed to efficiently harvest wind from the environment, have very low solidity according to this equation. This finding about propeller blades with less solidity being more efficient also agrees with Saraf, Nouli, Ravalet, and Bakir's findings. \cite{AxFlFan}
 
-\section{Discussion}
+\begin{equation}
+	\begin{aligned}
+	\label{solid}
+	\sigma = \frac{c}{s} = \frac{c n_{b}}{2 \pi \sqrt{\frac{r_{h}^{2}+r_{t}^{2}}{2}}}
+\end{aligned}
+\end{equation}
 
-The propeller was checked at blade counts of 1, 2, and 3. These results found that for all three blade counts, the optimal propeller was as thin as possible, with a small negative angles of attack. The finding about thinner propeller blades being more efficient agreed with Saraf, Nouli, Ravalet, and Bakir's findings, but the negative rotation angle was surprising at first \cite{AxFlFan}.
+Table \ref{resultstab} shows that although the optimal rotation angles were very similar for all three different blade counts, they became minutely more negative as the blade count increased. This further decrease in the already negative rotation angle could be at least partially explained by the airfoil polars shown in figure \ref{afplot}. Increasing the rotation angle slightly aboce $-3^{\circ}$ would make its lift coefficient higher and its drag coefficient slightly lower. 
 
-One lesson learned from this optimization is that the user should be careful what is optimize for, because the computer will optimize exactly what it is told, even if that is not what the user actually wants. An optimization that is written incorrectly or has unseen loopholes can not only give a misleading answer but also waste a lot of time. In the case of this optimization, I think other constraints could have been added to the optimization
+Changing the rotation angle of this propeller would change the forces and efficiency experienced by a propeller with a blade count of 2 differently than propellers with blade counts of 3 or 4, because the wake created by each rotor blade affects airflow over the blade next to it. This is why the curves in figure \ref{efftqtab} are shaped differently from each other, even though they are optimizations of the same rotor and propeller.
 
-\subsection{Efficiency Equation}
-
-One problem with this optimization is that a propeller's efficiency is available as a function of the advance ratio, the thrust coefficient, and the power coefficient. The equation for efficiency is described by Andrew Ning in \emph{Computational Aerodynamics}, page 200 \cite{ComAer} using the relation below, equation \ref{etqeq}.
+One problem with this optimization is that a propeller's efficiency is available as a function of the advance ratio, the thrust coefficient, and the power coefficient. The equation for efficiency is described by Andrew Ning in \emph{Computational Aerodynamics},\cite{ComAer} using the relations below, in equation \ref{etqeq}.
 
 \begin{equation}
 	\begin{aligned}
 	\label{etqeq}
-	\eta = J \frac{C_{T}}{C_{P}}
+	\eta = J \frac{C_{T}}{C_{P}} \\
+	\eta = \frac{T V_{\infty}}{T V_{\infty} + \frac{1}{2} \dot{m} (V_{w} - V_{\infty})^{2}}
 	\end{aligned}
 \end{equation}
 
-With $J$ kept constant, as it was in this research, this equation can be maximized in either by maximizing $C_{T}$ or by minimizing $C_{P}$, which is equal to $C_{Q}$ multiplied by $2 \pi$. Inspection of figure \ref{efftqtab} reveals that the optimizer did the latter. The torque coefficient $C_{Q}$ is significantly lower for each propeller. While the thrust coefficient $C_{T}$ did not decrease by as much as $C_{Q}$, it is still much lower than before. Although more efficient, the newly optimized propeller has a much lower solidity and is better suited for a different environment.
+Ning also wrote that when thrust is increased for a propellor, it comes at the expense of decreased efficiency.\cite{ComAer} Conversely, a propellor optimization that maximizes efficiency will decrease its thrust coefficient. The torque and moments output by the optimized rotors did not even come near those of the original propellor. For example, the original propellor blades experienced a normal moment of $3.753 \times 10^{6}N \times m$, but the optimized propellor with the same blade count only experienced $3.808 \times 10^{5} N \times m$.
 
-\subsection{Angle of Rotation}
+With $J$ kept constant, as it was in this research, inspection of figure \ref{efftqtab} reveals that the optimizer maximized equation \ref{optimization} by minimizing $C_{P}$, which is equal to $C_{Q}$ multiplied by $2 \pi$. The torque coefficient $C_{Q}$ is significantly lower for each propeller. While the thrust coefficient $C_{T}$ did not decrease by as much as $C_{Q}$, it is still much lower than before. Although more efficient, the newly optimized propeller produces much less power and may be better suited for a different environment than the one it started with.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 The optimal angles of rotation were between $-2.70^{\circ}$ and $-2.94^{\circ}$, as shown in table \ref{resultstab}. These negative angles of rotation were surprising at first, because angles near $0^{\circ}$ were expected to be the most efficient. Figure \ref{afplot}, from airfoil analysis conducted earlier in the semester, shows that $0^{\circ}$ angles of attack do not necessarily correspond to the lowest lift and drag coefficients for the NACA 4412 airfoil used in this design. Although that finding was for more simple analysis of an airfoil, it was concluded that a negative angle of rotation was possible.
 
@@ -196,7 +203,7 @@ This optimization combined several different Julia packages to find the optimal 
 
 \section{Acknowledgements}
 
-The author would like to thank Adam Cardoza for mentoring him in learning the codes used in the FLOW Lab, directing his research, helping him through questions and challenges that he discovered during his work.
+The author thanks Adam Cardoza for mentoring him in learning the codes used in the FLOW Lab, directing his research, helping him through questions and challenges that he faced during his work.
 
 
 
