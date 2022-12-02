@@ -1,9 +1,8 @@
 #=---------------------------------------------------------------
-11/23/2022
+11/30/2022
 Rotor Design v12 Rotor_Design.jl
-This version of the code has an updated program that can usually
-optimize a rotor at several advance ratios, as long as it 
-doesn't get stuck at a plateau.
+I included the rotor optimization code to create polars at the
+end of this file for the final report.
 ---------------------------------------------------------------=#
 
 include("Rotor_Functions.jl")
