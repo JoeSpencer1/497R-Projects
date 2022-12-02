@@ -13,9 +13,6 @@ Ning, A., \enquote{Using Blade Element Momentum Methods with Gradient-Based
   Vol.~64, No.~2, 2021, pp. 994--1014.
 \newblock \doi{http://dx.doi.org/10.1002/we.1636}.
 
-\bibitem[{Ning(2022)}]{ComAer}
-Ning, A., \emph{Computational Aerodynamics}, Brigham Young University, 2022.
-
 \bibitem[{J~Martins(2021)}]{EngDesOpt}
 J~Martins, A.~N., \emph{Engineering Design Optimization}, Cambridge University
   Press, 2021.
@@ -26,5 +23,8 @@ Bakir, C. S. H. N. F. R.~F., \enquote{Experimental study of blade thickness
   axial-flow fan,} \emph{Experimental Thermal and Fluid Science}, Vol.~35,
   No.~4, 2011, pp. 684--693.
 \newblock \doi{https://doi.org/10.1016/j.expthermflusci.2011.01.002}.
+
+\bibitem[{Ning(2022)}]{ComAer}
+Ning, A., \emph{Computational Aerodynamics}, Brigham Young University, 2022.
 
 \end{thebibliography}
