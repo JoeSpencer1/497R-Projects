@@ -287,7 +287,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
 - v - Freestream velocity. Default 12 m/s.
-- uc - Upper camber limit. Default 100.0
+- uc - Upper chord limit. Default 100.0
 - utwist - Upper twist angle limit. Default 90˚ 
 - type - The analysis that will be performed. Default 1.
 - np - The number of advance ratios that will be optimized. Default 5.
@@ -396,7 +396,7 @@ This function uses the SNOW code to find the optimal properties of the rotor.
 - rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
 - rho - The air density. Default 1.225.
 - v - Freestream velocity. Default 12 m/s.
-- uc - Upper camber limit. Default 100.0
+- uc - Upper chord limit. Default 100.0
 - utwist - Upper twist angle limit. Default 90˚ 
 - type - The analysis that will be performed. Default 1.
 # Outputs
@@ -409,6 +409,45 @@ function optimize(c, twist; rpm = 6000, nb = 3, d = 0.254, rhub = 0.1, rho = 1.2
     lx = [(1 / uc), (0 - utwist), rpm, nb, d, rhub, rho, v]  # lower bounds on x
     ux = [uc, utwist, rpm, nb, d, rhub, rho, v] # upper bounds on x
     lg = zeros(ng)  # lower bounds on g
+    ug = [Q0, Mn, Mt] # upper bounds on g
+    options = Options(solver=IPOPT())  # choosing IPOPT solver
+
+    # Optimize function with constraints defined above
+    xopt, fopt, info = minimize(simple!, x0, ng, lx, ux, lg, ug, options)
+
+    println("xstar = ", xopt[1:4]) # Print the found values (Only the variable ones). 
+    println("fstar = ", fopt)
+    println("info = ", info)
+
+    ropt = Rotortest(xopt[1], xopt[2], xopt[3], xopt[4], xopt[5], xopt[6], xopt[7], xopt[8])
+    return(ropt)
+end
+
+"""
+    optimize2(c, twist, v, rpm; nb = 3, d = 0.245, rhub = 0.1, rho = 1.225)
+This function uses the SNOW code to find the optimal properties of the rotor.
+# Arguments
+- c - Chord length.
+- twist - Twist, in degrees.
+- rpm - Rotational velocity, in rpm. Default 500
+- nb - The number of blades in the rotor. Default 3.
+- d - The rotor's diameter. Default 10 inches.
+- rhub - Ratio of the hub length to tip lentgh. Defulat 0.1.
+- rho - The air density. Default 1.225.
+- v - Freestream velocity. Default 12 m/s.
+- uc - Upper chord limit. Default 100.0
+- utwist - Upper twist angle limit. Default 90˚ 
+- type - The analysis that will be performed. Default 1.
+# Outputs
+- ropt - Rotor object with optimal properties.
+"""
+function optimize2(c, twist; rpm = 6000, nb = 3, d = 0.254, rhub = 0.1, rho = 1.225, v = 12, uc = 2.0, utwist = 90)
+    # nb = trunc(Int32, nb)
+    x0 = [c; twist; rpm; nb; d; rhub; rho; v] # starting point
+    ng = 3 # number of constraints
+    lx = [(1 / uc), (0 - utwist), rpm, nb, d, rhub, rho, v]  # lower bounds on x
+    ux = [uc, utwist, rpm, nb, d, rhub, rho, v] # upper bounds on x
+    lg = [Q0 * 0.9 / 1.1, 0, 0]  # lower bounds on g
     ug = [Q0, Mn, Mt] # upper bounds on g
     options = Options(solver=IPOPT())  # choosing IPOPT solver
 

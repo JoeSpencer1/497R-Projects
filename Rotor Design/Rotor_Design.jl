@@ -187,3 +187,57 @@ open("Rotor Design/Outputs4.txt", "w") do file
     ans = string(Mt4)
     write(file, ans)
 end
+
+Op0a = Rotortest(c0, -2.883, rpm0, nb0, d0, rhub0, rho0, v0) # Create initial rotor
+J0a, eff0a, CT0a, CQ0a = coefficients(Op0a, Jmax = 0.8) # Find thhe coefficients of the initial rotor
+
+plot(J0[:], eff0[:], label = "3 Blades, \$\\theta = 0^{\\circ}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", linewidth = 3, tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+plot!(J1[:], eff0a[:], label = "3 Blade, \$\\theta = -2.88^{\\circ}\$", linewidth = 3)
+plot!(J1[:], eff2[:], label = "3 Blade, \$\\theta = -2.88^{\\circ}\$, thickness = 0.5", linewidth = 3)
+plot!(h1[:], vert1[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_5.png")
+
+Op0b = optimize(c0, twist0, nb = 3, uc = 100.0) # Optimize for 2 blades
+J0b, eff0b, CT0b, CQ0b = coefficients(Op0b, Jmax = 0.8) # Find thhe coefficients of the initial rotor
+vert2 = [0, 1.0]
+
+plot(J0[:], eff0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", linewidth = 3, tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+plot!(J1[:], eff2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
+plot!(J1[:], eff0b[:], label = "3 Blade, \$c = 0.01 c_{og}\$", linewidth = 3)
+plot!(h1[:], vert2[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_6.png")
+
+print(Op0b.c)
+
+Op0c = optimize2(c0, twist0, nb = 3) # Optimize for 2 blades
+J0c, eff0c, CT0c, CQ0c = coefficients(Op0c, Jmax = 0.8) # Find thhe coefficients of the initial rotor
+#=
+plot(J0[:], eff0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", linewidth = 3, tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+plot!(J1[:], eff2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
+plot!(J1[:], eff0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(h1[:], vert1[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_8.png")
+=#
+plot(J0[:], eff0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Efficiency, \$\\eta\$", linewidth = 3, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false, leftmargin=10Plots.mm)
+plot!(J1[:], eff2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
+plot!(J2[:], eff0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(h1[:], vert1[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_7.png")
+
+vert3 = [-0.05, 0.25]
+plot(J1[:], CT0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", linewidth = 3, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false)
+ylims!((-0.05, 0.25))
+plot!(J1[:], CT2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
+plot!(J2[:], CT0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(h1[:], vert3[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_8.png")
+
+plot(J0[:], CQ0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", linewidth = 3, tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
+ylims!((-0.01, 0.015))
+plot!(J1[:], CQ2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
+plot!(J2[:], CQ0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(h1[:], vert3[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
+savefig("Rotor Design/Plots/Figure_9.png")
+
+print(Op0c.c, "\n")
+print(Op0c.twist * 180 / pi)
