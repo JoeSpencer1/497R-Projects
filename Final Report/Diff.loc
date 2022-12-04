@@ -1,0 +1,257 @@
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Propeller}}{1}{section*.1}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{ of Multiple Rotors}}{1}{section*.2}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{ at Different Blade Counts}}{1}{section*.3}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{oseph}}{1}{section*.4}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{r}}{1}{section*.5}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{This report describes}}{1}{section*.6}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Propellers can be modified to perform better under a variety of conditions. One}}{1}{section*.7}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{explores}}{1}{section*.8}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{ideal design variables for propeller performance.}}{1}{section*.9}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{this project drew on skills gained throughout the semester to design and execute a code in the julia programming language to find the optimal blade count, blade thickness magnification, and twist angle for a propellor to achieve its maximum efficiency, $\eta $, at a given advance ratio, $J$. This investigation found that thinner rotors are more efficient, especially at negative angles of attack. The implications of these results and possible areas of future research are then discussed.}}{1}{section*.10}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Computational stimulations of propellors allow researchers to perform low-risk studies and develop designs more quickly. This investigation found the optimal chord length magnification and the optimal rotation angle for a rotor’s efficiency. This was done with a computational simulation in the Julia programming language.}}{1}{section*.11}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{paper}}{1}{section*.12}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{report}}{1}{section*.13}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotors}}{1}{section*.14}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propellers}}{1}{section*.15}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{This paper}}{1}{section*.16}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I}}{1}{section*.17}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{slight}}{1}{section*.18}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotors}}{1}{section*.19}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propellers}}{1}{section*.20}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotor}}{1}{section*.21}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller}}{1}{section*.22}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Nomenclature}}{1}{section*.23}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{\noindent (Nomenclature entries are identified with their default units.)}}{1}{section*.24}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$J$}}{2}{section*.25}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.26}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Advance Ratio, \emph {dimensionless}}}{2}{section*.27}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$\alpha $}}{2}{section*.28}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.29}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Angle of Attack, $rad$}}{2}{section*.30}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$\phi $}}{2}{section*.31}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.32}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Angle of Rotation, $rad$}}{2}{section*.33}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$M_{b}$}}{2}{section*.34}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.35}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Bending Moment, $N \times m$}}{2}{section*.36}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$c$}}{2}{section*.37}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.38}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Chord length, $m$}}{2}{section*.39}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$D$}}{2}{section*.40}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.41}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Diameter, $m$}}{2}{section*.42}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$c_{d}$}}{2}{section*.43}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.44}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Drag Coefficient, \emph {dimensionless}}}{2}{section*.45}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$\eta $}}{2}{section*.46}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.47}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Efficiency, \emph {unitless}}}{2}{section*.48}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$\rho $}}{2}{section*.49}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.50}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Fluid Density, $kg/m^{3}$}}{2}{section*.51}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$v_{\infty }$}}{2}{section*.52}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.53}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Freestream Velocity, $m/s$}}{2}{section*.54}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$c_{l}$}}{2}{section*.55}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.56}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Lift Coefficient, \emph {dimensionless}}}{2}{section*.57}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$C_{P}$}}{2}{section*.58}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.59}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Power Coefficient, \emph {dimensionless}}}{2}{section*.60}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$RPM$}}{2}{section*.61}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.62}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Revolutions Per Minute, $\frac {\emph {rev.}}{\emph {min.}}$}}{2}{section*.63}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$\sigma $}}{2}{section*.64}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.65}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Rotor Solidity \emph {dimensionless}}}{2}{section*.66}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$C_{T}$}}{2}{section*.67}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.68}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Thrust Coefficient, \emph {dimensionless}}}{2}{section*.69}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{$C_{Q}$}}{2}{section*.70}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{=\tmspace +\thickmuskip {.2777em}}}{2}{section*.71}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Torque Coefficient, \emph {unitless}}}{2}{section*.72}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{paper}}{2}{section*.73}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{report}}{2}{section*.74}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I used}}{2}{section*.75}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{was used}}{2}{section*.76}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{certain}}{2}{section*.77}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{specific}}{2}{section*.78}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{Because different blade counts could be more appropriate for different applications}}{2}{section*.79}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I optimize and compare}}{2}{section*.80}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{were optimized and are compared}}{2}{section*.81}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I then compares the optimized propellers of each different blade count.}}{2}{section*.82}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{This report produced useful code that could be applied to different rotors in the future.}}{2}{section*.83}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Context}}{2}{section*.84}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{This report shows how computer simulations can be used to simulate the performance of propellors without needing to actually create them.}}{2}{section*.85}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{Computer simulations are very useful for modeling propellers. It would require significant investment of time, space, and money to perform an optimization like this}}{2}{section*.86}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{by physically manufacturing propellers. In the potential-flow code (PFC) simulation used in this report, I instead computationally compared the properties of}}{3}{section*.87}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{hundreds of slightly different propellers}}{3}{section*.88}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{to obtain a final result. A PFC is a program for modeling the pressure distribution of a rotor. PFCs were first}}{3}{section*.89}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{programmed in the 1960s and 1970s. Xfoil, a program used to create the airfoil model used in this project, was first developed by MIT in the 1980s, with its current version dating to 2013. Xfoil.jl, the Julia wrapper for Xfoil, was developed by Taylor McDonnell}}{3}{section*.90}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Paper Outline}}{3}{section*.91}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In}}{3}{section*.92}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{this paper}}{3}{section*.93}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I}}{3}{section*.94}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{first}}{3}{section*.95}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{explain}}{3}{section*.96}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{reviews}}{3}{section*.97}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{the procedure used in the rotor optimization, including the objective function used in the optimization and the initial conditions and constraints applied. Next, I review the results and compare them with each other. Finally, I draw conclusions based on the results of this optimization and discusses their meaning. All code used for each section of this report can also be accessed through a GitHub repository}}{3}{section*.98}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Procedure}}{3}{section*.99}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Methods}}{3}{section*.100}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Computational stimulations of propellers allow researchers to perform low-risk studies and develop designs more quickly. I performed}}{3}{section*.101}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{was performed}}{3}{section*.102}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{including that It can}}{3}{section*.103}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{with precompiled functions,}}{3}{section*.104}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{without needing to be totally compiled before running after any change is made like C}}{3}{section*.105}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{These packages provided useful functionality that simplified the design process.}}{3}{section*.106}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{Computer Code}}{3}{section*.107}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{Models}}{3}{section*.108}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In the rotor design an airfoil was first created}}{3}{section*.109}%
+\contentsline {deleted}{Deleted\nobreakspace {}(J): \truncate {\Changestruncatewidth }{function files}}{3}{section*.110}%
+\contentsline {added}{Added\nobreakspace {}(J): \truncate {\Changestruncatewidth }{packages}}{3}{section*.111}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{QuadGK.jl}}{3}{section*.112}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and SNOW.jl}}{3}{section*.113}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and FLOWMath are all designed for julia. These packages provided useful functionality that simplified the design process.}}{3}{section*.114}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Xfoil.jl, discussed previously, analyzes the lift, drag, and moment coefficients of an airfoil from its geometry and angle of attack using a potential-flow code with a panel method. It divides the airfoil into many small surfaces and finds the lift, drag, and moment forces at each of the smaller surfaces.}}{3}{section*.115}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{first}}{3}{section*.116}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{using Xfoil.jl}}{3}{section*.117}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{beforehand and included in the documentation for CCBlade.jl}}{4}{section*.118}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Airfoil data could be created using XFoil.jl, but I selected this provided data because its domain had already been widened using Viterna extrapolation to include a complete range of angles of attack}}{4}{section*.119}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The airfoil polars used to analyze this are presented in figure}}{4}{section*.120}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{After the airfoil was created, I lofted it over the APC 10x7 rotor used in the project, and evaluated the propeller's torque and power coefficients across a range of advance ratios with CCBlade.jl. Propellers in the optimization were compared at a specific advance ratio, $J=0.472$, which is explained later in this report and listed in the bottom entry of table}}{4}{section*.122}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{CCBlade.jl uses blade element momentum (BEM) theory}}{4}{section*.123}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{to calculate a propeller or turbine's behavior. BEM theory, which combines blade element theory and momentum theory, calculates the axial and tangential induction factors and the pitching angle, the angle between the free stream velocity and the tangential velocity of the propeller. After}}{4}{section*.124}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{constraints were determined}}{4}{section*.125}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{these three quantities are found, they are combined to find forces acting in all directions on the propeller}}{4}{section*.126}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I found the propeller's total torque and total moment from the torque output of the propeller's CCBlade.jl evaluation and from integrating the normal and tangential force data output by CCBlade.jl across the rotor blade using an integration function from the QuadGK.jl package. With the rotor blade's dimensions known, the forces found by integrating with QuadGK.jl provided reasonable limits for use in the optimization.}}{4}{section*.127}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Design Constraints}}{4}{section*.128}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Optimization}}{4}{section*.129}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The optimization function used in this optimization is listed in equation}}{4}{section*.130}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In this optimization, I modified the chord length and pitching angle for propellers at the same advance ratio to find the most efficient one. The optimization objective function, design variables, and constraints are displayed in equation}}{4}{section*.131}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{with the advance ratio $J=0.475$ calculated from equation}}{4}{section*.132}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In addition to restrictions on the moment and torque mentioned previously, the cord thickness was kept within a factor of two of the original and the twist was kept between }}{5}{section*.133}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and}}{5}{section*.134}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In this optimization, rotor thickness was not allowed to increase or decrease by a factor of more than 2, and the propeller could not rotate more than}}{5}{section*.135}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{in either direction. The propeller's torque and normal and tangental moments did not exceed 110\% of the values calculated from the CCBlade.jl output when the original propeller was created.}}{5}{section*.136}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{These factors are listed in table 1. they ensured that the optimization found a reasonable solution confined to real limits, shown in table 2.}}{5}{section*.137}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The optimized rotors each had other features in common between them, shown in the last entry of table 1. Ning(page 200) stated that}}{5}{section*.138}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Table \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {ctab}\unskip \@@italiccorr )}} shows shared features and design variables of the propellers optimized.}}{5}{section*.139}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Optimization}}{6}{section*.141}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The objective function, equation n1, was optimized using SNOW.jl.}}{6}{section*.142}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{SNOW.jl, developed by the FLOW Lab, finds either the maximum or minimum of a function.}}{6}{section*.143}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{used to design the propeller}}{6}{section*.144}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{designed}}{6}{section*.145}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{prepared}}{6}{section*.146}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{page 10 of}}{6}{section*.147}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{SNOW.jl can also use fixed environmental variables and set limits or constraints on design variables to contain the domain of possible solutions that can be optimized. The program written for this project used both of these inputs to obtain the desired solutions, so SNOW.jl was a very useful tool.}}{6}{section*.148}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and Discussion}}{6}{section*.149}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller's profile remained the same throughout}}{6}{section*.150}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{changed ruring}}{6}{section*.151}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{the chord length decreased for all blade counts. Changing the pitching angle only rotated the propeller blade, and changing the chord magnified the size of its entire profile uniformly along its entire length. Rotor and airfoil themselves retained the same NACA and APC identification numbers throughout the optimization.}}{6}{section*.152}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Changing the pitching angle only rotated the rotor blade, and changing the chord length magnified the size of its entire profile uniformly.}}{6}{section*.153}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{shows}}{6}{section*.154}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{demonstrates}}{6}{section*.155}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotor}}{6}{section*.156}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller}}{6}{section*.157}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotor}}{6}{section*.158}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller}}{6}{section*.159}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{decreased}}{6}{section*.160}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{went to zero more quickly, so the range of advance ratios over which the propeller maintained high efficiency was smaller. Maximizing the propeller efficiency at a single advance ratio by only changing the chord length and pitching angle may require other propeller performance measures to be sacrificed.}}{7}{section*.161}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{These decreases in other rotor properties may not be desired. This illustrates one problem with optimizers: if created correctly, they will do exactly what they are programmed to do and may sacrifice some desirable properties to further optimize the objective function}}{7}{section*.162}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The plots in figure}}{7}{section*.163}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{demonstrate this finding visually. The optimized efficiency was higher than the original efficiency at every blade count. This was the desired result, as stated by the optimization function in equation}}{7}{section*.164}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The figure also shows how much smaller the thrust and torque coefficients became at this increased efficiency.}}{7}{section*.165}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{If necessary, minimum thrust and torque coefficients could be provided as parameters along with the maximums shown below the objective function in table (1). These could find the angle of rotation and thickness that would provide the maximum efficiency while still maintaining some required thrust. The optimizer might not reduce the rotor to its minimum possible thickness in every case as it did in this optimization.}}{7}{section*.166}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{pitching}}{7}{section*.168}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{twist}}{7}{section*.169}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{found by SNOW.jl}}{7}{section*.170}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{same}}{7}{section*.171}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{found}}{7}{section*.172}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{constant}}{7}{section*.173}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller.}}{7}{section*.174}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotor. It gradually became negative as the blade count increased.}}{7}{section*.175}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{These results prove a few things about the propeller designed.}}{7}{section*.176}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Discussion}}{8}{section*.178}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The propellor was checked at blade counts of 1, 2, and 3. These results found that for all three blade counts, the optimal propellor was as thin as possible, with a small negative angles of attack.}}{8}{section*.179}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{thinner}}{8}{section*.180}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{with less solidity}}{8}{section*.181}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{also}}{8}{section*.182}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{but the negative rotation angle was surprising at first.}}{8}{section*.183}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{One lesson learned from this optimization is that the user should be careful what is optimize for, because the computer will optimize exactly what it is told, even if that is not what the user actually wants. An optimization that is written incorrectly or has unseen loopholes can not only give a misleading answer but also waste a lot of time. In the case of this optimization, I think other constraints could have been added to the optimization}}{8}{section*.184}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Table}}{8}{section*.185}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{shows that although the optimal pitching angles were very similar for all three different blade counts, they became minutely more negative as the blade count increased. This further decrease in the already negative pitching angle could be at least partially explained by the airfoil polars shown in figure}}{8}{section*.186}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Increasing the pitching angle slightly above $-3^{\circ }$ would make its lift coefficient higher and its drag coefficient slightly lower. Figure}}{8}{section*.187}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{from airfoil analysis conducted earlier in the semester, shows that angles of attack near $-3^{\circ }$ for the NACA 4412 airfoil used in this design correspond to a very low drag coefficient.}}{8}{section*.188}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Changing the pitching angle of this propeller would change the forces and efficiency produced by a propeller with a blade count of 2 differently than propellers with blade counts of 3 or 4, because the wake instability created by each propeller blade affects the other blades}}{9}{section*.189}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{This change in blade-to-blade interactions is why the curves in figure}}{9}{section*.190}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{are shaped differently from each other, even though they are optimizations of propellers with the same airfoil and rotor profiles.}}{9}{section*.191}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Efficiency Equation}}{9}{section*.192}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{propeller's}}{9}{section*.193}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{rotor's}}{9}{section*.194}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{obtained}}{9}{section*.195}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{found}}{9}{section*.196}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{its}}{9}{section*.197}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{the}}{9}{section*.198}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{the}}{9}{section*.199}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{the}}{9}{section*.200}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{(page 200)}}{9}{section*.201}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{in}}{9}{section*.202}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{below,}}{9}{section*.203}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Ning also wrote that when thrust is increased for a propeller, it comes at the expense of decreased efficiency}}{9}{section*.204}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Conversely, a propeller optimization that maximizes efficiency will decrease its thrust coefficient. The torque and moments output by the optimized propellers did not even come near the limits put in place by the original propeller. For example, the original propeller blades experienced a normal moment of $3.753 \times 10^{6}N \times m$, but the optimized propeller with the same blade count only experienced $3.808 \times 10^{5} N \times m$}}{9}{section*.205}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{When I kept}}{9}{section*.206}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{With}}{9}{section*.207}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{as it was}}{9}{section*.208}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{inspection of figure}}{9}{section*.209}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{reveals that the optimizer}}{9}{section*.210}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{this equation can be}}{9}{section*.211}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{equation}}{9}{section*.212}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{either}}{9}{section*.213}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Inspection of figure (2) reveals that the optimizer did the latter.}}{9}{section*.214}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{produces much less power}}{9}{section*.215}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{has a much lower solidity}}{9}{section*.216}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{may be}}{9}{section*.217}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{is}}{9}{section*.218}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{To prevent the optimizer from sacrificing thrust for efficiency, I could provide a minimum thrust or minimum torque as parameters along with the maximums shown below the objective function in equation}}{9}{section*.219}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I could use this additional constraint to find the pitching angle and chord magnification that would provide the maximum efficiency while still maintaining some required thrust or being powered by the same motor. If this function is used, the optimizer might not reduce the propeller to its minimum possible chord length in every case as it did in this optimization.}}{9}{section*.220}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{In}}{9}{section*.221}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I used}}{9}{section*.222}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{combined}}{9}{section*.223}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{combination of}}{9}{section*.224}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{angle of rotation and rotor}}{9}{section*.225}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and pitching angle for the maximum}}{9}{section*.226}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{a rotor's}}{9}{section*.227}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{of a propeller at a known advance ratio. I discovered that for the conditions listed in table}}{10}{section*.228}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{the optimal propeller has 50\% its original chord length, which is the lower limit of the optimization, and a pitching angle between $-2.70^{\circ }$ and $-2.94^{\circ }$, depending on the blade count.}}{10}{section*.229}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{It found that rotors with very small chord lengths at negative angles of rotation were the most efficient.}}{10}{section*.230}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{One discovery gained from these findings is that thinner propeller blades with smaller chord length make more efficient propellers. This finding is related to the rotor solidity, described in equation}}{10}{section*.231}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The optimization using SNOW.jl chose the minimum chord length as the most efficient each time. Another evidence that increasing solidity decreases efficiency can be observed in figure}}{10}{section*.232}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The rotor solidity increased proportionally to the blade count. As it increased, the efficiency at each advance ratio decreased.}}{10}{section*.233}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{With this information, I decided to find what the optimal chord length actually was. I removed the original 50\% lower limit of the optimizer and instead set it to 1\% in the function argument. SNOW.jl found a propeller that was much more efficient, and had exactly 1\% of the original chord length. This is a totally unrealistic propeller to actually use, though, because it would not produce thrust. One APC 10x7 propeller found on the internet had a 1.02 cm hub thickness to start with}}{10}{section*.234}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and lowering the chord to 1\% would decrease it to 102{\textmu }m. It appears that even in extreme cases, decreasing chord length always increases propeller efficiency even when it is most likely no longer desired.}}{10}{section*.235}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Another discovery made in this research was that this propeller was most efficient with negative blade pitching angle. To investigate this result further, I ran another simulation with the Julia code I had written to see what happened to this blade pitching angle when the propeller was increase back to its original chord length. The plot in figure}}{10}{section*.237}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{shows the original propeller compared to the optimized propeller and a propeller with the optimized pitching angle but the same chord length as the original propeller.}}{10}{section*.238}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The different curves plotted in figure}}{11}{section*.240}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{show that the propeller only became more efficient at the $-2.88^{\circ }$ pitching angle when its chord length was also reduced significantly. Otherwise, it became less efficient at the advance ratio measured but more efficient at higher advance ratios. This showed that thicker rotors and thinner rotors are better suited for different rotational velocities and free stream velocities.}}{11}{section*.241}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{With the added information from plot}}{11}{section*.242}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{and plot \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {same}\unskip \@@italiccorr )}}, I programmed one final optimization that eliminated the problem of Optim.jl converging to the propeller with the minimum thickness. I added another constraint to the objective function used for the initial optimization, described by equation}}{11}{section*.243}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I added a minimum constraint to the propeller's torque, $Q \geq 0.9 Q_{0}$. The torque coefficient $C_{T}$ and power coefficient $C_{P}$ are related by a factor of $2 \pi $, so keeping the propeller torque within 90\% of the original would also maintain 90\% of the original power output, or $P \geq 0.9 P_{0}$.}}{11}{section*.244}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The plots in figure}}{11}{section*.246}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{show two results of this new design. First, the propeller efficiency increases at the measured advance ratio, but not by quite as much as the propeller without the minimum power constraint. Second, it is even more efficient at higher advance ratios. This optimized propeller's final chord length was still decreased to 53.2\% of its original chord length, which was near although not quite at the 50\% lower limit given to Optim.jl. Unlike the propellers optimized previously, though, this optimized propeller's pitching angle was positive, $2.96^{\circ }$.}}{12}{section*.247}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Future work}}{12}{section*.248}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Other optimizations}}{12}{section*.249}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{investigate other possible constraints to place on this optimization, or change the constraints already present}}{12}{section*.250}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{be performed by simple editing of the code in this research to find which rotors perform best in other applications or environments}}{12}{section*.251}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Other optimizations could vary other aspects of the propeller. For example, the rotor length could be optimized while maintaining a maximum power output, or the shape of the airfoil could be changed entirely or even lofted through different shapes. The rotor could also be modified to an optimal shape. As long as the user understands well the constraints that must be met, optimizations have immense possibilities.}}{12}{section*.252}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{Performing an optimization aided by computers allowed me to explore a broader design space as new ideas were rapidly generated that had not been considered before.}}{12}{section*.253}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{The author would like to thank}}{12}{section*.254}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{, thank you}}{12}{section*.255}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{me}}{12}{section*.256}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{him}}{12}{section*.257}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{my}}{12}{section*.258}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{his}}{12}{section*.259}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{me}}{12}{section*.260}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{him}}{12}{section*.261}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{I}}{12}{section*.262}%
+\contentsline {deleted}{Deleted\nobreakspace {}(A): \truncate {\Changestruncatewidth }{he}}{12}{section*.263}%
+\contentsline {added}{Added\nobreakspace {}(A): \truncate {\Changestruncatewidth }{t}}{12}{section*.264}%
