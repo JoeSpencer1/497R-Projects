@@ -228,14 +228,14 @@ vert3 = [-0.05, 0.25]
 plot(J1[:], CT0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Thrust Coefficient, \$C_{T}\$", linewidth = 3, tickfontsize = 12, xguidefontsize = 18, yguidefontsize = 18, legendfontsize = 12, markersize = 10, background_color_legend = nothing, legend = false)
 ylims!((-0.05, 0.25))
 plot!(J1[:], CT2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
-plot!(J2[:], CT0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(J1[:], CT0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
 plot!(h1[:], vert3[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
 savefig("Rotor Design/Plots/Figure_8.png")
 
 plot(J0[:], CQ0[:], label = "3 Blades, \$c = c_{og}\$", xlabel = "Advance Ratio, \$J\$", ylabel = "Torque Coefficient, \$C_{Q}\$", linewidth = 3, tickfontsize = 18, xguidefontsize = 24, yguidefontsize = 24, legendfontsize = 25, markersize = 18, background_color_legend = nothing, legend = :outerright, size = (1600, 500), bottommargin = 15Plots.mm, leftmargin = 15Plots.mm)
 ylims!((-0.01, 0.015))
 plot!(J1[:], CQ2[:], label = "3 Blade, \$c = 0.5 c_{og}\$", linewidth = 3)
-plot!(J2[:], CQ0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
+plot!(J1[:], CQ0c[:], label = "3 Blade, \$P \\geq 0.9P_{0}\$", linewidth = 3)
 plot!(h1[:], vert3[:], linewidth = 3, color = :gray, linestyle = :dash, label = "Optimized advance ratio, 0.472")
 savefig("Rotor Design/Plots/Figure_9.png")
 
