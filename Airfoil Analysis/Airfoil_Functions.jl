@@ -62,7 +62,7 @@ end
 function writefile(n, x, y, m, p, th)
     num0 = m * 100000 + p * 1000 + th * 100
     num = trunc(Int64, num0)
-    filename = string("Documents/GitHub/497R-Projects/naca" , string(num) , "new.txt")
+    filename = string("Documents/GitHub/497R-Projects/Airfoil Analysis/Airfoils/naca" , string(num) , "new.txt")
     printfile = open(filename, "w")
     for i in 1:n
         write(printfile, string(x[i]))
@@ -201,7 +201,7 @@ function recordInfo(filename, x, y, a, l, max, re)
     sl = findslope(a, l, α0)
     st = findstall(x, y, α0, sl, max, re)
     intre::Int64 = re / 1000
-    filename = string("Documents/GitHub/497R-Projects/data_", string(filename), "_Re", string(intre), "k.txt")
+    filename = string("Documents/GitHub/497R-Projects/Airfoil Analysis/Data/data_", string(filename), "_Re", string(intre), "k.txt")
     open(filename, "w") do file
         write(file, string(α0, "\n"))
         write(file, string(sl, "\n"))

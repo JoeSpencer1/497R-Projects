@@ -37,11 +37,11 @@ const a3, l3, d3, dp3, m3, c3 = limscoef(x3, y3, len, numitr, 1e5, -8, 8)
 
 recordInfo(3310, x3, y3, a3, l3, 25, 1e5)
 
-plot3notitle(a1, l1, l2, l3, "Documents/GitHub/497R-Projects/Figure1.png", "Lift Coefficient")
+plot3notitle(a1, l1, l2, l3, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure1.png", "Lift Coefficient")
 
-plot3coefficients(a1, d1, "NACA 1310", d2, "NACA 2310", d3, "NACA 3310", "Documents/GitHub/497R-Projects/Figure2.png", "Drag Coefficient")
+plot3coefficients(a1, d1, "NACA 1310", d2, "NACA 2310", d3, "NACA 3310", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure2.png", "Drag Coefficient")
 
-plot3notitle(a1, m1, m2, m3, "Documents/GitHub/497R-Projects/Figure3.png", "Moment Coefficient")
+plot3notitle(a1, m1, m2, m3, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure3.png", "Moment Coefficient")
 
 const x4, y4 = create(1412, res)
 
@@ -61,11 +61,11 @@ const a6, l6, d6, dp6, m6, c6 = limscoef(x6, y6, len, numitr, 1e5, -8, 8)
 
 recordInfo(3412, x6, y6, a6, l6, 25, 1e5)
 
-plot3notitle(a4, l4, l5, l6, "Documents/GitHub/497R-Projects/Figure4.png", "Lift Coefficient")
+plot3notitle(a4, l4, l5, l6, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure4.png", "Lift Coefficient")
 
-plot3coefficients(a4, d4, "NACA 1412", d5, "NACA 2412", d6, "NACA 3412", "Documents/GitHub/497R-Projects/Figure5.png", "Drag Coefficient")
+plot3coefficients(a4, d4, "NACA 1412", d5, "NACA 2412", d6, "NACA 3412", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure5.png", "Drag Coefficient")
 
-plot3notitle(a4, m4, m5, m6, "Documents/GitHub/497R-Projects/Figure6.png", "Moment Coefficient")
+plot3notitle(a4, m4, m5, m6, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure6.png", "Moment Coefficient")
 
 #=---------------------------------------------------------------
 This section explores the effects of different Reynolds numbers
@@ -86,11 +86,11 @@ const a7c, l7c, d7c, dp7c, m7c, c7c = limscoef(x7, y7, len, numitr, 3e5, -8, 8)
 
 recordInfo(2209, x7, y7, a7c, l7c, 15, 3e5)
 
-plot3notitle(a7a, l7a,l7b, l7c, "Documents/GitHub/497R-Projects/Figure7.png", "Lift Coefficient")
+plot3notitle(a7a, l7a,l7b, l7c, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure7.png", "Lift Coefficient")
 
-plot3coefficients(a7a, d7a, "Re = 100,000", d7b, "Re = 200,000", d7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure8.png", "Drag Coefficient")
+plot3coefficients(a7a, d7a, "Re = 100,000", d7b, "Re = 200,000", d7c, "Re = 300,000", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure8.png", "Drag Coefficient")
 
-plot3notitle(a7a, m7a, m7b, m7c, "Documents/GitHub/497R-Projects/Figure9.png", "Moment Coefficient")
+plot3notitle(a7a, m7a, m7b, m7c, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure9.png", "Moment Coefficient")
 
 const x8, y8 = create(1115, res)
 
@@ -106,11 +106,11 @@ const a8c, l8c, d8c, dp8c, m8c, c8c = limscoef(x8, y8, len, numitr, 3e5, -8, 8)
 
 recordInfo(1115, x8, y8, a8c, l8c, 20, 3e5)
 
-plot3notitle(a8a, l8a, l8b, l8c, "Documents/GitHub/497R-Projects/Figure10.png", "Lift Coefficient")
+plot3notitle(a8a, l8a, l8b, l8c, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure10.png", "Lift Coefficient")
 
-plot3coefficients(a8a, d8a, "Re = 100,000", d8b, "Re = 200,000", d8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Figure11.png", "Drag Coefficient")
+plot3coefficients(a8a, d8a, "Re = 100,000", d8b, "Re = 200,000", d8c, "Re = 300,000", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure11.png", "Drag Coefficient")
 
-plot3notitle(a8a, m8a, m8b, m8c, "Documents/GitHub/497R-Projects/Figure12.png", "Moment Coefficient")
+plot3notitle(a8a, m8a, m8b, m8c, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure12.png", "Moment Coefficient")
 
 #=---------------------------------------------------------------
 This section examines different airfoil thicknesses and cambers.
@@ -134,11 +134,11 @@ const a11, l11, d11, dp11, m11, c11 = limscoef(x11, y11, len, numitr, 1e5, -8, 8
 
 recordInfo(2218, x11, y11, a11, l11, 15, 1e5)
 
-plot3notitle(a9, l9, l10, l11, "Documents/GitHub/497R-Projects/Figure13.png", "Lift Coefficient")
+plot3notitle(a9, l9, l10, l11, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure13.png", "Lift Coefficient")
 
-plot3coefficients(a9, d9, "NACA 2208", d10, "NACA 2213", d11, "NACA 2218", "Documents/GitHub/497R-Projects/Figure14.png", "Drag Coefficient")
+plot3coefficients(a9, d9, "NACA 2208", d10, "NACA 2213", d11, "NACA 2218", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure14.png", "Drag Coefficient")
 
-plot3notitle(a9, m9, m10, m11, "Documents/GitHub/497R-Projects/Figure15.png", "Moment Coefficient")
+plot3notitle(a9, m9, m10, m11, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure15.png", "Moment Coefficient")
 
 const x12, y12 = create(2114, res)
 
@@ -158,25 +158,25 @@ const a14, l14, d14, dp14, m14, c14 = limscoef(x14, y14, len, numitr, 1e5, -8, 8
 
 recordInfo(2314, x14, y14, a14, l14, 25, 1e5)
 
-plot3notitle(a12, l12, l13, l14, "Documents/GitHub/497R-Projects/Figure16.png", "Lift Coefficient")
+plot3notitle(a12, l12, l13, l14, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure16.png", "Lift Coefficient")
 
-plot3coefficients(a12, d12, "NACA 2114", d13, "NACA 2214", d14, "NACA 2314", "Documents/GitHub/497R-Projects/Figure17.png", "Drag Coefficient")
+plot3coefficients(a12, d12, "NACA 2114", d13, "NACA 2214", d14, "NACA 2314", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure17.png", "Drag Coefficient")
 
-plot3notitle(a12, m12, m13, m14, "Documents/GitHub/497R-Projects/Figure18.png", "Moment Coefficient")
+plot3notitle(a12, m12, m13, m14, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure18.png", "Moment Coefficient")
 
-plotliftdrag(l14, d14, "Documents/GitHub/497R-Projects/Figure19.png")
+plotliftdrag(l14, d14, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure19.png")
 
-polar("lift", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Lift Coefficient", "Documents/GitHub/497R-Projects/Figure20.png")
+polar("lift", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Lift Coefficient", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure20.png")
 
-polar("drag", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Drag Coefficient", "Documents/GitHub/497R-Projects/Figure21.png")
+polar("drag", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Drag Coefficient", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure21.png")
 
-polar("moment", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Moment Coefficient", "Documents/GitHub/497R-Projects/Figure22.png")
+polar("moment", x7, y7, 1.0, 10000, 150000, numitr, "Reynolds Number", "Moment Coefficient", "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure22.png")
 
-plotliftdrag(l9, d10, "Documents/GitHub/497R-Projects/Figure23.png")
+plotliftdrag(l9, d10, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure23.png")
 
-plotliftdrag(l10, d11, "Documents/GitHub/497R-Projects/Figure24.png")
+plotliftdrag(l10, d11, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure24.png")
 
-plotliftdrag(l11, d12, "Documents/GitHub/497R-Projects/Figure25.png")
+plotliftdrag(l11, d12, "Documents/GitHub/497R-Projects/Airfoil Analysis/Figures/Figure25.png")
 
 const x15, y15 = create(4412, res)
 
