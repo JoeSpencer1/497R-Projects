@@ -24,12 +24,12 @@ Sarraf, C., Nouri, H., Ravelet, F., and Bakir, F., \enquote{Experimental study
   Fluid Science}, Vol.~35, No.~4, 2011, pp. 684--693.
 \newblock \doi{https://doi.org/10.1016/j.expthermflusci.2011.01.002}.
 
+\bibitem[{Ning(2022)}]{ComAer}
+Ning, A., \emph{Computational Aerodynamics}, Brigham Young University, 2022.
+
 \bibitem[{Felli et~al.(2008)Felli, Guj, and Camussi}]{bceff}
 Felli, M., Guj, G., and Camussi, R., \enquote{Effect of the number of blades on
   propeller wake evolution,} \emph{Experiments in fluids}, Vol.~44, No.~3,
   2008, pp. 409--418.
-
-\bibitem[{Ning(2022)}]{ComAer}
-Ning, A., \emph{Computational Aerodynamics}, Brigham Young University, 2022.
 
 \end{thebibliography}
