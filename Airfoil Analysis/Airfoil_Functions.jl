@@ -62,7 +62,7 @@ end
 function writefile(n, x, y, m, p, th)
     num0 = m * 100000 + p * 1000 + th * 100
     num = trunc(Int64, num0)
-    filename = string("Documents/GitHub/497R-Projects/Airfoil Analysis/Airfoils/naca" , string(num) , "new.txt")
+    filename = string("Documents/GitHub/497R-Projects/Airfoil Analysis/Airfoils/naca", string(num), "new.txt")
     printfile = open(filename, "w")
     for i in 1:n
         write(printfile, string(x[i]))
